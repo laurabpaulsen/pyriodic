@@ -1,1 +1,1 @@
-# 🌀 Pyriodic – Plotting and statistics of circular data in Python
+# 🌀 Pyriodic – analysis, visualisation and statistics of circular data in Python
