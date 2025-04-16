@@ -1,7 +1,6 @@
 from circular import Circular
 import numpy as np
 from scipy import interpolate, signal
-from scipy.stats import gaussian_kde
 from scipy.signal import hilbert, butter, filtfilt
 import logging
 logger = logging.getLogger(__name__)
@@ -140,3 +139,9 @@ def extract_phase_angle_hilbert(ts, fs=1.0, bandpass=(0.05, 0.5)):
     phase_angles = np.angle(analytic_signal)  # returns in range [-π, π]
 
     return phase_angles
+
+
+def extract_phase_angle_events(phase_angle_ts, event_times, first_samp = 0):
+    phase_at_events = phase_angle_ts[event_times-first_samp]
+
+    return phase_at_events
