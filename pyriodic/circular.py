@@ -49,30 +49,32 @@ class Circular:
         Creates a polar plot of the circular data, with density and individual points.
     """
 
-    VALID_UNITS = {"degrees", "radians"} # hours, years?
-    VALID_DATA_TYPES = {"angles"}#, "directions", "day", "year"}
+    VALID_UNITS = {"degrees", "radians"}  # hours, years?
+    VALID_DATA_TYPES = {"angles"}  # , "directions", "day", "year"}
     VALID_ZEROS = {"pi", 0}
 
-    UNIT_RANGES = {
-        "radians": 2 * math.pi,
-        "degrees": 360,
-        "hours": 24,
-        "months": 12
-    }
+    UNIT_RANGES = {"radians": 2 * math.pi, "degrees": 360, "hours": 24, "months": 12}
 
-    def __init__(self, data, data_type: str = "angles", unit: str = "radians", zero = 0):
+    def __init__(self, data, data_type: str = "angles", unit: str = "radians", zero=0):
         unit = unit.lower()
         if unit not in self.VALID_UNITS:
-            raise ValueError(f"Invalid unit '{unit}'. Must be one of {self.VALID_UNITS}.")
-        
+            raise ValueError(
+                f"Invalid unit '{unit}'. Must be one of {self.VALID_UNITS}."
+            )
+
         if zero not in self.VALID_ZEROS:
-            raise ValueError(f"Invalid zero '{zero}'. Must be one of {self.VALID_ZEROS}.")
-        
+            raise ValueError(
+                f"Invalid zero '{zero}'. Must be one of {self.VALID_ZEROS}."
+            )
+
         data_type = data_type.lower()
         if data_type not in self.VALID_DATA_TYPES:
-            raise ValueError((f"Invalid data_type '{data_type}'. Must be one of {self.VALID_DATA_TYPES}."))
+            raise ValueError(
+                (
+                    f"Invalid data_type '{data_type}'. Must be one of {self.VALID_DATA_TYPES}."
+                )
+            )
 
-        
         # check that data looks valid for the declared unit
         self._validate_data_matches_unit(data, unit)
         self.data = np.asarray(data, dtype=float)
@@ -82,9 +84,13 @@ class Circular:
 
     def _validate_data_matches_unit(self, data, unit):
         abs_data = np.abs(data)
-        
-        all_within_radian_range = all(x <= self.UNIT_RANGES["radians"] + 0.1 for x in abs_data)
-        any_exceed_radian_range = any(x > self.UNIT_RANGES["radians"]  + 0.5 for x in abs_data)
+
+        all_within_radian_range = all(
+            x <= self.UNIT_RANGES["radians"] + 0.1 for x in abs_data
+        )
+        any_exceed_radian_range = any(
+            x > self.UNIT_RANGES["radians"] + 0.5 for x in abs_data
+        )
 
         if unit == "degrees" and all_within_radian_range:
             raise ValueError(
@@ -97,9 +103,7 @@ class Circular:
                 "Some data values exceed the valid radian range (~0–6.28); "
                 "they may be in degrees instead."
             )
-        
 
-        
     def convert_to(self, target_unit):
         if self.unit == target_unit:
             return
@@ -108,10 +112,12 @@ class Circular:
         elif self.unit == "radians" and target_unit == "degrees":
             self.data = np.rad2deg(self.data)
         else:
-            raise NotImplementedError(f"Conversion from {self.unit} to {target_unit} not implemented.")
-        
+            raise NotImplementedError(
+                f"Conversion from {self.unit} to {target_unit} not implemented."
+            )
+
         self.unit = target_unit
-    
+
     def plot(self):
         """"""
         from .visualise import PyCircPlot
@@ -122,8 +128,6 @@ class Circular:
         plot.add_points()
 
         return plot
-
-
 
     def __str__(self):
         summary = (

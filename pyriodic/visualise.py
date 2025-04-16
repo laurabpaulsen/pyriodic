@@ -1,23 +1,26 @@
-
 import matplotlib.pyplot as plt
 import numpy as np
-from circular import Circular
+from .circular import Circular
 from math import pi
+
 DEFAULT_COLOUR = "forestgreen"
 
 
-
-def vonmises_kde(data, kappa, min_x = -pi, max_x = pi, n_bins=100):
+def vonmises_kde(data, kappa, min_x=-pi, max_x=pi, n_bins=100):
     from scipy.special import i0
+
     bins = np.linspace(min_x, max_x, n_bins)
     x = np.linspace(min_x, max_x, n_bins)
     # integrate vonmises kernels
-    kde = np.exp(kappa*np.cos(x[:, None]-data[None, :])).sum(1)/(2*np.pi*i0(kappa))
+    kde = np.exp(kappa * np.cos(x[:, None] - data[None, :])).sum(1) / (
+        2 * np.pi * i0(kappa)
+    )
     kde /= np.trapz(kde, x=bins)
     return bins, kde
 
+
 class PyCircPlot:
-    def __init__(self, circ: Circular, fig_size=(6, 6), dpi=300, ax=None, ylim = None):
+    def __init__(self, circ: Circular, fig_size=(6, 6), dpi=300, ax=None, ylim=None):
         self.circ = circ
 
         if ax is None:
@@ -26,18 +29,18 @@ class PyCircPlot:
             )
         else:
             # Ensure it's a polar axis
-            if ax.name != 'polar':
+            if ax.name != "polar":
                 raise ValueError("Provided axis must be a polar projection")
             self.ax = ax
             self.fig = ax.figure
 
-        self.prepare_ax(ylim = ylim)
+        self.prepare_ax(ylim=ylim)
 
     def prepare_ax(self, ylim):
         # Remove radial ticks
         self.ax.set_yticklabels([])
         self.ax.set_yticks([])
-        
+
         # Optional: remove radial gridlines
         self.ax.yaxis.grid(False)
 
@@ -55,9 +58,9 @@ class PyCircPlot:
         # Direction of theta
         self.ax.set_theta_direction(-1)
 
-    def add_points(self, colour = DEFAULT_COLOUR):
-        self.ax.scatter(self.circ.data, [0.5]*len(self.circ.data), color = colour)
-    
+    def add_points(self, colour=DEFAULT_COLOUR):
+        self.ax.scatter(self.circ.data, [0.5] * len(self.circ.data), color=colour)
+
     from numpy import pi
 
     def add_density(self, colour=DEFAULT_COLOUR, kappa=20, n_bins=500):
@@ -80,7 +83,9 @@ class PyCircPlot:
             else:
                 raise ValueError("Unsupported value for circ.zero. Expected 0 or 'pi'.")
 
-            xs, density_vals = vonmises_kde(tmp_angles, kappa, min_x=min_x, max_x=max_x, n_bins=n_bins)
+            xs, density_vals = vonmises_kde(
+                tmp_angles, kappa, min_x=min_x, max_x=max_x, n_bins=n_bins
+            )
 
             self.ax.plot(xs, density_vals, color=colour, linewidth=1.5)
 
@@ -97,7 +102,6 @@ class PyCircPlot:
     def save(self, filename, **kwargs):
         """Save the figure to a file"""
         self.fig.savefig(filename, **kwargs)
-
 
 
 # other plotting functions (mainly for ts)
