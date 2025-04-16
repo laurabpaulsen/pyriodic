@@ -1,0 +1,46 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pyriodic"
+version = "0.1.0"
+description = "Tools for circular data analysis"
+authors = [
+  { name = "Laura Bock Paulsen", email = "laurabpaulsen@cc.au.dk" }
+]
+readme = "README.md"
+requires-python = ">=3.8"
+dependencies = []
+
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "black",
+    "mypy",
+    "ruff",
+    "ipykernel",     # for notebooks
+    "matplotlib",    # assuming you're plotting
+    "numpy",         # your project uses this
+    "scipy"          # for kde and signal tools
+]
+
+[tool.setuptools.packages.find]
+include = ["pyriodic"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"
+
+[tool.black]
+line-length = 88
+target-version = ['py38']
+
+[tool.ruff]
+line-length = 88
+select = ["E", "F"]  # Errors and Flake8-type issues
+
+[tool.mypy]
+ignore_missing_imports = true
+strict = false
+
