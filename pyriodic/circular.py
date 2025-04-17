@@ -8,7 +8,7 @@ class Circular:
 
     This class supports circular statistics and visualization of data that wraps around a fixed range,
     such as angles (in radians or degrees), phases, hours, or other cyclic measurements. It provides
-    basic unit validation, conversion between degrees and radians, and visualization tools.
+    basic unit validation, conversion between degrees and radians, and visualisation tools.
 
     Parameters
     ----------
@@ -24,8 +24,8 @@ class Circular:
         and visualization:
 
         - If unit is "radians":
-            - `zero = 0`  → data is assumed to be in the range **[-π, π]**
-            - `zero = "pi"` → data is assumed to be in the range **[0, 2π]**
+            - `zero = 0`  → data is assumed to be in the range [-π, π]
+            - `zero = "pi"` → data is assumed to be in the range [0, 2π]
 
         This affects tick labeling and density estimation in visualizations.
         Default is 0.
@@ -43,6 +43,8 @@ class Circular:
 
     Methods
     -------
+    mean()
+    sd()
     convert_to(target_unit)
         Converts the data to a different angular unit ("radians" or "degrees").
     plot(x_ticks="pi")
@@ -103,6 +105,58 @@ class Circular:
                 "Some data values exceed the valid radian range (~0–6.28); "
                 "they may be in degrees instead."
             )
+
+    # ----- descriptive statistics ------- #
+    def mean(self):
+        if self.unit == "degrees":
+            angles_rad = np.radians(self.data)
+        elif self.unit == "radians":
+            angles_rad = self.data
+        else:
+            raise ValueError("unit must be 'radians' or 'degrees'")
+
+        sin_sum = np.sum(np.sin(angles_rad))
+        cos_sum = np.sum(np.cos(angles_rad))
+        mean_angle = np.arctan2(sin_sum, cos_sum)  # Result is in [-π, π)
+
+        # Normalize output range
+        if self.unit == "radians":
+            if self.zero == 0:  # range from 0 to 2pi
+                mean_angle = mean_angle % (2 * np.pi)
+        elif self.unit == "degrees":
+            mean_angle = np.degrees(mean_angle)
+            mean_angle = mean_angle % 360
+
+        return mean_angle
+
+    def sd(self):
+        """
+        Returns the circular standard deviation of the circular data.
+
+        Based on the formula:
+            SD = sqrt(-2 * log(R))
+        where R is the mean resultant length.
+        """
+        if self.unit == "degrees":
+            angles_rad = np.radians(self.data)
+        elif self.unit == "radians":
+            angles_rad = self.data
+        else:
+            raise ValueError("unit must be 'radians' or 'degrees'")
+
+        sin_sum = np.sum(np.sin(angles_rad))
+        cos_sum = np.sum(np.cos(angles_rad))
+        R = np.sqrt(sin_sum**2 + cos_sum**2) / len(angles_rad)
+
+        if R == 0:
+            return np.nan  # completely uniform distribution
+
+        circ_sd_rad = np.sqrt(-2 * np.log(R))
+
+        if self.unit == "degrees":
+            return np.degrees(circ_sd_rad)
+        else:
+            return circ_sd_rad
 
     def convert_to(self, target_unit):
         if self.unit == target_unit:
