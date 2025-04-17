@@ -100,7 +100,6 @@ def extract_phase_angle_linear(ts, nan_threshold=2.5, widths=500):
     normalised_ts = preprocesses_ts(ts, nan_threshold=nan_threshold)
 
     peaks, troughs = extract_peaks_and_troughs(normalised_ts, widths=widths)
-    print(peaks)
 
     # linear interpolation between peaks and troughs to get phase angle
     phase_angle = np.zeros(len(normalised_ts))
@@ -118,7 +117,11 @@ def extract_phase_angle_linear(ts, nan_threshold=2.5, widths=500):
             -np.pi + np.pi / (peak2 - trough), 0, peak2 - trough
         )
 
-    return phase_angle, peaks, troughs
+    return (
+        phase_angle % (2 * np.pi),
+        peaks,
+        troughs,
+    )  # return from 0 to 2pi instead, peak, throug
 
 
 def extract_phase_angle_hilbert(ts, fs=1.0, bandpass=(0.05, 0.5)):
@@ -147,7 +150,7 @@ def extract_phase_angle_hilbert(ts, fs=1.0, bandpass=(0.05, 0.5)):
     analytic_signal = hilbert(filtered)
     phase_angles = np.angle(analytic_signal)  # returns in range [-π, π]
 
-    return phase_angles
+    return phase_angles % (2 * np.pi)  # return from 0 to 2pi instead
 
 
 def extract_phase_angle_events(phase_angle_ts, event_times, first_samp=0):
