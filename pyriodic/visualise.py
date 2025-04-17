@@ -6,7 +6,7 @@ from math import pi
 DEFAULT_COLOUR = "forestgreen"
 
 
-def vonmises_kde(data, kappa, min_x=-pi, max_x=pi, n_bins=100):
+def vonmises_kde(data, kappa, min_x=0, max_x=2 * pi, n_bins=100):
     from scipy.special import i0
 
     bins = np.linspace(min_x, max_x, n_bins)
@@ -20,8 +20,16 @@ def vonmises_kde(data, kappa, min_x=-pi, max_x=pi, n_bins=100):
 
 
 class PyCircPlot:
-    def __init__(self, circ: Circular, fig_size=(6, 6), dpi=300, ax=None, ylim=None):
-        self.circ = circ
+    def __init__(
+        self,
+        circs: dict[str, Circular],
+        colours=None,
+        fig_size=(6, 6),
+        dpi=300,
+        ax=None,
+        ylim=None,
+    ):
+        self.circs = circs
 
         if ax is None:
             self.fig, self.ax = plt.subplots(
@@ -35,6 +43,14 @@ class PyCircPlot:
             self.fig = ax.figure
 
         self.prepare_ax(ylim=ylim)
+
+        if colours:
+            self.colours = [colours] if colours.type() == "str" else colours
+        else:
+            # Automatically pick colors from matplotlib's default cycle
+            prop_cycle = plt.rcParams["axes.prop_cycle"]
+            color_cycle = prop_cycle.by_key()["color"]
+            self.colours = color_cycle[: len(circs)]
 
     def prepare_ax(self, ylim):
         # Remove radial ticks
@@ -52,45 +68,47 @@ class PyCircPlot:
             self.ax.set_ylim(*ylim)
 
         # Set theta offset
-        zero_location = pi if self.circ.zero == "pi" else self.circ.zero
-        self.ax.set_theta_offset(zero_location)
+
+        # self.ax.set_theta_offset(zero_location)
 
         # Direction of theta
         self.ax.set_theta_direction(-1)
 
-    def add_points(self, colour=DEFAULT_COLOUR):
-        self.ax.scatter(self.circ.data, [0.5] * len(self.circ.data), color=colour)
+    def add_points(self):
+        for idx, (label, circ) in enumerate(self.circs.items()):
+            self.ax.scatter(
+                circ.data, [0.5] * len(circ.data), color=self.colours[idx], label=label
+            )
 
-    from numpy import pi
-
-    def add_density(self, colour=DEFAULT_COLOUR, kappa=20, n_bins=500):
+    def add_density(self, kappa=20, n_bins=500):
         """
         Add a circular density estimate using Von Mises KDE.
 
         Parameters:
         - colour: Line color for the density plot.
-        - kappa: Concentration parameter of the Von Mises distribution (like 1/variance).
+        - kappa: Concentration parameter of the Von Mises distribution (0 = uniform).
         - n_bins: Number of bins to evaluate density on.
         """
+        for idx, (label, circ) in enumerate(self.circs.items()):
 
-        if self.circ.unit == "radians":
-            tmp_angles = self.circ.data
-
-            if self.circ.zero == 0:
-                min_x, max_x = -pi, pi
-            elif self.circ.zero == "pi":
+            if circ.unit == "radians":
                 min_x, max_x = 0, 2 * pi
+
+            elif circ.unit == "degrees":
+                min_x, max_x = 0, 360
+
             else:
-                raise ValueError("Unsupported value for circ.zero. Expected 0 or 'pi'.")
+                raise ValueError("upss")
 
             xs, density_vals = vonmises_kde(
-                tmp_angles, kappa, min_x=min_x, max_x=max_x, n_bins=n_bins
+                circ.data, kappa, min_x=min_x, max_x=max_x, n_bins=n_bins
             )
 
-            self.ax.plot(xs, density_vals, color=colour, linewidth=1.5)
+            self.ax.plot(
+                xs, density_vals, color=self.colours[idx], linewidth=1.5, label=label
+            )
 
-        else:
-            print("upss")
+        self.ax.legend()
 
     def add_circular_mean(self):
         # calculate the mean using function from Circular
