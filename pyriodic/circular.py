@@ -18,17 +18,7 @@ class Circular:
     data_type : str, optional
         The type of circular data. Currently supported: {"angles"}. Default is "angles".
     unit : str, optional
-        The unit of the input data. Must be one of {"radians", "degrees"}. Default is "radians".
-     zero : str or int, optional
-        Defines the zero reference point of the circular data, affecting both its interpretation
-        and visualization:
-
-        - If unit is "radians":
-            - `zero = 0`  → data is assumed to be in the range [-π, π]
-            - `zero = "pi"` → data is assumed to be in the range [0, 2π]
-
-        This affects tick labeling and density estimation in visualizations.
-        Default is 0.
+        The unit of the input data. Must be one of {"radians", "degrees"}. Default is "radians". Assumes radian range to be from 0 to 2pi.
 
     Attributes
     ----------
@@ -38,8 +28,7 @@ class Circular:
         Type of circular data (e.g., "angles").
     unit : str
         Unit of measurement, either "radians" or "degrees".
-    zero : str or int
-        Zero reference point for angular orientation (used in plotting).
+
 
     Methods
     -------
@@ -53,20 +42,14 @@ class Circular:
 
     VALID_UNITS = {"degrees", "radians"}  # hours, years?
     VALID_DATA_TYPES = {"angles"}  # , "directions", "day", "year"}
-    VALID_ZEROS = {"pi", 0}
 
     UNIT_RANGES = {"radians": 2 * math.pi, "degrees": 360, "hours": 24, "months": 12}
 
-    def __init__(self, data, data_type: str = "angles", unit: str = "radians", zero=0):
+    def __init__(self, data, data_type: str = "angles", unit: str = "radians"):
         unit = unit.lower()
         if unit not in self.VALID_UNITS:
             raise ValueError(
                 f"Invalid unit '{unit}'. Must be one of {self.VALID_UNITS}."
-            )
-
-        if zero not in self.VALID_ZEROS:
-            raise ValueError(
-                f"Invalid zero '{zero}'. Must be one of {self.VALID_ZEROS}."
             )
 
         data_type = data_type.lower()
@@ -82,7 +65,6 @@ class Circular:
         self.data = np.asarray(data, dtype=float)
         self.data_type = data_type
         self.unit = unit
-        self.zero = zero
 
     def _validate_data_matches_unit(self, data, unit):
         abs_data = np.abs(data)
@@ -119,10 +101,9 @@ class Circular:
         cos_sum = np.sum(np.cos(angles_rad))
         mean_angle = np.arctan2(sin_sum, cos_sum)  # Result is in [-π, π)
 
-        # Normalize output range
+        # Normalise output range
         if self.unit == "radians":
-            if self.zero == 0:  # range from 0 to 2pi
-                mean_angle = mean_angle % (2 * np.pi)
+            mean_angle = mean_angle % (2 * np.pi)  # range from 0 to 2pi
         elif self.unit == "degrees":
             mean_angle = np.degrees(mean_angle)
             mean_angle = mean_angle % 360
@@ -172,11 +153,11 @@ class Circular:
 
         self.unit = target_unit
 
-    def plot(self):
+    def plot(self, label: str = ""):
         """"""
         from .visualise import PyCircPlot
 
-        plot = PyCircPlot(self)
+        plot = PyCircPlot({f"{label}": self})
 
         plot.add_density()
         plot.add_points()
@@ -189,7 +170,6 @@ class Circular:
             f"---------------------\n"
             f"Type:     {self.data_type}\n"
             f"Unit:     {self.unit}\n"
-            f"Zero ref:    {self.zero}\n"
             f"Data:     {self.data[:5]}{'...' if len(self.data) > 5 else ''} "
             f"(n={len(self.data)})\n"
             f"Min value:   {np.min(self.data):.3f}\n"
