@@ -106,7 +106,7 @@ def extract_phase_angle_linear(ts, nan_threshold=2.5, widths=500):
     phase_angle[:] = np.nan  # fill with nans
 
     # set troughs to pi and peaks to 0
-    phase_angle[troughs], phase_angle[peaks] = np.pi, 0
+    phase_angle[troughs], phase_angle[peaks] = 2*np.pi, 0
 
     # interpolate the phase angle between peaks and troughs
     for peak1, peak2, trough in zip(peaks, peaks[1:], troughs):
@@ -114,14 +114,14 @@ def extract_phase_angle_linear(ts, nan_threshold=2.5, widths=500):
             0 + np.pi / (trough - peak1), np.pi, trough - peak1
         )
         phase_angle[trough:peak2] = np.linspace(
-            -np.pi + np.pi / (peak2 - trough), 0, peak2 - trough
+            np.pi + np.pi / (peak2 - trough), 2*np.pi, peak2 - trough
         )
 
     return (
-        phase_angle % (2 * np.pi),
+        phase_angle,
         peaks,
         troughs,
-    )  # return from 0 to 2pi instead, peak, throug
+    ) 
 
 
 def extract_phase_angle_hilbert(ts, fs=1.0, bandpass=(0.05, 0.5)):
