@@ -24,7 +24,7 @@ extensions = [
     "sphinx.ext.napoleon",
     'sphinx.ext.mathjax',  # Enables math rendering in HTML
 ]
-]
+
 
 templates_path = ["_templates"]
 exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
