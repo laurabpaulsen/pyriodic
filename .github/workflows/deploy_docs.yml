@@ -21,6 +21,10 @@ jobs:
         with:
           python-version: 3.13
 
+      - name: Install your package
+        run: |
+          pip install -e .
+
       - name: Install Sphinx and theme
         run: |
           pip install --upgrade pip
