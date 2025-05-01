@@ -2,7 +2,7 @@ from collections import defaultdict
 import numpy as np
 from typing import Union, Optional
 import matplotlib.pyplot as plt
-
+from pathlib import Path
 from .circular import Circular
 
 class PhaseEvents:
@@ -23,7 +23,10 @@ class PhaseEvents:
     def r(self):
         return {label: circ.r() for label, circ in self.phase_dict.items()}
 
-    def plot(self):
+    def plot(
+            self, 
+            savepath = Union[Path, str]
+            ):
         n = len(self.phase_dict)
         cols = int(np.ceil(np.sqrt(n)))
         rows = int(np.ceil(n / cols))
@@ -40,7 +43,11 @@ class PhaseEvents:
             ax.set_visible(False)
 
         plt.tight_layout()
-        plt.show()
+
+        if savepath:
+            plt.savefig(savepath)
+        else:
+            plt.show()
 
 
     def __getitem__(self, key):
@@ -54,7 +61,7 @@ class PhaseEvents:
 def create_phase_events(
     phase_ts: np.ndarray,
     events: np.ndarray,
-    event_ids: Optional[Union[np.ndarray, dict]] = None,
+    event_labels: Optional[np.ndarray] = None,
     unit: str = "radians",
     first_samp: int = 0
 ) -> Union[Circular, PhaseEvents]:
@@ -67,11 +74,10 @@ def create_phase_events(
         1D array of phase values in radians.
     events : np.ndarray
         Event sample indices.
-    event_ids : np.ndarray or dict, optional
-        Event condition codes or label mapping.
+    event_labels : np.ndarray, optional
+        label mapping for events.
         - If None: returns a single Circular object.
         - If array: used to group events by value.
-        - If dict: keys are condition labels, values are event codes.
     unit : str
         Unit to assign to Circular objects ('radians', 'degrees', etc.).
     first_samp : int
@@ -84,15 +90,12 @@ def create_phase_events(
     """
     events = np.asarray(events)
 
-    if event_ids is None:
+    if event_labels is None:
         phase_data = phase_ts[events - first_samp]
         return Circular(phase_data, unit=unit)
 
-    if isinstance(event_ids, dict):
-        code_to_label = {v: k for k, v in event_ids.items()}
-        labels = np.array([code_to_label.get(ev, "unknown") for ev in events])
     else:
-        labels = np.asarray(event_ids)
+        labels = np.asarray(event_labels)
 
     if len(labels) != len(events):
         raise ValueError("event_ids and events must be the same length if event_ids is an array.")
