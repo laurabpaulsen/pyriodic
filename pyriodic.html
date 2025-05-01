@@ -335,7 +335,6 @@ document.write(`
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.preproc.RawSignal.phase_hilbert"><code class="docutils literal notranslate"><span class="pre">RawSignal.phase_hilbert()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.preproc.RawSignal.phase_linear"><code class="docutils literal notranslate"><span class="pre">RawSignal.phase_linear()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.preproc.RawSignal.phase_threepoint"><code class="docutils literal notranslate"><span class="pre">RawSignal.phase_threepoint()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.preproc.RawSignal.plot"><code class="docutils literal notranslate"><span class="pre">RawSignal.plot()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.preproc.RawSignal.remove_outliers"><code class="docutils literal notranslate"><span class="pre">RawSignal.remove_outliers()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.preproc.RawSignal.zscore"><code class="docutils literal notranslate"><span class="pre">RawSignal.zscore()</span></code></a></li>
 </ul>
@@ -601,7 +600,7 @@ Values should be in the range appropriate to the specified <cite>unit</cite>.</p
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pyriodic.preproc.RawSignal.phase_threepoint">
-<span class="sig-name descname"><span class="pre">phase_threepoint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">peak_finder</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">distance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prominence</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.01</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">percentile</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">50</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">descent_window</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyriodic.preproc.RawSignal.phase_threepoint" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">phase_threepoint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">peak_finder=typing.Optional[&lt;built-in</span> <span class="pre">function</span> <span class="pre">callable&gt;],</span> <span class="pre">distance=100,</span> <span class="pre">prominence=0.01,</span> <span class="pre">percentile=50,</span> <span class="pre">descent_window=5</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyriodic.preproc.RawSignal.phase_threepoint" title="Link to this definition">#</a></dt>
 <dd><p>Extract phase using a three-point method:
 Peak → descending slope → flat region → ascending slope → next peak.</p>
 <dl class="field-list simple">
@@ -624,11 +623,6 @@ troughs (list of tuples): List of (trough_start, trough_end) for flat segments</
 </dd>
 </dl>
 </dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="pyriodic.preproc.RawSignal.plot">
-<span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">show_phase</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyriodic.preproc.RawSignal.plot" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pyriodic.preproc.RawSignal.remove_outliers">
@@ -820,7 +814,6 @@ HA: the samples do not come from the same population</p>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.preproc.RawSignal.phase_hilbert"><code class="docutils literal notranslate"><span class="pre">RawSignal.phase_hilbert()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.preproc.RawSignal.phase_linear"><code class="docutils literal notranslate"><span class="pre">RawSignal.phase_linear()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.preproc.RawSignal.phase_threepoint"><code class="docutils literal notranslate"><span class="pre">RawSignal.phase_threepoint()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.preproc.RawSignal.plot"><code class="docutils literal notranslate"><span class="pre">RawSignal.plot()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.preproc.RawSignal.remove_outliers"><code class="docutils literal notranslate"><span class="pre">RawSignal.remove_outliers()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.preproc.RawSignal.zscore"><code class="docutils literal notranslate"><span class="pre">RawSignal.zscore()</span></code></a></li>
 </ul>
