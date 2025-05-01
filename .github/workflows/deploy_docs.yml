@@ -28,6 +28,9 @@ jobs:
           sphinx-build docs docs/_build/html
 
       - name: Deploy to GitHub Pages
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: docs/_build/html
+        env:
+          GH_TOKEN: ${{ secrets.GH_PAT }}  # your personal access token
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+          ghp-import -n -p -f docs/_build/html
