@@ -21,7 +21,7 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install sphinx furo ghp-import
+          pip install sphinx furo sphinx-book-theme ghp-import
 
       - name: Build documentation
         run: |
