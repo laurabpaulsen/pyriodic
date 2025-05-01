@@ -37,16 +37,6 @@ class Circular:
         The circular data as a NumPy array.
     unit : str
         Unit of measurement, either "radians" or "degrees".
-
-
-    Methods
-    -------
-    mean()
-    sd()
-    convert_to(target_unit)
-        Converts the data to a different angular unit ("radians" or "degrees").
-    plot(x_ticks="pi")
-        Creates a polar plot of the circular data, with density and individual points.
     """
 
 
@@ -56,8 +46,8 @@ class Circular:
             full_range: Optional[Union[int, None]] = None
             ):
         
-        VALID_UNITS = {"degrees", "radians", "hours"}  # hours, years?
-        UNIT_RANGES = {"radians": 2 * np.pi, "degrees": 360, "hours": 24}
+        self.VALID_UNITS = {"degrees", "radians", "hours"}  # hours, years?
+        self.UNIT_RANGES = {"radians": 2 * np.pi, "degrees": 360, "hours": 24}
 
         unit = unit.lower()
         if unit not in self.VALID_UNITS:
