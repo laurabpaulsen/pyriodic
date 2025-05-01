@@ -49,8 +49,6 @@ class Circular:
         Creates a polar plot of the circular data, with density and individual points.
     """
 
-    VALID_UNITS = {"degrees", "radians", "hours"}  # hours, years?
-    UNIT_RANGES = {"radians": 2 * np.pi, "degrees": 360, "hours": 24}
 
     def __init__(
             self, 
@@ -58,6 +56,9 @@ class Circular:
             full_range: Optional[Union[int, None]] = None
             ):
         
+        VALID_UNITS = {"degrees", "radians", "hours"}  # hours, years?
+        UNIT_RANGES = {"radians": 2 * np.pi, "degrees": 360, "hours": 24}
+
         unit = unit.lower()
         if unit not in self.VALID_UNITS:
             raise ValueError(
