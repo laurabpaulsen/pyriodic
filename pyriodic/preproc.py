@@ -1,7 +1,6 @@
-from .circular import Circular
 import numpy as np
 from scipy import interpolate, signal
-from scipy.signal import hilbert, butter, filtfilt
+from scipy.signal import hilbert
 import logging
 from copy import deepcopy
 
@@ -36,6 +35,9 @@ class RawSignal:
     
 
     def interpolate_missing(self):
+        """
+        
+        """
         nans = np.isnan(self.ts)
         x_vals = np.where(~nans)[0]
         y_vals = self.ts[~nans]
@@ -56,8 +58,11 @@ class RawSignal:
 
 
     def filter_bandpass(self, low, high):
+        """
+        
+        """
         sos = signal.butter(N=4, Wn=[low, high], btype='band', fs=self.fs, output='sos')
-        self.ts = signal.sosfiltfilt(sos, self._proc_ts)
+        self.ts = signal.sosfiltfilt(sos, self.ts)
         self._history.append(f"bandpass({low}-{high})")
 
     def phase_hilbert(self):
@@ -234,23 +239,4 @@ class RawSignal:
     def __repr__(self):
         return (f"<RawSignal | fs={self.fs} Hz, len={len(self.ts)}, "
                 f"steps={len(self._history)}>")
-
-
-
-def extract_phase_angle_hilbert(ts):
-    """
-    Extract instantaneous phase angle using the Hilbert Transform.
-
-    Parameters:
-        ts (np.ndarray): 1D time series
-
-    Returns:
-        np.ndarray: phase angles in radians (0 to 2π)
-    """
-
-    # Hilbert transform
-    analytic_signal = hilbert(ts)
-    phase_angles = np.angle(analytic_signal)  # returns in range [-π, π]
-
-    return phase_angles % (2 * np.pi)  # return from 0 to 2pi instead
 
