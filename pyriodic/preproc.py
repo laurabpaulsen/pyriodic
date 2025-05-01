@@ -224,6 +224,14 @@ class RawSignal:
     #        raise ValueError("Phase not yet computed.")
     #    return self._phase
 
+    @property
+    def history(self):
+        if self._history == []:
+            raise ValueError("No changes has been made to the data")
+        
+        else: 
+            return self._history
+
 
     """
     def get_phase_at_events(self, event_indices, first_samp=0):
