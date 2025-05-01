@@ -13,7 +13,7 @@ class PhaseEvents:
 
         Parameters
         ----------
-        phase_dict : dict
+        phase_dict
             Dictionary mapping condition labels or codes to Circular objects.
         """
         self.phase_dict = phase_dict
@@ -24,7 +24,7 @@ class PhaseEvents:
     def r(self):
         return {label: circ.r() for label, circ in self.phase_dict.items()}
 
-    def plot(self, savepath=Union[Path, str]):
+    def plot(self, savepath: Optional[Union[Path, str]] = None):
         n = len(self.phase_dict)
         cols = int(np.ceil(np.sqrt(n)))
         rows = int(np.ceil(n / cols))
