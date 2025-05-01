@@ -303,11 +303,7 @@ document.write(`
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.circular.Circular.data"><code class="docutils literal notranslate"><span class="pre">Circular.data</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.circular.Circular.unit"><code class="docutils literal notranslate"><span class="pre">Circular.unit</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.circular.Circular.mean"><code class="docutils literal notranslate"><span class="pre">Circular.mean()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.circular.Circular.sd"><code class="docutils literal notranslate"><span class="pre">Circular.sd()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.circular.Circular.convert_to"><code class="docutils literal notranslate"><span class="pre">Circular.convert_to()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.circular.Circular.plot"><code class="docutils literal notranslate"><span class="pre">Circular.plot()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id0"><code class="docutils literal notranslate"><span class="pre">Circular.mean()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id1"><code class="docutils literal notranslate"><span class="pre">Circular.plot()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.circular.Circular.r"><code class="docutils literal notranslate"><span class="pre">Circular.r()</span></code></a></li>
 </ul>
 </li>
@@ -434,30 +430,8 @@ Values should be in the range appropriate to the specified <cite>unit</cite>.</p
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="pyriodic.circular.Circular.sd">
-<span class="sig-name descname"><span class="pre">sd</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyriodic.circular.Circular.sd" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="pyriodic.circular.Circular.convert_to">
-<span class="sig-name descname"><span class="pre">convert_to</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target_unit</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyriodic.circular.Circular.convert_to" title="Link to this definition">#</a></dt>
-<dd><p>Converts the data to a different angular unit (“radians” or “degrees”).</p>
-</dd></dl>
-
-<dl class="py method">
 <dt class="sig sig-object py" id="pyriodic.circular.Circular.plot">
-<span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x_ticks</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'pi'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyriodic.circular.Circular.plot" title="Link to this definition">#</a></dt>
-<dd><p>Creates a polar plot of the circular data, with density and individual points.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="id0">
-<span class="sig-name descname"><span class="pre">mean</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#id0" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="id1">
-<span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">label</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#id1" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">label</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyriodic.circular.Circular.plot" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -608,7 +582,7 @@ Values should be in the range appropriate to the specified <cite>unit</cite>.</p
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>peak_finder</strong> (<em>callable</em>) – Optional custom function(ts, <a href="#id2"><span class="problematic" id="id3">**</span></a>kwargs) -&gt; np.ndarray of peak indices.</p></li>
+<li><p><strong>peak_finder</strong> (<em>callable</em>) – Optional custom function(ts, <a href="#id1"><span class="problematic" id="id2">**</span></a>kwargs) -&gt; np.ndarray of peak indices.</p></li>
 <li><p><strong>distance</strong> (<em>int</em>) – Minimum distance between peaks.</p></li>
 <li><p><strong>prominence</strong> (<em>float</em>) – Prominence threshold for peak detection.</p></li>
 </ul>
@@ -627,7 +601,7 @@ Peak → descending slope → flat region → ascending slope → next peak.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>peak_finder</strong> (<em>callable</em>) – Optional function(ts, <a href="#id4"><span class="problematic" id="id5">**</span></a>kwargs) → np.ndarray of peak indices.</p></li>
+<li><p><strong>peak_finder</strong> (<em>callable</em>) – Optional function(ts, <a href="#id3"><span class="problematic" id="id4">**</span></a>kwargs) → np.ndarray of peak indices.</p></li>
 <li><p><strong>distance</strong> (<em>int</em>) – Min distance between peaks (used if no custom peak_finder).</p></li>
 <li><p><strong>prominence</strong> (<em>float</em>) – Prominence threshold for peak detection.</p></li>
 <li><p><strong>percentile</strong> (<em>float</em>) – Percentile of absolute gradient below which region is considered ‘flat’.</p></li>
@@ -808,11 +782,7 @@ HA: the samples do not come from the same population</p>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.circular.Circular.data"><code class="docutils literal notranslate"><span class="pre">Circular.data</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.circular.Circular.unit"><code class="docutils literal notranslate"><span class="pre">Circular.unit</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.circular.Circular.mean"><code class="docutils literal notranslate"><span class="pre">Circular.mean()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.circular.Circular.sd"><code class="docutils literal notranslate"><span class="pre">Circular.sd()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.circular.Circular.convert_to"><code class="docutils literal notranslate"><span class="pre">Circular.convert_to()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.circular.Circular.plot"><code class="docutils literal notranslate"><span class="pre">Circular.plot()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id0"><code class="docutils literal notranslate"><span class="pre">Circular.mean()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id1"><code class="docutils literal notranslate"><span class="pre">Circular.plot()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.circular.Circular.r"><code class="docutils literal notranslate"><span class="pre">Circular.r()</span></code></a></li>
 </ul>
 </li>
