@@ -1,159 +1,256 @@
-from circular import Circular
+from .circular import Circular
 import numpy as np
 from scipy import interpolate, signal
 from scipy.signal import hilbert, butter, filtfilt
 import logging
+from copy import deepcopy
 
 logger = logging.getLogger(__name__)
 
+class RawSignal:
+    def __init__(self, data, fs, info=None):
+        self.ts = np.asarray(data).copy()
 
-def aaaaa(data) -> Circular:
-    pass
+        self.fs = fs
+        self.info = info or {}
+        #self._phase = None
+        #self._peaks = None
+        #self._troughs = None
+        self._history = []
+
+    def copy(self):
+        return deepcopy(self)
+
+    def remove_outliers(self, threshold=2.5, linear_interpolation = True):
+        """
+        Removes outliers .... threshold + linear interpolation
+        """
+        z_scores = np.abs((self.ts - np.nanmean(self.ts)) / np.nanstd(self.ts))
+        self.ts[z_scores > threshold] = np.nan
+
+        # linear interpolation of NaNs
+        if linear_interpolation:
+            self.interpolate_missing()
+            
+        self._history.append(f"remove_outliers({threshold}), {sum(z_scores > threshold)} outliers found")
+    
+
+    def interpolate_missing(self):
+        nans = np.isnan(self.ts)
+        x_vals = np.where(~nans)[0]
+        y_vals = self.ts[~nans]
+        interpolated_values = interpolate.interp1d(
+            x_vals, y_vals, kind="linear", fill_value="extrapolate"
+        )
+        self.ts[nans] = interpolated_values(np.where(nans)[0])
+
+        self._history.append(f"interpolate_missing(), {np.sum(nans)} NaNs interpolated")
 
 
-def preprocesses_ts(ts, nan_threshold=2.5):
-    # set outliers to NaN based on z-score threshold
-    z_scores = np.abs((ts - np.nanmean(ts)) / np.nanstd(ts))
-    logger.info(f"Found {sum(z_scores > 2.5)} outliers")
-    ts[z_scores > nan_threshold] = np.nan
-
-    # linear interpolation of outlier segments
-    nans = np.isnan(ts)
-    x_vals = np.where(~nans)[0]
-    y_vals = ts[~nans]
-    interpolated_values = interpolate.interp1d(
-        x_vals, y_vals, kind="linear", fill_value="extrapolate"
-    )
-    ts[nans] = interpolated_values(np.where(nans)[0])
-    logger.info("Linear interpolation of NaN finished")
-
-    # normalise interpolated time series
-    normalised_ts = (ts - np.nanmean(ts)) / np.nanstd(ts)
-
-    return normalised_ts
+    def zscore(self):
+        """
+        Normalizes the signal in-place to mean 0 and unit variance.
+        """
+        self.ts = (self.ts - np.nanmean(self.ts)) / np.nanstd(self.ts)
+        self._history.append("normalize()")
 
 
-def extract_peaks_and_troughs(ts, widths=500) -> tuple[np.ndarray, np.ndarray]:
+    def filter_bandpass(self, low, high):
+        sos = signal.butter(N=4, Wn=[low, high], btype='band', fs=self.fs, output='sos')
+        self.ts = signal.sosfiltfilt(sos, self._proc_ts)
+        self._history.append(f"bandpass({low}-{high})")
+
+    def phase_hilbert(self):
+        """
+        Extract instantaneous phase angle using the Hilbert Transform.
+
+        Parameters:
+            ts (np.ndarray): 1D time series
+
+        Returns:
+            np.ndarray: phase angles in radians (0 to 2π)
+        """
+
+        # Hilbert transform
+        analytic_signal = hilbert(self.ts)
+        phase_angles = np.angle(analytic_signal)  # returns in range [-π, π]
+
+        return phase_angles % (2 * np.pi)  # return from 0 to 2pi instead
+
+    def phase_linear(self, peak_finder=None, distance=100, prominence=0.01):
+        """
+        Extract phase using linear interpolation between peaks and troughs.
+
+        Args:
+            peak_finder (callable): Optional custom function(ts, **kwargs) -> np.ndarray of peak indices.
+            distance (int): Minimum distance between peaks.
+            prominence (float): Prominence threshold for peak detection.
+
+        Returns:
+            self
+        """
+        if peak_finder is None:
+            # Default logic
+            def peak_finder(ts, distance=distance, prominence=prominence):
+                peaks, _ = signal.find_peaks(ts, distance=distance, prominence=prominence)
+                return peaks
+
+        peaks = peak_finder(self.ts, distance=distance, prominence=prominence)
+
+        # Troughs between peaks
+        troughs = []
+        for p1, p2 in zip(peaks[:-1], peaks[1:]):
+            segment = self.ts[p1:p2]
+            trough = p1 + np.argmin(segment)
+            troughs.append(trough)
+
+        # Assign phase
+        phase = np.full_like(self.ts, np.nan, dtype=np.float32)
+        for p1, p2, t in zip(peaks[:-1], peaks[1:], troughs):
+            phase[p1:t] = np.linspace(0, np.pi, t - p1)
+            phase[t:p2] = np.linspace(np.pi, 2*np.pi, p2 - t)
+            phase[p1] = 0
+            phase[t] = np.pi
+            phase[p2] = 2*np.pi
+
+        #self._phase = phase
+        #self._peaks = peaks
+        #self._troughs = np.array(troughs)
+
+        return (
+            phase,
+            peaks,
+            troughs
+        )
+        
+
+    def phase_threepoint(
+            self, 
+            peak_finder=None, 
+            distance=100, 
+            prominence=0.01, 
+            percentile = 50, 
+            descent_window=5
+            ):
+        """
+        Extract phase using a three-point method:
+        Peak → descending slope → flat region → ascending slope → next peak.
+
+        Args:
+            peak_finder (callable): Optional function(ts, **kwargs) → np.ndarray of peak indices.
+            distance (int): Min distance between peaks (used if no custom peak_finder).
+            prominence (float): Prominence threshold for peak detection.
+            percentile (float): Percentile of absolute gradient below which region is considered 'flat'.
+            descent_window (int): Number of samples used to confirm descent/ascent before/after flat region.
+
+        Returns:
+            phase (np.ndarray): Phase array in radians (0 to 2π)
+            peaks (np.ndarray): Indices of detected peaks
+            troughs (list of tuples): List of (trough_start, trough_end) for flat segments
+        """
+        if peak_finder is None:
+            def peak_finder(ts, distance=distance, prominence=prominence):
+                peaks, _ = signal.find_peaks(ts, distance=distance, prominence=prominence)
+                return peaks
+
+        peaks = peak_finder(self.ts, distance=distance, prominence=prominence)
+        if len(peaks) < 2:
+            raise ValueError("Need at least two peaks to compute phase.")
+
+        gradient = np.gradient(self.ts)
+        troughs = []
+
+        for i in range(len(peaks) - 1):
+            start, end = peaks[i], peaks[i + 1]
+            segment_grad = gradient[start:end]
+            segment_abs_grad = np.abs(segment_grad)
+            grad_threshold = np.percentile(segment_abs_grad, percentile)
+
+            flat_indices = np.where(segment_abs_grad < grad_threshold)[0]
+
+            # Step 1: Start of flat region (after descent)
+            trough_start = None
+            for idx in flat_indices:
+                if idx < descent_window:
+                    continue
+                if np.all(segment_grad[idx - descent_window:idx] < 0):
+                    trough_start = start + idx
+                    break
+
+            if trough_start is None:
+                mid = (start + end) // 2
+                troughs.append((mid, mid))
+                continue
+
+            # Step 2: End of flat region (before ascent)
+            flat_following = flat_indices[flat_indices > (trough_start - start)]
+            trough_end = trough_start  # fallback
+
+            for idx in reversed(flat_following):
+                if idx + descent_window >= len(segment_grad):
+                    continue
+                if np.all(segment_grad[idx:idx + descent_window] > 0):
+                    trough_end = start + idx
+                    break
+
+            troughs.append((trough_start, trough_end))
+
+        phase = np.full(len(self.ts), np.nan, dtype=np.float32)
+
+        for (p1, p2), (t_start, t_end) in zip(zip(peaks[:-1], peaks[1:]), troughs):
+            if t_start > p1:
+                phase[p1:t_start] = np.linspace(0, np.pi, t_start - p1)
+            if t_end > t_start:
+                phase[t_start:t_end] = np.pi
+            if p2 > t_end:
+                phase[t_end:p2] = np.linspace(np.pi, 2 * np.pi, p2 - t_end)
+
+            # Force exact values
+            phase[p1] = 0
+            phase[t_start] = np.pi
+            phase[t_end] = np.pi
+            phase[p2] = 2 * np.pi
+
+        return phase, peaks, troughs
+    
+    #@property
+    #def phase_array(self):
+    #    if self._phase is None:
+    #        raise ValueError("Phase not yet computed.")
+    #    return self._phase
+
+
     """
-    Extracts peaks and troughs from timeseries data
-
-    Parameters:
-    ts (np.array): An array of timeseries datapoints
-
-    Returns:
-
+    def get_phase_at_events(self, event_indices, first_samp=0):
+        if self._phase is None:
+            raise RuntimeError("Phase has not been computed yet.")
+        return self._phase[event_indices - first_samp]
     """
-
-    # POTENTIAL OPTIMISATION OF FUNCTION
-    # auto for widths. Is there some way to programmatically make a good guess about the width for peak detection?
-
-    # finding peaks and troughs
-    logger.info("Looking for peaks - this may take a while")
-    peaks = signal.find_peaks_cwt(ts, widths=widths)  # , distance = min_sample)
-    if len(peaks) == 0:
-        raise ValueError(
-            f"No peaks were identified. Consider lowering the widths parameter which is currently set to {widths}"
-        )
-    # old way of doing it -> peaks = signal.find_peaks(normalised_ts)[0] figure out what works best on data!!
-
-    logger.info("Done looking for peaks")
-    troughs = np.array([], dtype=int)
-
-    for peak1, peak2 in zip(
-        peaks, peaks[1:]
-    ):  # finding the troughs -> the minimum between the peaks
-        tmp_resp = ts[peak1:peak2]  # respiration time course between the peaks
-
-        # DIFFERENT WAYS OF FINDING TROUGH
-
-        # take the index in the middle between the two peaks
-        # trough_ind = peak2 - peak1
-
-        # finding minimum between two peaks
-        trough_ind_tmp = np.where(tmp_resp == min(tmp_resp))
-        try:
-            trough_ind = int(
-                trough_ind_tmp[0] + peak1
-            )  # get the index relative to the entire time series
-        except TypeError:
-            trough_ind = int(np.mean(trough_ind_tmp[0]) + peak1)
-
-        # other ways??
-
-        troughs = np.append(troughs, trough_ind)
-
-    return peaks, troughs
+    def plot(self, show_phase=False):
+        # Quick QC plot using matplotlib
+        pass
 
 
-def extract_phase_angle(ts, method="linear", **kwargs):
-    if method == "linear":
-        return extract_phase_angle_linear(ts, **kwargs)
-    elif method == "hilbert":
-        return extract_phase_angle_hilbert(ts, **kwargs)
-
-    else:
-        raise NotImplementedError
+    def __repr__(self):
+        return (f"<RawSignal | fs={self.fs} Hz, len={len(self.ts)}, "
+                f"steps={len(self._history)}>")
 
 
-def extract_phase_angle_linear(ts, nan_threshold=2.5, widths=500):
-    # detect outliers, interpolate and normalise timeseries data
-    normalised_ts = preprocesses_ts(ts, nan_threshold=nan_threshold)
 
-    peaks, troughs = extract_peaks_and_troughs(normalised_ts, widths=widths)
-
-    # linear interpolation between peaks and troughs to get phase angle
-    phase_angle = np.zeros(len(normalised_ts))
-    phase_angle[:] = np.nan  # fill with nans
-
-    # set troughs to pi and peaks to 0
-    phase_angle[troughs], phase_angle[peaks] = 2*np.pi, 0
-
-    # interpolate the phase angle between peaks and troughs
-    for peak1, peak2, trough in zip(peaks, peaks[1:], troughs):
-        phase_angle[peak1:trough] = np.linspace(
-            0 + np.pi / (trough - peak1), np.pi, trough - peak1
-        )
-        phase_angle[trough:peak2] = np.linspace(
-            np.pi + np.pi / (peak2 - trough), 2*np.pi, peak2 - trough
-        )
-
-    return (
-        phase_angle,
-        peaks,
-        troughs,
-    ) 
-
-
-def extract_phase_angle_hilbert(ts, fs=1.0, bandpass=(0.05, 0.5)):
+def extract_phase_angle_hilbert(ts):
     """
     Extract instantaneous phase angle using the Hilbert Transform.
 
     Parameters:
         ts (np.ndarray): 1D time series
-        fs (float): sampling frequency (Hz)
-        bandpass (tuple): bandpass filter range (low, high) in Hz
 
     Returns:
-        np.ndarray: phase angles in radians (-π to π)
+        np.ndarray: phase angles in radians (0 to 2π)
     """
-    if np.isnan(ts).any():
-        ts = preprocesses_ts(ts)
-
-    # Optional: bandpass filter
-    nyq = 0.5 * fs
-    low, high = bandpass[0] / nyq, bandpass[1] / nyq
-    b, a = butter(2, [low, high], btype="band")
-
-    filtered = filtfilt(b, a, ts)
 
     # Hilbert transform
-    analytic_signal = hilbert(filtered)
+    analytic_signal = hilbert(ts)
     phase_angles = np.angle(analytic_signal)  # returns in range [-π, π]
 
     return phase_angles % (2 * np.pi)  # return from 0 to 2pi instead
 
-
-def extract_phase_angle_events(phase_angle_ts, event_times, first_samp=0):
-    phase_at_events = phase_angle_ts[event_times - first_samp]
-
-    return phase_at_events
