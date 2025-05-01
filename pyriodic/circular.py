@@ -1,6 +1,15 @@
-import math
 import numpy as np
+from typing import Optional, Union
 
+from .utils import (
+    dat2rad,
+    rad2dat
+)
+
+from .descriptive_stats import (
+    circular_mean,
+    circular_r
+)
 
 class Circular:
     """
@@ -19,13 +28,13 @@ class Circular:
         The type of circular data. Currently supported: {"angles"}. Default is "angles".
     unit : str, optional
         The unit of the input data. Must be one of {"radians", "degrees"}. Default is "radians". Assumes radian range to be from 0 to 2pi.
+    full_range: int, optional
+    
 
     Attributes
     ----------
     data : ndarray
         The circular data as a NumPy array.
-    data_type : str
-        Type of circular data (e.g., "angles").
     unit : str
         Unit of measurement, either "radians" or "degrees".
 
@@ -40,124 +49,66 @@ class Circular:
         Creates a polar plot of the circular data, with density and individual points.
     """
 
-    VALID_UNITS = {"degrees", "radians"}  # hours, years?
-    VALID_DATA_TYPES = {"angles"}  # , "directions", "day", "year"}
+    VALID_UNITS = {"degrees", "radians", "hours"}  # hours, years?
+    UNIT_RANGES = {"radians": 2 * np.pi, "degrees": 360, "hours": 24}
 
-    UNIT_RANGES = {"radians": 2 * math.pi, "degrees": 360, "hours": 24, "months": 12}
-
-    def __init__(self, data, data_type: str = "angles", unit: str = "radians"):
+    def __init__(
+            self, 
+            data, unit: str = "radians", 
+            full_range: Optional[Union[int, None]] = None
+            ):
+        
         unit = unit.lower()
         if unit not in self.VALID_UNITS:
             raise ValueError(
                 f"Invalid unit '{unit}'. Must be one of {self.VALID_UNITS}."
             )
-
-        data_type = data_type.lower()
-        if data_type not in self.VALID_DATA_TYPES:
-            raise ValueError(
-                (
-                    f"Invalid data_type '{data_type}'. Must be one of {self.VALID_DATA_TYPES}."
-                )
-            )
-
-        # check that data looks valid for the declared unit
-        self._validate_data_matches_unit(data, unit)
-        self.data = np.asarray(data, dtype=float)
-        self.data_type = data_type
         self.unit = unit
 
-    def _validate_data_matches_unit(self, data, unit):
-        abs_data = np.abs(data)
+       
 
-        all_within_radian_range = all(
-            x <= self.UNIT_RANGES["radians"] + 0.1 for x in abs_data
-        )
-        any_exceed_radian_range = any(
-            x > self.UNIT_RANGES["radians"] + 0.5 for x in abs_data
-        )
+        if full_range is None:
+            try:
+                self.full_range = self.UNIT_RANGES[unit]
+            except (KeyError):
+                raise IndexError (
+                    f"If unit is not one of {self.VALID_UNITS} you need to specify the full range."
+                )
+        else:
+            self.full_range = full_range
 
-        if unit == "degrees" and all_within_radian_range:
-            raise ValueError(
-                "All data values are within the expected radian range (max ~6.28), "
-                "but unit is set to 'degrees'. Did you mean 'radians'?"
-            )
+        # check that data is within the specified range
+        self._validate_data_matches_range()
 
-        if unit == "radians" and any_exceed_radian_range:
-            raise ValueError(
-                "Some data values exceed the valid radian range (~0–6.28); "
-                "they may be in degrees instead."
-            )
+        data = np.asarray(data, dtype=float)
+        if unit != "radians":
+            # convert data to radians
+            self.data = dat2rad(data, full_range=self.full_range)
+        else:
+            self.data = data
+        
+
+    def _validate_data_matches_range(self):
+        pass
 
     # ----- descriptive statistics ------- #
     def mean(self):
-        if self.unit == "degrees":
-            angles_rad = np.radians(self.data)
-        elif self.unit == "radians":
-            angles_rad = self.data
-        else:
-            raise ValueError("unit must be 'radians' or 'degrees'")
+        mean = circular_mean(self.data)
 
-        sin_sum = np.sum(np.sin(angles_rad))
-        cos_sum = np.sum(np.cos(angles_rad))
-        mean_angle = np.arctan2(sin_sum, cos_sum)  # Result is in [-π, π)
+        if self.unit != "radians":
+            mean = rad2dat(mean, full_range=self.full_range)
 
-        # Normalise output range
-        if self.unit == "radians":
-            mean_angle = mean_angle % (2 * np.pi)  # range from 0 to 2pi
-        elif self.unit == "degrees":
-            mean_angle = np.degrees(mean_angle)
-            mean_angle = mean_angle % 360
+        return mean
 
-        return mean_angle
+    def r(self):
+        return circular_r(self.data)
 
-    def sd(self):
-        """
-        Returns the circular standard deviation of the circular data.
 
-        Based on the formula:
-            SD = sqrt(-2 * log(R))
-        where R is the mean resultant length.
-        """
-        if self.unit == "degrees":
-            angles_rad = np.radians(self.data)
-        elif self.unit == "radians":
-            angles_rad = self.data
-        else:
-            raise ValueError("unit must be 'radians' or 'degrees'")
-
-        sin_sum = np.sum(np.sin(angles_rad))
-        cos_sum = np.sum(np.cos(angles_rad))
-        R = np.sqrt(sin_sum**2 + cos_sum**2) / len(angles_rad)
-
-        if R == 0:
-            return np.nan  # completely uniform distribution
-
-        circ_sd_rad = np.sqrt(-2 * np.log(R))
-
-        if self.unit == "degrees":
-            return np.degrees(circ_sd_rad)
-        else:
-            return circ_sd_rad
-
-    def convert_to(self, target_unit):
-        if self.unit == target_unit:
-            return
-        if self.unit == "degrees" and target_unit == "radians":
-            self.data = np.deg2rad(self.data)
-        elif self.unit == "radians" and target_unit == "degrees":
-            self.data = np.rad2deg(self.data)
-        else:
-            raise NotImplementedError(
-                f"Conversion from {self.unit} to {target_unit} not implemented."
-            )
-
-        self.unit = target_unit
-
-    def plot(self, label: str = ""):
+    def plot(self, label: str = "", ax = None):
         """"""
         from .visualise import PyCircPlot
 
-        plot = PyCircPlot({f"{label}": self})
+        plot = PyCircPlot({f"{label}": self}, ax = ax)
 
         plot.add_density()
         plot.add_points()
@@ -174,8 +125,9 @@ class Circular:
             f"(n={len(self.data)})\n"
             f"Min value:   {np.min(self.data):.3f}\n"
             f"Max value:   {np.max(self.data):.3f}\n"
+            f"Mean:        {self.mean()}"
         )
         return summary
 
     def __repr__(self):
-        return f"<Circular(n={len(self.data)}, unit='{self.unit}', type='{self.data_type}')>"
+        return f"<Circular(n={len(self.data)}, unit='{self.unit}', full range = {self.full_range})>"
