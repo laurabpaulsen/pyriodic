@@ -23,7 +23,7 @@ jobs:
 
       - name: Install your package
         run: |
-          pip install -e .
+          pip install .
 
       - name: Install Sphinx and theme
         run: |
