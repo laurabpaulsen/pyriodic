@@ -22,6 +22,8 @@ sys.path.insert(0, os.path.abspath(".."))
 extensions = [
     "sphinx.ext.autodoc",
     "sphinx.ext.napoleon",
+    'sphinx.ext.mathjax',  # Enables math rendering in HTML
+]
 ]
 
 templates_path = ["_templates"]

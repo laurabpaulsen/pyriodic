@@ -35,9 +35,9 @@ def circular_r(rad: np.ndarray):
     """
     Compute the length of the mean resultant vector \( r \), a measure of circular concentration:
 
-    \[
-    r = \sqrt{\bar{C}^2 + \bar{S}^2}
-    \]
+    .. math::
+        r = \sqrt{\bar{C}^2 + \bar{S}^2}
+    
     """
     sin_sum = np.sum(np.sin(rad))
     cos_sum = np.sum(np.cos(rad))
