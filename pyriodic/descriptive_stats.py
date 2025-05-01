@@ -1,10 +1,8 @@
 import numpy as np
 from typing import Optional, Union
 
-def circular_mean(
-        rad: np.ndarray,
-        wrap_to_2pi: bool = True
-        ):
+
+def circular_mean(rad: np.ndarray, wrap_to_2pi: bool = True):
     """
     Compute the mean angle from a list of angles in radians.
 
@@ -29,14 +27,11 @@ def circular_mean(
 
     if wrap_to_2pi and mean < 0:
         mean += 2 * np.pi
-    
+
     return mean
 
 
-
-def circular_r(
-        rad: np.ndarray
-        ):
+def circular_r(rad: np.ndarray):
     """
     Compute the length of the mean resultant vector (r), a measure of circular concentration.
 
@@ -51,13 +46,10 @@ def circular_r(
     r = np.sqrt(sin_sum**2 + cos_sum**2) / n
     return r
 
-def angular_deviation(
-        rad: np.ndarray
-        ):
+
+def angular_deviation(rad: np.ndarray):
     raise NotImplementedError
 
 
-def circular_standard_deviation(
-        rad: np.ndarray
-        ):
+def circular_standard_deviation(rad: np.ndarray):
     raise NotImplementedError

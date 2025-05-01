@@ -1,4 +1,5 @@
 import numpy as np
+from typing import Union
 from scipy import interpolate, signal
 from scipy.signal import hilbert
 import logging
@@ -6,21 +7,22 @@ from copy import deepcopy
 
 logger = logging.getLogger(__name__)
 
+
 class RawSignal:
     def __init__(self, data, fs, info=None):
         self.ts = np.asarray(data).copy()
 
         self.fs = fs
         self.info = info or {}
-        #self._phase = None
-        #self._peaks = None
-        #self._troughs = None
+        # self._phase = None
+        # self._peaks = None
+        # self._troughs = None
         self._history = []
 
     def copy(self):
         return deepcopy(self)
 
-    def remove_outliers(self, threshold=2.5, linear_interpolation = True):
+    def remove_outliers(self, threshold=2.5, linear_interpolation=True):
         """
         Removes outliers .... threshold + linear interpolation
         """
@@ -30,14 +32,13 @@ class RawSignal:
         # linear interpolation of NaNs
         if linear_interpolation:
             self.interpolate_missing()
-            
-        self._history.append(f"remove_outliers({threshold}), {sum(z_scores > threshold)} outliers found")
-    
+
+        self._history.append(
+            f"remove_outliers({threshold}), {sum(z_scores > threshold)} outliers found"
+        )
 
     def interpolate_missing(self):
-        """
-        
-        """
+        """ """
         nans = np.isnan(self.ts)
         x_vals = np.where(~nans)[0]
         y_vals = self.ts[~nans]
@@ -48,7 +49,6 @@ class RawSignal:
 
         self._history.append(f"interpolate_missing(), {np.sum(nans)} NaNs interpolated")
 
-
     def zscore(self):
         """
         Normalizes the signal in-place to mean 0 and unit variance.
@@ -56,12 +56,9 @@ class RawSignal:
         self.ts = (self.ts - np.nanmean(self.ts)) / np.nanstd(self.ts)
         self._history.append("normalize()")
 
-
     def filter_bandpass(self, low, high):
-        """
-        
-        """
-        sos = signal.butter(N=4, Wn=[low, high], btype='band', fs=self.fs, output='sos')
+        """ """
+        sos = signal.butter(N=4, Wn=[low, high], btype="band", fs=self.fs, output="sos")
         self.ts = signal.sosfiltfilt(sos, self.ts)
         self._history.append(f"bandpass({low}-{high})")
 
@@ -97,7 +94,9 @@ class RawSignal:
         if peak_finder is None:
             # Default logic
             def peak_finder(ts, distance=distance, prominence=prominence):
-                peaks, _ = signal.find_peaks(ts, distance=distance, prominence=prominence)
+                peaks, _ = signal.find_peaks(
+                    ts, distance=distance, prominence=prominence
+                )
                 return peaks
 
         peaks = peak_finder(self.ts, distance=distance, prominence=prominence)
@@ -113,30 +112,25 @@ class RawSignal:
         phase = np.full_like(self.ts, np.nan, dtype=np.float32)
         for p1, p2, t in zip(peaks[:-1], peaks[1:], troughs):
             phase[p1:t] = np.linspace(0, np.pi, t - p1)
-            phase[t:p2] = np.linspace(np.pi, 2*np.pi, p2 - t)
+            phase[t:p2] = np.linspace(np.pi, 2 * np.pi, p2 - t)
             phase[p1] = 0
             phase[t] = np.pi
-            phase[p2] = 2*np.pi
+            phase[p2] = 2 * np.pi
 
-        #self._phase = phase
-        #self._peaks = peaks
-        #self._troughs = np.array(troughs)
+        # self._phase = phase
+        # self._peaks = peaks
+        # self._troughs = np.array(troughs)
 
-        return (
-            phase,
-            peaks,
-            troughs
-        )
-        
+        return (phase, peaks, troughs)
 
     def phase_threepoint(
-            self, 
-            peak_finder=None, 
-            distance=100, 
-            prominence=0.01, 
-            percentile = 50, 
-            descent_window=5
-            ):
+        self,
+        peak_finder=Union[None, callable],
+        distance=100,
+        prominence=0.01,
+        percentile=50,
+        descent_window=5,
+    ):
         """
         Extract phase using a three-point method:
         Peak → descending slope → flat region → ascending slope → next peak.
@@ -154,8 +148,11 @@ class RawSignal:
             troughs (list of tuples): List of (trough_start, trough_end) for flat segments
         """
         if peak_finder is None:
+
             def peak_finder(ts, distance=distance, prominence=prominence):
-                peaks, _ = signal.find_peaks(ts, distance=distance, prominence=prominence)
+                peaks, _ = signal.find_peaks(
+                    ts, distance=distance, prominence=prominence
+                )
                 return peaks
 
         peaks = peak_finder(self.ts, distance=distance, prominence=prominence)
@@ -178,7 +175,7 @@ class RawSignal:
             for idx in flat_indices:
                 if idx < descent_window:
                     continue
-                if np.all(segment_grad[idx - descent_window:idx] < 0):
+                if np.all(segment_grad[idx - descent_window : idx] < 0):
                     trough_start = start + idx
                     break
 
@@ -194,7 +191,7 @@ class RawSignal:
             for idx in reversed(flat_following):
                 if idx + descent_window >= len(segment_grad):
                     continue
-                if np.all(segment_grad[idx:idx + descent_window] > 0):
+                if np.all(segment_grad[idx : idx + descent_window] > 0):
                     trough_end = start + idx
                     break
 
@@ -217,21 +214,14 @@ class RawSignal:
             phase[p2] = 2 * np.pi
 
         return phase, peaks, troughs
-    
-    #@property
-    #def phase_array(self):
-    #    if self._phase is None:
-    #        raise ValueError("Phase not yet computed.")
-    #    return self._phase
 
     @property
     def history(self):
         if self._history == []:
             raise ValueError("No changes has been made to the data")
-        
-        else: 
-            return self._history
 
+        else:
+            return self._history
 
     """
     def get_phase_at_events(self, event_indices, first_samp=0):
@@ -239,12 +229,9 @@ class RawSignal:
             raise RuntimeError("Phase has not been computed yet.")
         return self._phase[event_indices - first_samp]
     """
-    def plot(self, show_phase=False):
-        # Quick QC plot using matplotlib
-        pass
-
 
     def __repr__(self):
-        return (f"<RawSignal | fs={self.fs} Hz, len={len(self.ts)}, "
-                f"steps={len(self._history)}>")
-
+        return (
+            f"<RawSignal | fs={self.fs} Hz, len={len(self.ts)}, "
+            f"steps={len(self._history)}>"
+        )

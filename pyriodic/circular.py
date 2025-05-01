@@ -1,15 +1,10 @@
 import numpy as np
 from typing import Optional, Union
 
-from .utils import (
-    dat2rad,
-    rad2dat
-)
+from .utils import dat2rad, rad2dat
 
-from .descriptive_stats import (
-    circular_mean,
-    circular_r
-)
+from .descriptive_stats import circular_mean, circular_r
+
 
 class Circular:
     """
@@ -29,7 +24,7 @@ class Circular:
     unit : str, optional
         The unit of the input data. Must be one of {"radians", "degrees"}. Default is "radians". Assumes radian range to be from 0 to 2pi.
     full_range: int, optional
-    
+
 
     Attributes
     ----------
@@ -39,13 +34,10 @@ class Circular:
         Unit of measurement, either "radians" or "degrees".
     """
 
-
     def __init__(
-            self, 
-            data, unit: str = "radians", 
-            full_range: Optional[Union[int, None]] = None
-            ):
-        
+        self, data, unit: str = "radians", full_range: Optional[Union[int, None]] = None
+    ):
+
         self.VALID_UNITS = {"degrees", "radians", "hours"}  # hours, years?
         self.UNIT_RANGES = {"radians": 2 * np.pi, "degrees": 360, "hours": 24}
 
@@ -56,13 +48,11 @@ class Circular:
             )
         self.unit = unit
 
-       
-
         if full_range is None:
             try:
                 self.full_range = self.UNIT_RANGES[unit]
-            except (KeyError):
-                raise IndexError (
+            except KeyError:
+                raise IndexError(
                     f"If unit is not one of {self.VALID_UNITS} you need to specify the full range."
                 )
         else:
@@ -77,7 +67,6 @@ class Circular:
             self.data = dat2rad(data, full_range=self.full_range)
         else:
             self.data = data
-        
 
     def _validate_data_matches_range(self):
         pass
@@ -94,12 +83,11 @@ class Circular:
     def r(self):
         return circular_r(self.data)
 
-
-    def plot(self, label: str = "", ax = None):
+    def plot(self, label: str = "", ax=None):
         """"""
         from .visualise import PyCircPlot
 
-        plot = PyCircPlot({f"{label}": self}, ax = ax)
+        plot = PyCircPlot({f"{label}": self}, ax=ax)
 
         plot.add_density()
         plot.add_points()
