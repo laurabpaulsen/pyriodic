@@ -3,7 +3,7 @@ from typing import Optional, Union
 
 from .utils import dat2rad, rad2dat
 
-from .descriptive_stats import circular_mean, circular_r
+from .desc import circular_mean, circular_r
 
 
 class Circular:
@@ -110,7 +110,7 @@ class Circular:
 
     def plot(self, label: str = "", ax=None, histogram=False):
         """"""
-        from .visualise import PyCircPlot
+        from .viz import PyCircPlot
 
         plot = PyCircPlot({f"{label}": self}, ax=ax)
 

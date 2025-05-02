@@ -3,7 +3,7 @@ import numpy as np
 from .circular import Circular
 from math import pi
 from typing import Union, Optional
-from .descriptive_stats import circular_mean, circular_r
+from .desc import circular_mean, circular_r
 
 
 DEFAULT_COLOUR = "forestgreen"
@@ -22,7 +22,7 @@ def vonmises_kde(data, kappa, min_x=0, max_x=2 * pi, n_bins=100):
     return bins, kde
 
 
-class PyCircPlot:
+class CircPlot:
     def __init__(
         self,
         circ: Circular,
