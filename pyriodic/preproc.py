@@ -1,5 +1,5 @@
 import numpy as np
-from typing import Union
+from typing import Union, Optional, Callable
 from scipy import interpolate, signal
 from scipy.signal import hilbert
 import logging
@@ -125,11 +125,11 @@ class RawSignal:
 
     def phase_threepoint(
         self,
-        peak_finder=Union[None, callable],
-        distance=100,
-        prominence=0.01,
-        percentile=50,
-        descent_window=5,
+        peak_finder:Optional[Callable[..., np.ndarray]] = None,
+        distance:int=100,
+        prominence:Union[float, int]=0.01,
+        percentile:Union[float, int]=50,
+        descent_window:int=5,
     ):
         """
         Extract phase using a three-point method:
@@ -223,12 +223,6 @@ class RawSignal:
         else:
             return self._history
 
-    """
-    def get_phase_at_events(self, event_indices, first_samp=0):
-        if self._phase is None:
-            raise RuntimeError("Phase has not been computed yet.")
-        return self._phase[event_indices - first_samp]
-    """
 
     def __repr__(self):
         return (
