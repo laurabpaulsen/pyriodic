@@ -30,6 +30,7 @@ def circular_mean(rad: np.ndarray, wrap_to_2pi: bool = True):
 
     return mean
 
+
 def circular_r(rad: np.ndarray):
     r"""
     Compute the length of the mean resultant vector \( r \), a measure of circular concentration.

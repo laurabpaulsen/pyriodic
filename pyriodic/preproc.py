@@ -125,11 +125,11 @@ class RawSignal:
 
     def phase_threepoint(
         self,
-        peak_finder:Optional[Callable[..., np.ndarray]] = None,
-        distance:int=100,
-        prominence:Union[float, int]=0.01,
-        percentile:Union[float, int]=50,
-        descent_window:int=5,
+        peak_finder: Optional[Callable[..., np.ndarray]] = None,
+        distance: int = 100,
+        prominence: Union[float, int] = 0.01,
+        percentile: Union[float, int] = 50,
+        descent_window: int = 5,
     ):
         """
         Extract phase using a three-point method:
@@ -222,7 +222,6 @@ class RawSignal:
 
         else:
             return self._history
-
 
     def __repr__(self):
         return (

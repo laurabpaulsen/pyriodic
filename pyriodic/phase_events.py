@@ -25,9 +25,10 @@ class PhaseEvents:
         return {label: circ.r() for label, circ in self.phase_dict.items()}
 
     def plot(
-            self, 
-            histogram: Optional[np.ndarray] = None,
-            savepath: Optional[Union[Path, str]] = None):
+        self,
+        histogram: Optional[np.ndarray] = None,
+        savepath: Optional[Union[Path, str]] = None,
+    ):
         n = len(self.phase_dict)
         cols = int(np.ceil(np.sqrt(n)))
         rows = int(np.ceil(n / cols))
@@ -42,7 +43,7 @@ class PhaseEvents:
         axes = np.array(axes).reshape(-1)  # flatten in case of 2D array
 
         for ax, (label, circ) in zip(axes, self.phase_dict.items()):
-            circ.plot(label=label, ax=ax, histogram = histogram)
+            circ.plot(label=label, ax=ax, histogram=histogram)
             ax.set_title(f"{label}")
 
         # Hide unused axes
@@ -66,7 +67,6 @@ class PhaseEvents:
         matched = [(label, self.phase_dict[label]) for label in include]
         labels, circulars = zip(*matched)
         return Circular.from_multiple(circulars, labels=labels)
-    
 
     def __getitem__(self, key):
         return self.phase_dict[key]

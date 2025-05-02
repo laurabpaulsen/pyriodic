@@ -22,7 +22,7 @@ sys.path.insert(0, os.path.abspath(".."))
 extensions = [
     "sphinx.ext.autodoc",
     "sphinx.ext.napoleon",
-    'sphinx.ext.mathjax',  # Enables math rendering in HTML
+    "sphinx.ext.mathjax",  # Enables math rendering in HTML
 ]
 
 
@@ -36,4 +36,3 @@ exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
 html_theme = "sphinx_book_theme"
 html_static_path = ["_static"]
 html_favicon = "_static/favicon.ico"  # or .png
-

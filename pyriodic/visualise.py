@@ -26,7 +26,7 @@ class PyCircPlot:
     def __init__(
         self,
         circ: Circular,
-        group_by_labels:bool = True,
+        group_by_labels: bool = True,
         colours=None,
         fig_size=(6, 6),
         dpi=300,
@@ -57,7 +57,9 @@ class PyCircPlot:
             color_cycle = prop_cycle.by_key()["color"]
             if group_by_labels:
                 if self.circ.labels is None:
-                    raise ValueError("Can only group by labels if labels are present in the circular object")
+                    raise ValueError(
+                        "Can only group by labels if labels are present in the circular object"
+                    )
                 self.colours = color_cycle[: len(np.unique(self.circ.labels))]
 
     def prepare_ax(self, ylim):
@@ -82,11 +84,7 @@ class PyCircPlot:
         # Direction of theta
         self.ax.set_theta_direction(-1)
 
-
-    def add_points(
-            self, 
-            grouped: Optional[bool] = None,
-            **kwargs):
+    def add_points(self, grouped: Optional[bool] = None, **kwargs):
         """
         Plot circular data points on the polar axis.
 
@@ -105,7 +103,9 @@ class PyCircPlot:
 
         if grouped:
             if self.circ.labels is None:
-                raise ValueError("Cannot group by labels: no labels present in the Circular object.")
+                raise ValueError(
+                    "Cannot group by labels: no labels present in the Circular object."
+                )
 
             unique_labels = np.unique(self.circ.labels)
             for idx, label in enumerate(unique_labels):
@@ -115,7 +115,7 @@ class PyCircPlot:
                     [0.5] * len(values),
                     color=self.colours[idx % len(self.colours)],
                     label=label,
-                    **kwargs
+                    **kwargs,
                 )
         else:
             self.ax.scatter(
@@ -123,10 +123,12 @@ class PyCircPlot:
                 [0.5] * len(self.circ.data),
                 color=DEFAULT_COLOUR,
                 label="all",
-                **kwargs
+                **kwargs,
             )
 
-    def add_density(self, kappa=20, n_bins=500, grouped: Optional[bool] = None, **kwargs):
+    def add_density(
+        self, kappa=20, n_bins=500, grouped: Optional[bool] = None, **kwargs
+    ):
         """
         Add a circular density estimate using Von Mises KDE.
 
@@ -148,7 +150,9 @@ class PyCircPlot:
 
         if grouped:
             if self.circ.labels is None:
-                raise ValueError("Cannot group by labels: no labels present in the Circular object.")
+                raise ValueError(
+                    "Cannot group by labels: no labels present in the Circular object."
+                )
 
             unique_labels = np.unique(self.circ.labels)
             for idx, label in enumerate(unique_labels):
@@ -164,7 +168,7 @@ class PyCircPlot:
                     density_vals,
                     color=self.colours[idx % len(self.colours)],
                     label=label,
-                    **kwargs
+                    **kwargs,
                 )
         else:
             values = self.circ.data
@@ -174,20 +178,15 @@ class PyCircPlot:
             min_x, max_x = 0, self.circ.full_range
             xs, density_vals = vonmises_kde(values, kappa, min_x, max_x, n_bins)
 
-            self.ax.plot(
-                xs,
-                density_vals,
-                color=DEFAULT_COLOUR,
-                label="all",
-                **kwargs
-            )
-    
+            self.ax.plot(xs, density_vals, color=DEFAULT_COLOUR, label="all", **kwargs)
+
     def add_histogram(
-            self, 
-            data: Optional[Union[dict[str, np.ndarray], np.ndarray]] = None, 
-            bins=36,
-            alpha=0.2,
-            color:str="grey"):
+        self,
+        data: Optional[Union[dict[str, np.ndarray], np.ndarray]] = None,
+        bins=36,
+        alpha=0.2,
+        color: str = "grey",
+    ):
         """
         Plot histogram as radial bars on the polar axis.
         If `data` is None, uses circular data in `self.circs`.
@@ -205,16 +204,20 @@ class PyCircPlot:
         elif isinstance(data, np.ndarray):
             data_to_plot = {"data": data}
         else:
-            raise ValueError("Input `data` must be None, a numpy array, or a dict of arrays.")
+            raise ValueError(
+                "Input `data` must be None, a numpy array, or a dict of arrays."
+            )
 
         for idx, (label, values) in enumerate(data_to_plot.items()):
             counts, bin_edges = np.histogram(values, bins=bins, range=(0, 2 * np.pi))
-            
-            r_min, r_max = self.ax.get_ylim()  # Set max radius of bars (so they fit on same scale as points)
+
+            r_min, r_max = (
+                self.ax.get_ylim()
+            )  # Set max radius of bars (so they fit on same scale as points)
             max_height = r_max * 0.7  # Keep some space for clarity
             if counts.max() > 0:
                 counts = (counts / counts.max()) * max_height
-           
+
             bin_centers = (bin_edges[:-1] + bin_edges[1:]) / 2
             width = (2 * np.pi) / bins
 
@@ -230,11 +233,9 @@ class PyCircPlot:
                 label=f"{label}",
             )
 
-
-
     def add_circular_mean(self, grouped: Optional[bool] = None, **kwargs):
         """
-        Plot mean resultant vector(s) as arrows. 
+        Plot mean resultant vector(s) as arrows.
 
         Parameters
         ----------
@@ -254,7 +255,9 @@ class PyCircPlot:
 
         if grouped:
             if self.circ.labels is None:
-                raise ValueError("Cannot group by labels: no labels present in the Circular object.")
+                raise ValueError(
+                    "Cannot group by labels: no labels present in the Circular object."
+                )
 
             unique_labels = np.unique(self.circ.labels)
             for idx, label in enumerate(unique_labels):
@@ -272,7 +275,7 @@ class PyCircPlot:
                     r,
                     color=self.colours[idx % len(self.colours)],
                     label=label,
-                    **arrow_defaults
+                    **arrow_defaults,
                 )
         else:
             values = self.circ.data
@@ -282,15 +285,7 @@ class PyCircPlot:
             mean_angle = circular_mean(values)
             r = circular_r(values)
 
-            self.ax.arrow(
-                mean_angle,
-                0,
-                0,
-                r,
-                color=DEFAULT_COLOUR,
-                **arrow_defaults
-            )
-
+            self.ax.arrow(mean_angle, 0, 0, r, color=DEFAULT_COLOUR, **arrow_defaults)
 
     def add_legend(self, location="upper right", **kwargs):
         """
@@ -304,7 +299,6 @@ class PyCircPlot:
             Additional arguments passed to `ax.legend()`.
         """
         self.ax.legend(loc=location, **kwargs)
-
 
     def show(self):
         plt.show()

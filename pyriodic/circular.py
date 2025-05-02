@@ -34,15 +34,15 @@ class Circular:
         Optional labels (e.g., condition tags) for each data point.
     unit : str
         Unit of measurement, either "radians" or "degrees".
-    
+
     """
 
     def __init__(
-        self, 
-        data: np.ndarray, 
+        self,
+        data: np.ndarray,
         labels: Optional[Union[list, np.ndarray]] = None,
-        unit: str = "radians", 
-        full_range: Optional[Union[int, None]] = None
+        unit: str = "radians",
+        full_range: Optional[Union[int, None]] = None,
     ):
 
         self.VALID_UNITS = {"degrees", "radians", "hours"}  # hours, years?
@@ -53,13 +53,12 @@ class Circular:
             raise ValueError(
                 f"Invalid unit '{unit}'. Must be one of {self.VALID_UNITS}."
             )
-        
+
         self.unit = unit
 
         if labels is not None and len(labels) != len(data):
             raise ValueError("Length of labels must match length of data.")
         self.labels = labels
-
 
         if full_range is None:
             try:
@@ -83,7 +82,7 @@ class Circular:
 
     def _validate_data_matches_range(self):
         pass
-    
+
     def mean(self, group_by_label: bool = False):
         if not group_by_label:
             mean = circular_mean(self.data)
@@ -109,7 +108,7 @@ class Circular:
     def r(self):
         return circular_r(self.data)
 
-    def plot(self, label: str = "", ax=None, histogram = False):
+    def plot(self, label: str = "", ax=None, histogram=False):
         """"""
         from .visualise import PyCircPlot
 
@@ -121,7 +120,7 @@ class Circular:
             plot.add_histogram(data=histogram)
 
         return plot
-    
+
     @classmethod
     def from_multiple(cls, circular_objects, labels=None):
         if not circular_objects:
@@ -146,7 +145,12 @@ class Circular:
             all_labels.extend([label] * len(circ.data))
 
         all_data = np.concatenate(all_data)
-        return cls(all_data, unit=circular_objects[0].unit, full_range=circular_objects[0].full_range, labels=np.array(all_labels))
+        return cls(
+            all_data,
+            unit=circular_objects[0].unit,
+            full_range=circular_objects[0].full_range,
+            labels=np.array(all_labels),
+        )
 
     def __str__(self):
         summary = (
@@ -163,7 +167,9 @@ class Circular:
 
         if self.labels is not None:
             unique, counts = np.unique(self.labels, return_counts=True)
-            label_lines = "\n".join(f"  {label}: {count}" for label, count in zip(unique, counts))
+            label_lines = "\n".join(
+                f"  {label}: {count}" for label, count in zip(unique, counts)
+            )
             summary += f"Label distribution:\n{label_lines}"
 
         return summary
