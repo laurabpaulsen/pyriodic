@@ -21,7 +21,7 @@ jobs:
         with:
           python-version: 3.13
 
-      - name: Install your package
+      - name: Install packages
         run: |
           pip install .
 
