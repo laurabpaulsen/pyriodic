@@ -40,7 +40,6 @@
     <script src="_static/doctools.js?v=9bcbadda"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
-    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'pyriodic';</script>
     <link rel="icon" href="_static/favicon.ico"/>
     <link rel="index" title="Index" href="genindex.html" />
@@ -313,13 +312,7 @@ document.write(`
 </li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-pyriodic.descriptive_stats">pyriodic.descriptive_stats module</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.descriptive_stats.angular_deviation"><code class="docutils literal notranslate"><span class="pre">angular_deviation()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.descriptive_stats.circular_mean"><code class="docutils literal notranslate"><span class="pre">circular_mean()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.descriptive_stats.circular_r"><code class="docutils literal notranslate"><span class="pre">circular_r()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.descriptive_stats.circular_standard_deviation"><code class="docutils literal notranslate"><span class="pre">circular_standard_deviation()</span></code></a></li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic-descriptive-stats-module">pyriodic.descriptive_stats module</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-pyriodic.phase_events">pyriodic.phase_events module</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.phase_events.PhaseEvents"><code class="docutils literal notranslate"><span class="pre">PhaseEvents</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.phase_events.PhaseEvents.mean"><code class="docutils literal notranslate"><span class="pre">PhaseEvents.mean()</span></code></a></li>
@@ -356,21 +349,7 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.utils.rad2dat"><code class="docutils literal notranslate"><span class="pre">rad2dat()</span></code></a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-pyriodic.visualise">pyriodic.visualise module</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.visualise.PyCircPlot"><code class="docutils literal notranslate"><span class="pre">PyCircPlot</span></code></a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.visualise.PyCircPlot.add_circular_mean"><code class="docutils literal notranslate"><span class="pre">PyCircPlot.add_circular_mean()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.visualise.PyCircPlot.add_density"><code class="docutils literal notranslate"><span class="pre">PyCircPlot.add_density()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.visualise.PyCircPlot.add_histogram"><code class="docutils literal notranslate"><span class="pre">PyCircPlot.add_histogram()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.visualise.PyCircPlot.add_legend"><code class="docutils literal notranslate"><span class="pre">PyCircPlot.add_legend()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.visualise.PyCircPlot.add_points"><code class="docutils literal notranslate"><span class="pre">PyCircPlot.add_points()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.visualise.PyCircPlot.prepare_ax"><code class="docutils literal notranslate"><span class="pre">PyCircPlot.prepare_ax()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.visualise.PyCircPlot.save"><code class="docutils literal notranslate"><span class="pre">PyCircPlot.save()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.visualise.PyCircPlot.show"><code class="docutils literal notranslate"><span class="pre">PyCircPlot.show()</span></code></a></li>
-</ul>
-</li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.visualise.vonmises_kde"><code class="docutils literal notranslate"><span class="pre">vonmises_kde()</span></code></a></li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic-visualise-module">pyriodic.visualise module</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-pyriodic">Module contents</a></li>
 </ul>
             </nav>
@@ -465,48 +444,8 @@ Values should be in the range appropriate to the specified <cite>unit</cite>.</p
 </dd></dl>
 
 </section>
-<section id="module-pyriodic.descriptive_stats">
-<span id="pyriodic-descriptive-stats-module"></span><h2>pyriodic.descriptive_stats module<a class="headerlink" href="#module-pyriodic.descriptive_stats" title="Link to this heading">#</a></h2>
-<dl class="py function">
-<dt class="sig sig-object py" id="pyriodic.descriptive_stats.angular_deviation">
-<span class="sig-prename descclassname"><span class="pre">pyriodic.descriptive_stats.</span></span><span class="sig-name descname"><span class="pre">angular_deviation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rad</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyriodic.descriptive_stats.angular_deviation" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="pyriodic.descriptive_stats.circular_mean">
-<span class="sig-prename descclassname"><span class="pre">pyriodic.descriptive_stats.</span></span><span class="sig-name descname"><span class="pre">circular_mean</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rad</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wrap_to_2pi</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyriodic.descriptive_stats.circular_mean" title="Link to this definition">#</a></dt>
-<dd><p>Compute the mean angle from a list of angles in radians.</p>
-<section id="parameters">
-<h3>Parameters:<a class="headerlink" href="#parameters" title="Link to this heading">#</a></h3>
-<dl class="simple">
-<dt>rad<span class="classifier">np.ndarray</span></dt><dd><p>Array of angles in radians.</p>
-</dd>
-<dt>wrap_to_2pi<span class="classifier">bool, default=True</span></dt><dd><p>If True, wraps result to range [0, 2π]. If False, result is in [-π, π].</p>
-</dd>
-</dl>
-</section>
-<section id="returns">
-<h3>Returns:<a class="headerlink" href="#returns" title="Link to this heading">#</a></h3>
-<dl class="simple">
-<dt>mean<span class="classifier">float</span></dt><dd><p>The circular mean angle.</p>
-</dd>
-</dl>
-</section>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="pyriodic.descriptive_stats.circular_r">
-<span class="sig-prename descclassname"><span class="pre">pyriodic.descriptive_stats.</span></span><span class="sig-name descname"><span class="pre">circular_r</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rad</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyriodic.descriptive_stats.circular_r" title="Link to this definition">#</a></dt>
-<dd><p>Compute the length of the mean resultant vector ( r ), a measure of circular concentration.</p>
-<div class="math notranslate nohighlight">
-\[r = \sqrt{\bar{C}^2 + \bar{S}^2}\]</div>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="pyriodic.descriptive_stats.circular_standard_deviation">
-<span class="sig-prename descclassname"><span class="pre">pyriodic.descriptive_stats.</span></span><span class="sig-name descname"><span class="pre">circular_standard_deviation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rad</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyriodic.descriptive_stats.circular_standard_deviation" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
+<section id="pyriodic-descriptive-stats-module">
+<h2>pyriodic.descriptive_stats module<a class="headerlink" href="#pyriodic-descriptive-stats-module" title="Link to this heading">#</a></h2>
 </section>
 <section id="module-pyriodic.phase_events">
 <span id="pyriodic-phase-events-module"></span><h2>pyriodic.phase_events module<a class="headerlink" href="#module-pyriodic.phase_events" title="Link to this heading">#</a></h2>
@@ -710,111 +649,8 @@ HA: the samples do not come from the same population</p>
 <dd></dd></dl>
 
 </section>
-<section id="module-pyriodic.visualise">
-<span id="pyriodic-visualise-module"></span><h2>pyriodic.visualise module<a class="headerlink" href="#module-pyriodic.visualise" title="Link to this heading">#</a></h2>
-<dl class="py class">
-<dt class="sig sig-object py" id="pyriodic.visualise.PyCircPlot">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyriodic.visualise.</span></span><span class="sig-name descname"><span class="pre">PyCircPlot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">circ</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pyriodic.circular.Circular" title="pyriodic.circular.Circular"><span class="pre">Circular</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">group_by_labels</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">colours</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fig_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(6,</span> <span class="pre">6)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dpi</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">300</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ylim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyriodic.visualise.PyCircPlot" title="Link to this definition">#</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<dl class="py method">
-<dt class="sig sig-object py" id="pyriodic.visualise.PyCircPlot.add_circular_mean">
-<span class="sig-name descname"><span class="pre">add_circular_mean</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">grouped</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyriodic.visualise.PyCircPlot.add_circular_mean" title="Link to this definition">#</a></dt>
-<dd><p>Plot mean resultant vector(s) as arrows.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>grouped</strong> (<em>bool</em><em>, </em><em>optional</em>) – If None, uses <cite>self.group_by_labels</cite>.
-If True, plots a vector per label.
-If False, plots a single mean vector for all data.</p></li>
-<li><p><strong>kwargs</strong> (<em>dict</em>) – Additional keyword arguments passed to <cite>ax.arrow</cite>.
-Common kwargs: width, color, alpha, linewidth.</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="pyriodic.visualise.PyCircPlot.add_density">
-<span class="sig-name descname"><span class="pre">add_density</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">kappa</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_bins</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">500</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grouped</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyriodic.visualise.PyCircPlot.add_density" title="Link to this definition">#</a></dt>
-<dd><p>Add a circular density estimate using Von Mises KDE.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>kappa</strong> (<em>float</em>) – Concentration parameter of the Von Mises distribution (higher = sharper).</p></li>
-<li><p><strong>n_bins</strong> (<em>int</em>) – Number of angular bins to evaluate the density on.</p></li>
-<li><p><strong>grouped</strong> (<em>bool</em><em>, </em><em>optional</em>) – If None, uses <cite>self.group_by_labels</cite>.
-If True, plots a density curve for each label separately.
-If False, plots a single joint density curve for all data.</p></li>
-<li><p><strong>kwargs</strong> (<em>dict</em>) – Additional keyword arguments passed to <cite>ax.plot</cite> (e.g., linewidth, linestyle, alpha).</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="pyriodic.visualise.PyCircPlot.add_histogram">
-<span class="sig-name descname"><span class="pre">add_histogram</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bins</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">36</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'grey'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyriodic.visualise.PyCircPlot.add_histogram" title="Link to this definition">#</a></dt>
-<dd><p>Plot histogram as radial bars on the polar axis.
-If <cite>data</cite> is None, uses circular data in <cite>self.circs</cite>.</p>
-<p>Parameters:
-- data: Optional dict[label] = array or a single array.
-- bins: Number of angular bins (default 36).
-- alpha: Transparency of bars.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="pyriodic.visualise.PyCircPlot.add_legend">
-<span class="sig-name descname"><span class="pre">add_legend</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">location</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'upper</span> <span class="pre">right'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyriodic.visualise.PyCircPlot.add_legend" title="Link to this definition">#</a></dt>
-<dd><p>Add a legend to the plot.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>location</strong> (<em>str</em>) – Position of the legend (default is ‘upper right’).</p></li>
-<li><p><strong>kwargs</strong> (<em>dict</em>) – Additional arguments passed to <cite>ax.legend()</cite>.</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="pyriodic.visualise.PyCircPlot.add_points">
-<span class="sig-name descname"><span class="pre">add_points</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">grouped</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyriodic.visualise.PyCircPlot.add_points" title="Link to this definition">#</a></dt>
-<dd><p>Plot circular data points on the polar axis.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>grouped</strong> (<em>bool</em><em>, </em><em>optional</em>) – If None, uses the <cite>self.group_by_labels</cite> setting.
-If True, plots each label separately.
-If False, plots all data points together, ignoring labels.</p></li>
-<li><p><strong>kwargs</strong> (<em>dict</em>) – Additional keyword arguments passed to <cite>ax.scatter</cite>, such as <cite>s</cite>, <cite>alpha</cite>, or <cite>marker</cite>.</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="pyriodic.visualise.PyCircPlot.prepare_ax">
-<span class="sig-name descname"><span class="pre">prepare_ax</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ylim</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyriodic.visualise.PyCircPlot.prepare_ax" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="pyriodic.visualise.PyCircPlot.save">
-<span class="sig-name descname"><span class="pre">save</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyriodic.visualise.PyCircPlot.save" title="Link to this definition">#</a></dt>
-<dd><p>Save the figure to a file</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="pyriodic.visualise.PyCircPlot.show">
-<span class="sig-name descname"><span class="pre">show</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyriodic.visualise.PyCircPlot.show" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="pyriodic.visualise.vonmises_kde">
-<span class="sig-prename descclassname"><span class="pre">pyriodic.visualise.</span></span><span class="sig-name descname"><span class="pre">vonmises_kde</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kappa</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_x</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_x</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">6.283185307179586</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_bins</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyriodic.visualise.vonmises_kde" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
+<section id="pyriodic-visualise-module">
+<h2>pyriodic.visualise module<a class="headerlink" href="#pyriodic-visualise-module" title="Link to this heading">#</a></h2>
 </section>
 <section id="module-pyriodic">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-pyriodic" title="Link to this heading">#</a></h2>
@@ -871,13 +707,7 @@ If False, plots all data points together, ignoring labels.</p></li>
 </li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-pyriodic.descriptive_stats">pyriodic.descriptive_stats module</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.descriptive_stats.angular_deviation"><code class="docutils literal notranslate"><span class="pre">angular_deviation()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.descriptive_stats.circular_mean"><code class="docutils literal notranslate"><span class="pre">circular_mean()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.descriptive_stats.circular_r"><code class="docutils literal notranslate"><span class="pre">circular_r()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.descriptive_stats.circular_standard_deviation"><code class="docutils literal notranslate"><span class="pre">circular_standard_deviation()</span></code></a></li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic-descriptive-stats-module">pyriodic.descriptive_stats module</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-pyriodic.phase_events">pyriodic.phase_events module</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.phase_events.PhaseEvents"><code class="docutils literal notranslate"><span class="pre">PhaseEvents</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.phase_events.PhaseEvents.mean"><code class="docutils literal notranslate"><span class="pre">PhaseEvents.mean()</span></code></a></li>
@@ -914,21 +744,7 @@ If False, plots all data points together, ignoring labels.</p></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.utils.rad2dat"><code class="docutils literal notranslate"><span class="pre">rad2dat()</span></code></a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-pyriodic.visualise">pyriodic.visualise module</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.visualise.PyCircPlot"><code class="docutils literal notranslate"><span class="pre">PyCircPlot</span></code></a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.visualise.PyCircPlot.add_circular_mean"><code class="docutils literal notranslate"><span class="pre">PyCircPlot.add_circular_mean()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.visualise.PyCircPlot.add_density"><code class="docutils literal notranslate"><span class="pre">PyCircPlot.add_density()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.visualise.PyCircPlot.add_histogram"><code class="docutils literal notranslate"><span class="pre">PyCircPlot.add_histogram()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.visualise.PyCircPlot.add_legend"><code class="docutils literal notranslate"><span class="pre">PyCircPlot.add_legend()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.visualise.PyCircPlot.add_points"><code class="docutils literal notranslate"><span class="pre">PyCircPlot.add_points()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.visualise.PyCircPlot.prepare_ax"><code class="docutils literal notranslate"><span class="pre">PyCircPlot.prepare_ax()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.visualise.PyCircPlot.save"><code class="docutils literal notranslate"><span class="pre">PyCircPlot.save()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.visualise.PyCircPlot.show"><code class="docutils literal notranslate"><span class="pre">PyCircPlot.show()</span></code></a></li>
-</ul>
-</li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.visualise.vonmises_kde"><code class="docutils literal notranslate"><span class="pre">vonmises_kde()</span></code></a></li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic-visualise-module">pyriodic.visualise module</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-pyriodic">Module contents</a></li>
 </ul>
   </nav></div>
