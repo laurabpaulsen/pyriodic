@@ -43,7 +43,7 @@ class PhaseEvents:
         axes = np.array(axes).reshape(-1)  # flatten in case of 2D array
 
         for ax, (label, circ) in zip(axes, self.phase_dict.items()):
-            circ.plot(label=label, ax=ax, histogram=histogram)
+            circ.plot(ax=ax, histogram=histogram)
             ax.set_title(f"{label}")
 
         # Hide unused axes

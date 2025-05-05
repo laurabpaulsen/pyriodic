@@ -108,11 +108,11 @@ class Circular:
     def r(self):
         return circular_r(self.data)
 
-    def plot(self, label: str = "", ax=None, histogram=False):
+    def plot(self, ax=None, histogram=False, group_by_labels = False):
         """"""
-        from .viz import PyCircPlot
+        from .viz import CircPlot
 
-        plot = PyCircPlot({f"{label}": self}, ax=ax)
+        plot = CircPlot(self, ax=ax, group_by_labels=group_by_labels)
 
         plot.add_density()
         plot.add_points()

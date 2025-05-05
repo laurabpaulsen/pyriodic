@@ -196,8 +196,8 @@ class CircPlot:
         - bins: Number of angular bins (default 36).
         - alpha: Transparency of bars.
         """
-        print("this function has not been updated yet and will not work sry")
         if data is None:
+            raise NotImplementedError("Not yet implemented plotting the data in circ. Please supply data. ")
             data_to_plot = {label: circ.data for label, circ in self.circs.items()}
         elif isinstance(data, dict):
             data_to_plot = data
