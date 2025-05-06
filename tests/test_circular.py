@@ -4,11 +4,30 @@ from pyriodic.circular import Circular
 
 
 def test_valid_radian_data():
-    data = np.linspace(-np.pi, np.pi, 100)
-    circ = Circular(data, unit="radians", zero=0)
+    data = np.linspace(0, 2 * np.pi, 100)
+    circ = Circular(data, unit="radians")
     assert circ.unit == "radians"
-    assert circ.zero == 0
     assert circ.data.shape == (100,)
+
+def test_valid_degree_data():
+    degrees = [0, 90, 180, 270, 360]
+    circ = Circular(degrees, unit="degrees")
+    expected = np.deg2rad(degrees)
+    np.testing.assert_allclose(circ.data, expected)
+    assert circ.unit == "degrees"
+
+
+def test_label_length_mismatch():
+    data = [0, 90, 180]
+    labels = ["a", "b"]
+    with pytest.raises(ValueError, match="Length of labels must match"):
+        Circular(data, labels=labels, unit="degrees")
+
+def test_degrees_out_of_range():
+    bad_degrees = [0, 90, 370]  # 370 > 360
+    with pytest.raises(ValueError, match="unit is set to 'degrees'"):
+        Circular(bad_degrees, unit="degrees")
+
 
 
 def test_invalid_unit():
@@ -16,41 +35,16 @@ def test_invalid_unit():
         Circular([0, 1, 2], unit="bananas")
 
 
-def test_invalid_data_type():
-    with pytest.raises(ValueError, match="Invalid data_type"):
-        Circular([0, 1, 2], data_type="something_else")
-
-
-def test_invalid_zero():
-    with pytest.raises(ValueError, match="Invalid zero"):
-        Circular([0, 1, 2], zero="wrong")
-
-
-def test_radians_mislabelled_as_degrees():
-    # Data within 0–2π but labeled as degrees → should raise error
-    data = np.linspace(0, 2 * np.pi, 100)
-    with pytest.raises(ValueError, match="but unit is set to 'degrees'"):
-        Circular(data, unit="degrees")
-
-
-def test_degrees_mislabelled_as_radians():
-    # Data in degrees range but labeled as radians → should raise error
-    data = [0, 90, 180, 270]
-    with pytest.raises(ValueError, match="exceed the valid radian range"):
-        Circular(data, unit="radians")
-
-
-def test_conversion_to_degrees():
-    data = np.array([0, np.pi / 2, np.pi])
-    circ = Circular(data, unit="radians")
-    circ.convert_to("degrees")
-    expected = np.array([0, 90, 180])
-    np.testing.assert_allclose(circ.data, expected, atol=1e-6)
-
-
-def test_conversion_to_radians():
-    data = np.array([0, 90, 180])
+def test_mean_in_degrees():
+    data = [80, 90, 180, 270, 280]
     circ = Circular(data, unit="degrees")
-    circ.convert_to("radians")
-    expected = np.array([0, np.pi / 2, np.pi])
-    np.testing.assert_allclose(circ.data, expected, atol=1e-6)
+    mean = circ.mean()
+    assert 170 < mean < 190  # Should be near 180°
+
+def test_from_multiple():
+    c1 = Circular([0, 90], unit="degrees")
+    c2 = Circular([180, 270], unit="degrees")
+    merged = Circular.from_multiple([c1, c2], labels=["A", "B"])
+    assert merged.unit == "degrees"
+    assert len(merged.data) == 4
+    assert set(merged.labels) == {"A", "B"}
