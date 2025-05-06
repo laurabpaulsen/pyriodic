@@ -321,7 +321,10 @@ document.write(`
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.phase_events.PhaseEvents.to_circular"><code class="docutils literal notranslate"><span class="pre">PhaseEvents.to_circular()</span></code></a></li>
 </ul>
 </li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.phase_events.compute_segment_outliers"><code class="docutils literal notranslate"><span class="pre">compute_segment_outliers()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.phase_events.create_phase_events"><code class="docutils literal notranslate"><span class="pre">create_phase_events()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.phase_events.get_outlier_sample_indices"><code class="docutils literal notranslate"><span class="pre">get_outlier_sample_indices()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.phase_events.get_phase_segments"><code class="docutils literal notranslate"><span class="pre">get_phase_segments()</span></code></a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-pyriodic.preproc">pyriodic.preproc module</a><ul class="nav section-nav flex-column">
@@ -476,26 +479,74 @@ Values should be in the range appropriate to the specified <cite>unit</cite>.</p
 </dd></dl>
 
 <dl class="py function">
+<dt class="sig sig-object py" id="pyriodic.phase_events.compute_segment_outliers">
+<span class="sig-prename descclassname"><span class="pre">pyriodic.phase_events.</span></span><span class="sig-name descname"><span class="pre">compute_segment_outliers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">segments</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sampling_rate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyriodic.phase_events.compute_segment_outliers" title="Link to this definition">#</a></dt>
+<dd><p>Identify segment durations that deviate &gt; threshold * SD from the mean.
+Optionally normalize by sampling_rate.</p>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="pyriodic.phase_events.create_phase_events">
-<span class="sig-prename descclassname"><span class="pre">pyriodic.phase_events.</span></span><span class="sig-name descname"><span class="pre">create_phase_events</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">phase_ts</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">events</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">event_labels</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unit</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'radians'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">first_samp</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#pyriodic.circular.Circular" title="pyriodic.circular.Circular"><span class="pre">Circular</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#pyriodic.phase_events.PhaseEvents" title="pyriodic.phase_events.PhaseEvents"><span class="pre">PhaseEvents</span></a></span></span><a class="headerlink" href="#pyriodic.phase_events.create_phase_events" title="Link to this definition">#</a></dt>
-<dd><p>Create Circular object(s) from a phase angle time series and event markers.</p>
+<span class="sig-prename descclassname"><span class="pre">pyriodic.phase_events.</span></span><span class="sig-name descname"><span class="pre">create_phase_events</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">phase_ts</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">events</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">event_labels</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unit</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'radians'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">first_samp</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rejection_method</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rejection_criterion</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_rejected</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#pyriodic.phase_events.PhaseEvents" title="pyriodic.phase_events.PhaseEvents"><span class="pre">PhaseEvents</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#pyriodic.phase_events.PhaseEvents" title="pyriodic.phase_events.PhaseEvents"><span class="pre">PhaseEvents</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#pyriodic.phase_events.create_phase_events" title="Link to this definition">#</a></dt>
+<dd><p>Create Circular object(s) from a phase angle time series and event markers.
+Optionally apply cycle-based rejection criteria to exclude events occurring during atypical phase dynamics.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>phase_ts</strong> (<em>np.ndarray</em>) – 1D array of phase values in radians.</p></li>
-<li><p><strong>events</strong> (<em>np.ndarray</em>) – Event sample indices.</p></li>
-<li><p><strong>event_labels</strong> (<em>np.ndarray</em><em>, </em><em>optional</em>) – label mapping for events.
-- If None: returns a single Circular object.
-- If array: used to group events by value.</p></li>
-<li><p><strong>unit</strong> (<em>str</em>) – Unit to assign to Circular objects (‘radians’, ‘degrees’, etc.).</p></li>
-<li><p><strong>first_samp</strong> (<em>int</em>) – Offset for non-zero-indexed phase time series.</p></li>
+<li><p><strong>phase_ts</strong> (<em>np.ndarray</em>) – 1D array of phase values (in radians), typically spanning multiple 0–2π cycles.</p></li>
+<li><p><strong>events</strong> (<em>np.ndarray</em>) – 1D array of sample indices at which to extract phase values.</p></li>
+<li><p><strong>event_labels</strong> (<em>np.ndarray</em><em>, </em><em>optional</em>) – Labels for grouping events. If None, returns a single Circular object;
+otherwise, returns a PhaseEvents container grouped by unique labels.</p></li>
+<li><p><strong>unit</strong> (<em>str</em>) – Unit of the input phase time series and the desired unit for output Circular objects.
+Must be either ‘radians’ or ‘degrees’. Internally, all computations are performed in radians.</p></li>
+<li><p><strong>first_samp</strong> (<em>int</em>) – Offset to subtract from each event index to align with the phase time series
+(useful if phase_ts is a segment of a longer recording).</p></li>
+<li><p><strong>rejection_method</strong> (<em>str</em><em>, </em><em>optional</em>) – <p>Method to reject events based on surrounding phase dynamics.
+Currently supported:</p>
+<blockquote>
+<div><ul>
+<li><p>’segment_duration_sd’ : excludes events occurring during rising or falling phase
+segments whose durations deviate more than <cite>rejection_criterion</cite> standard deviations
+from the mean across cycles.</p></li>
+</ul>
+</div></blockquote>
+</p></li>
+<li><p><strong>rejection_criterion</strong> (<em>float</em><em>, </em><em>optional</em>) – Threshold (in standard deviation units) for identifying outlier segments.
+Only used if <cite>rejection_method=’segment_duration_sd’</cite>. Default is 3.</p></li>
+<li><p><strong>return_rejected</strong> (<em>bool</em>) – If True, also return a list of rejected event indices.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Single Circular object if event_ids is None, otherwise PhaseEvents container.</p>
+<dd class="field-even"><p><ul class="simple">
+<li><p><em>Circular or PhaseEvents</em> – If event_labels is None, returns a single Circular object.
+Otherwise, returns a PhaseEvents object containing condition-grouped Circular data.</p></li>
+<li><p><em>(optional) list[int]</em> – If <cite>return_rejected</cite> is True, returns a second value: the list of event indices that were rejected.</p></li>
+</ul>
+</p>
 </dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="#pyriodic.circular.Circular" title="pyriodic.circular.Circular">Circular</a> or <a class="reference internal" href="#pyriodic.phase_events.PhaseEvents" title="pyriodic.phase_events.PhaseEvents">PhaseEvents</a></p>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyriodic.phase_events.get_outlier_sample_indices">
+<span class="sig-prename descclassname"><span class="pre">pyriodic.phase_events.</span></span><span class="sig-name descname"><span class="pre">get_outlier_sample_indices</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">segments</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outlier_indices</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyriodic.phase_events.get_outlier_sample_indices" title="Link to this definition">#</a></dt>
+<dd><p>Convert outlier segments to a flat set of sample indices for fast lookup.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyriodic.phase_events.get_phase_segments">
+<span class="sig-prename descclassname"><span class="pre">pyriodic.phase_events.</span></span><span class="sig-name descname"><span class="pre">get_phase_segments</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">phase_ts</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyriodic.phase_events.get_phase_segments" title="Link to this definition">#</a></dt>
+<dd><p>Identify rising (0→π) and falling (π→2π) phase segments in a wrapped phase signal.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>phase_ts</strong> (<em>np.ndarray</em>) – 1D array of phase values (in radians), assumed to evolve continuously over time.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>rising_segments</strong> (<em>list of (start_idx, stop_idx)</em>) – List of index tuples for rising phase segments (0 to π).</p></li>
+<li><p><strong>falling_segments</strong> (<em>list of (start_idx, stop_idx)</em>) – List of index tuples for falling phase segments (π to 2π).</p></li>
+</ul>
+</p>
 </dd>
 </dl>
 </dd></dl>
@@ -557,7 +608,9 @@ Values should be in the range appropriate to the specified <cite>unit</cite>.</p
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>self</p>
+<dd class="field-even"><p>phase
+peaks
+troughs</p>
 </dd>
 </dl>
 </dd></dl>
@@ -716,7 +769,10 @@ HA: the samples do not come from the same population</p>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.phase_events.PhaseEvents.to_circular"><code class="docutils literal notranslate"><span class="pre">PhaseEvents.to_circular()</span></code></a></li>
 </ul>
 </li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.phase_events.compute_segment_outliers"><code class="docutils literal notranslate"><span class="pre">compute_segment_outliers()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.phase_events.create_phase_events"><code class="docutils literal notranslate"><span class="pre">create_phase_events()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.phase_events.get_outlier_sample_indices"><code class="docutils literal notranslate"><span class="pre">get_outlier_sample_indices()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.phase_events.get_phase_segments"><code class="docutils literal notranslate"><span class="pre">get_phase_segments()</span></code></a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-pyriodic.preproc">pyriodic.preproc module</a><ul class="nav section-nav flex-column">
