@@ -89,7 +89,9 @@ class RawSignal:
             prominence (float): Prominence threshold for peak detection.
 
         Returns:
-            self
+            phase
+            peaks
+            troughs
         """
         if peak_finder is None:
             # Default logic
