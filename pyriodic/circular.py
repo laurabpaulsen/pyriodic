@@ -70,18 +70,27 @@ class Circular:
         else:
             self.full_range = full_range
 
-        # check that data is within the specified range
-        self._validate_data_matches_range()
-
         data = np.asarray(data, dtype=float)
+
+        # Validate range before conversion
+        self._validate_data_matches_range(data, unit, full_range)
+
+        # convert to radians if needed
         if unit != "radians":
-            # convert data to radians
-            self.data = dat2rad(data, full_range=self.full_range)
+            self.data = dat2rad(data, full_range=full_range or self.UNIT_RANGES[unit])
         else:
             self.data = data
 
-    def _validate_data_matches_range(self):
-        pass
+    def _validate_data_matches_range(self, data, unit, full_range):
+        expected_range = full_range or self.UNIT_RANGES[unit]
+
+        if unit in {"radians", "degrees"}:
+            if np.min(data) < 0 or np.max(data) > expected_range:
+                raise ValueError(
+                    f"Input data values exceed the valid {unit} range (0 to {expected_range}), "
+                    f"but unit is set to '{unit}'."
+                )
+
 
     def mean(self, group_by_label: bool = False):
         if not group_by_label:
@@ -108,7 +117,7 @@ class Circular:
     def r(self):
         return circular_r(self.data)
 
-    def plot(self, ax=None, histogram=False, group_by_labels = False):
+    def plot(self, ax=None, histogram=False, group_by_labels=False):
         """"""
         from .viz import CircPlot
 
