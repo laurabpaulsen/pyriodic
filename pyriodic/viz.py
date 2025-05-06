@@ -197,7 +197,9 @@ class CircPlot:
         - alpha: Transparency of bars.
         """
         if data is None:
-            raise NotImplementedError("Not yet implemented plotting the data in circ. Please supply data. ")
+            raise NotImplementedError(
+                "Not yet implemented plotting the data in circ. Please supply data. "
+            )
             data_to_plot = {label: circ.data for label, circ in self.circs.items()}
         elif isinstance(data, dict):
             data_to_plot = data
