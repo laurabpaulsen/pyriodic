@@ -6,7 +6,7 @@
 pyriodic documentation
 ======================
 
-Welcome to the documentation for the `pyriodic` package.
+Welcome to the documentation for `pyriodic`.
 
 .. toctree::
    :maxdepth: 2
@@ -18,4 +18,5 @@ Welcome to the documentation for the `pyriodic` package.
    :maxdepth: 1
    :caption: Tutorials
 
-   tutorials
+   tutorials/index  # points to tutorials/index.rst
+
