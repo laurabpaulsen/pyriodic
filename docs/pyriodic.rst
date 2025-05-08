@@ -4,7 +4,7 @@ pyriodic package
 Submodules
 ----------
 
-pyriodic.circular module
+pyriodic.circular
 ------------------------
 
 .. automodule:: pyriodic.circular
@@ -12,15 +12,15 @@ pyriodic.circular module
    :show-inheritance:
    :undoc-members:
 
-pyriodic.descriptive\_stats module
+pyriodic.desc
 ----------------------------------
 
-.. automodule:: pyriodic.descriptive_stats
+.. automodule:: pyriodic.desc
    :members:
    :show-inheritance:
    :undoc-members:
 
-pyriodic.phase\_events module
+pyriodic.phase\_events
 -----------------------------
 
 .. automodule:: pyriodic.phase_events
@@ -52,18 +52,10 @@ pyriodic.utils module
    :show-inheritance:
    :undoc-members:
 
-pyriodic.visualise module
+pyriodic.viz
 -------------------------
 
-.. automodule:: pyriodic.visualise
-   :members:
-   :show-inheritance:
-   :undoc-members:
-
-Module contents
----------------
-
-.. automodule:: pyriodic
+.. automodule:: pyriodic.viz
    :members:
    :show-inheritance:
    :undoc-members:
