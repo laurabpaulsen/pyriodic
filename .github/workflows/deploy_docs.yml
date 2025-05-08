@@ -24,6 +24,10 @@ jobs:
       - name: Install packages
         run: |
           pip install .
+      
+      - name: Install documentation dependencies
+        run: pip install -r docs/requirements.txt
+
 
       - name: Install Sphinx and theme
         run: |
