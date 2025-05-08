@@ -40,6 +40,7 @@
     <script src="_static/doctools.js?v=9bcbadda"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'pyriodic';</script>
     <link rel="icon" href="_static/favicon.ico"/>
     <link rel="index" title="Index" href="genindex.html" />
@@ -155,7 +156,9 @@
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">pyriodic package</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="tutorials.html">Tutorials</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="simple">
+<li class="toctree-l1 has-children"><a class="reference internal" href="tutorials.html">Tutorials</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/01_getting_started.html">testing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/02_phase_diagnostics.html">Comparisions of methods for phase extraction from time series data</a></li>
 </ul>
 </details></li>
 </ul>
@@ -343,6 +346,7 @@ document.write(`
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.preproc.RawSignal.interpolate_missing"><code class="docutils literal notranslate"><span class="pre">RawSignal.interpolate_missing()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.preproc.RawSignal.phase_hilbert"><code class="docutils literal notranslate"><span class="pre">RawSignal.phase_hilbert()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.preproc.RawSignal.phase_linear"><code class="docutils literal notranslate"><span class="pre">RawSignal.phase_linear()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.preproc.RawSignal.phase_onepoint"><code class="docutils literal notranslate"><span class="pre">RawSignal.phase_onepoint()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.preproc.RawSignal.phase_threepoint"><code class="docutils literal notranslate"><span class="pre">RawSignal.phase_threepoint()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.preproc.RawSignal.remove_outliers"><code class="docutils literal notranslate"><span class="pre">RawSignal.remove_outliers()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.preproc.RawSignal.zscore"><code class="docutils literal notranslate"><span class="pre">RawSignal.zscore()</span></code></a></li>
@@ -382,7 +386,7 @@ document.write(`
 <span id="pyriodic-circular-module"></span><h2>pyriodic.circular module<a class="headerlink" href="#module-pyriodic.circular" title="Link to this heading">#</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="pyriodic.circular.Circular">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyriodic.circular.</span></span><span class="sig-name descname"><span class="pre">Circular</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unit</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'radians'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">full_range</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyriodic.circular.Circular" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyriodic.circular.</span></span><span class="sig-name descname"><span class="pre">Circular</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unit</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'radians'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">full_range</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyriodic.circular.Circular" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>A class for representing and working with circular data (e.g., angles, time-of-day, phase).</p>
 <p>This class supports circular statistics and visualization of data that wraps around a fixed range,
@@ -434,7 +438,7 @@ Values should be in the range appropriate to the specified <cite>unit</cite>.</p
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pyriodic.circular.Circular.from_multiple">
-<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_multiple</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">circular_objects</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyriodic.circular.Circular.from_multiple" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_multiple</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">circular_objects</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyriodic.circular.Circular.from_multiple" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -462,7 +466,7 @@ Values should be in the range appropriate to the specified <cite>unit</cite>.</p
 <span id="pyriodic-phase-events-module"></span><h2>pyriodic.phase_events module<a class="headerlink" href="#module-pyriodic.phase_events" title="Link to this heading">#</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="pyriodic.phase_events.PhaseEvents">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyriodic.phase_events.</span></span><span class="sig-name descname"><span class="pre">PhaseEvents</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">phase_dict</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyriodic.phase_events.PhaseEvents" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyriodic.phase_events.</span></span><span class="sig-name descname"><span class="pre">PhaseEvents</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">phase_dict</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyriodic.phase_events.PhaseEvents" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <dl class="py method">
 <dt class="sig sig-object py" id="pyriodic.phase_events.PhaseEvents.mean">
@@ -564,7 +568,7 @@ Otherwise, returns a PhaseEvents object containing condition-grouped Circular da
 <span id="pyriodic-preproc-module"></span><h2>pyriodic.preproc module<a class="headerlink" href="#module-pyriodic.preproc" title="Link to this heading">#</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="pyriodic.preproc.RawSignal">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyriodic.preproc.</span></span><span class="sig-name descname"><span class="pre">RawSignal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">info</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyriodic.preproc.RawSignal" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyriodic.preproc.</span></span><span class="sig-name descname"><span class="pre">RawSignal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">info</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyriodic.preproc.RawSignal" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <dl class="py method">
 <dt class="sig sig-object py" id="pyriodic.preproc.RawSignal.copy">
@@ -578,7 +582,7 @@ Otherwise, returns a PhaseEvents object containing condition-grouped Circular da
 
 <dl class="py property">
 <dt class="sig sig-object py" id="pyriodic.preproc.RawSignal.history">
-<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">history</span></span><a class="headerlink" href="#pyriodic.preproc.RawSignal.history" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">history</span></span><a class="headerlink" href="#pyriodic.preproc.RawSignal.history" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -606,7 +610,7 @@ Otherwise, returns a PhaseEvents object containing condition-grouped Circular da
 <dl class="py method">
 <dt class="sig sig-object py" id="pyriodic.preproc.RawSignal.phase_linear">
 <span class="sig-name descname"><span class="pre">phase_linear</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">peak_finder</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">distance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prominence</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.01</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyriodic.preproc.RawSignal.phase_linear" title="Link to this definition">#</a></dt>
-<dd><p>Extract phase using linear interpolation between peaks and troughs.</p>
+<dd><p>Extract phase using linear interpolation between peaks and troughs at</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -624,6 +628,25 @@ troughs</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="pyriodic.preproc.RawSignal.phase_onepoint">
+<span class="sig-name descname"><span class="pre">phase_onepoint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">peak_finder</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">distance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prominence</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.01</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyriodic.preproc.RawSignal.phase_onepoint" title="Link to this definition">#</a></dt>
+<dd><p>Extract phase using linear interpolation between from 0 to 2pi between peaks.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>peak_finder</strong> (<em>callable</em>) – Optional custom function(ts, <a href="#id3"><span class="problematic" id="id4">**</span></a>kwargs) -&gt; np.ndarray of peak indices.</p></li>
+<li><p><strong>distance</strong> (<em>int</em>) – Minimum distance between peaks.</p></li>
+<li><p><strong>prominence</strong> (<em>float</em>) – Prominence threshold for peak detection.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>phase
+peaks</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="pyriodic.preproc.RawSignal.phase_threepoint">
 <span class="sig-name descname"><span class="pre">phase_threepoint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">peak_finder</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">distance</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prominence</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.01</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">percentile</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">50</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">descent_window</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">5</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyriodic.preproc.RawSignal.phase_threepoint" title="Link to this definition">#</a></dt>
 <dd><p>Extract phase using a three-point method:
@@ -631,7 +654,7 @@ Peak → descending slope → flat region → ascending slope → next peak.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>peak_finder</strong> (<em>callable</em>) – Optional function(ts, <a href="#id3"><span class="problematic" id="id4">**</span></a>kwargs) → np.ndarray of peak indices.</p></li>
+<li><p><strong>peak_finder</strong> (<em>callable</em>) – Optional function(ts, <a href="#id5"><span class="problematic" id="id6">**</span></a>kwargs) → np.ndarray of peak indices.</p></li>
 <li><p><strong>distance</strong> (<em>int</em>) – Min distance between peaks (used if no custom peak_finder).</p></li>
 <li><p><strong>prominence</strong> (<em>float</em>) – Prominence threshold for peak detection.</p></li>
 <li><p><strong>percentile</strong> (<em>float</em>) – Percentile of absolute gradient below which region is considered ‘flat’.</p></li>
@@ -658,7 +681,7 @@ troughs (list of tuples): List of (trough_start, trough_end) for flat segments</
 <dl class="py method">
 <dt class="sig sig-object py" id="pyriodic.preproc.RawSignal.zscore">
 <span class="sig-name descname"><span class="pre">zscore</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyriodic.preproc.RawSignal.zscore" title="Link to this definition">#</a></dt>
-<dd><p>Normalizes the signal in-place to mean 0 and unit variance.</p>
+<dd><p>Normalises the signal in-place to mean 0 and unit variance.</p>
 </dd></dl>
 
 </dd></dl>
@@ -800,6 +823,7 @@ HA: the samples do not come from the same population</p>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.preproc.RawSignal.interpolate_missing"><code class="docutils literal notranslate"><span class="pre">RawSignal.interpolate_missing()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.preproc.RawSignal.phase_hilbert"><code class="docutils literal notranslate"><span class="pre">RawSignal.phase_hilbert()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.preproc.RawSignal.phase_linear"><code class="docutils literal notranslate"><span class="pre">RawSignal.phase_linear()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.preproc.RawSignal.phase_onepoint"><code class="docutils literal notranslate"><span class="pre">RawSignal.phase_onepoint()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.preproc.RawSignal.phase_threepoint"><code class="docutils literal notranslate"><span class="pre">RawSignal.phase_threepoint()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.preproc.RawSignal.remove_outliers"><code class="docutils literal notranslate"><span class="pre">RawSignal.remove_outliers()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.preproc.RawSignal.zscore"><code class="docutils literal notranslate"><span class="pre">RawSignal.zscore()</span></code></a></li>
