@@ -1,4 +1,5 @@
 import matplotlib.pyplot as plt
+from matplotlib.widgets import Slider
 import numpy as np
 from .circular import Circular
 from math import pi
@@ -311,3 +312,174 @@ class CircPlot:
 
 
 # other plotting functions (mainly for ts)
+
+
+# ------- DIAGNOSIC PLOT FOR PREPROCESSING -----------
+def plot_phase_diagnostics(
+    phase_angles: dict[str, np.ndarray],
+    fs: Union[int, float],
+    data: Optional[np.ndarray] = None,
+    events: Optional[Union[list, np.ndarray]] = None,
+    event_labels: Optional[Union[list, np.ndarray]] = None,
+    peaks=None,
+    troughs=None,
+    flat_start_stop=None,
+    savepath=None,
+    figsize=None,
+    interactive: bool = False,
+    window_duration: float = 20.0,
+):
+    n_phase_axes = len(phase_angles)
+    n_rows = n_phase_axes + (1 if data is not None else 0)
+    time = np.arange(len(next(iter(phase_angles.values())))) / fs
+
+    if interactive:
+        window_samples = int(window_duration * fs)
+        fig, axes = plt.subplots(n_rows, 1, figsize=(12, 2.5 * n_rows), sharex=True)
+        if n_rows == 1:
+            axes = [axes]
+
+        slider_ax = plt.axes([0.1, 0.01, 0.8, 0.03])
+        slider = Slider(slider_ax, 'Time (s)', 0, time[-1] - window_duration, valinit=0, valstep=1/fs)
+
+        lines = []
+        marker_objs = []
+        row_idx = 0
+        start_idx = 0
+        end_idx = start_idx + window_samples
+
+        if data is not None:
+            ax = axes[row_idx]
+            line, = ax.plot(time[start_idx:end_idx], data[start_idx:end_idx], color='green', label='Signal')
+            lines.append((line, data))
+
+            def scatter_pts(indices, color, label):
+                return ax.plot([], [], 'o', color=color, label=label, markersize=4)[0]
+
+            # --- Markers
+            if peaks is not None:
+                peak_sc = scatter_pts(peaks, 'blue', 'Peaks')
+                marker_objs.append((peak_sc, np.asarray(peaks)))
+            if troughs is not None:
+                trough_sc = scatter_pts(troughs, 'purple', 'Troughs')
+                marker_objs.append((trough_sc, np.asarray(troughs)))
+            flat_idxs = []
+            if flat_start_stop is not None:
+                if isinstance(flat_start_stop[0], (tuple, list)):
+                    flat_idxs = [i for start, end in flat_start_stop for i in range(start, end)]
+                else:
+                    flat_idxs = flat_start_stop
+                flat_sc = scatter_pts(flat_idxs, 'orange', 'Flat')
+                marker_objs.append((flat_sc, np.asarray(flat_idxs)))
+
+            ax.legend(loc="upper right")
+            row_idx += 1
+
+        # --- Phase angles
+        for label, phase in phase_angles.items():
+            line, = axes[row_idx].plot(time[start_idx:end_idx], phase[start_idx:end_idx], color='grey', label=label)
+            axes[row_idx].set_ylabel(label)
+            lines.append((line, phase))
+            row_idx += 1
+
+        # --- Events
+        event_lines = []
+        if events is not None:
+            if event_labels is None:
+                event_labels = ["event"] * len(events)
+            unique_labels = sorted(set(event_labels))
+            cmap = plt.cm.get_cmap("tab10", len(unique_labels))
+            label_colors = {lbl: cmap(i) for i, lbl in enumerate(unique_labels)}
+
+            for ax in axes:
+                ev_objs = []
+                for ev_sample, ev_label in zip(events, event_labels):
+                    line = ax.axvline(x=0, color=label_colors[ev_label], linestyle="--", alpha=0.5, visible=False)
+                    ev_objs.append((line, ev_sample))
+                event_lines.append(ev_objs)
+
+        def update(val):
+            start_idx = int(val * fs)
+            end_idx = start_idx + window_samples
+            for ax, (line, y_data) in zip(axes, lines):
+                line.set_xdata(time[start_idx:end_idx])
+                line.set_ydata(y_data[start_idx:end_idx])
+                ax.set_xlim(time[start_idx], time[end_idx - 1])
+                ax.relim()
+                ax.autoscale_view()
+
+            for marker, indices in marker_objs:
+                if indices is not None and len(indices) > 0:
+                    mask = (indices >= start_idx) & (indices < end_idx)
+                    in_window = indices[mask]
+                    marker.set_xdata(time[in_window])
+                    marker.set_ydata(data[in_window])
+
+            for ev_objs in event_lines:
+                for line, ev_sample in ev_objs:
+                    visible = start_idx <= ev_sample < end_idx
+                    line.set_xdata(ev_sample / fs)
+                    line.set_visible(visible)
+
+            fig.canvas.draw_idle()
+
+        slider.on_changed(update)
+        plt.subplots_adjust(bottom=0.12)
+        plt.show()
+        return fig, axes
+
+    else:
+        # Static full-range view
+        if figsize is None:
+            figsize = (12, 2.5 * n_rows)
+
+        fig, axes = plt.subplots(n_rows, 1, figsize=figsize, dpi=300, sharex=True)
+        if n_rows == 1:
+            axes = [axes]
+
+        ax_idx = 0
+
+        if data is not None:
+            axes[ax_idx].plot(time, data, label="Signal", color="forestgreen", linewidth=1)
+            for arr, label, color in zip(
+                [peaks, flat_start_stop, troughs],
+                ["Peaks", "Flat", "Troughs"],
+                ["blue", "orange", "purple"]
+            ):
+                if arr is not None and len(arr) > 0:
+                    if isinstance(arr[0], (tuple, list)):
+                        flat_idx = [i for start, end in arr for i in range(start, end)]
+                        y_vals = [data[i] for i in flat_idx]
+                        axes[ax_idx].scatter(time[flat_idx], y_vals, s=3, label=label, color=color)
+                    else:
+                        y_vals = [data[i] for i in arr]
+                        axes[ax_idx].scatter(time[arr], y_vals, s=3, label=label, color=color)
+            axes[ax_idx].legend(loc="upper right")
+            ax_idx += 1
+
+        for label, values in phase_angles.items():
+            axes[ax_idx].plot(time, values, color="grey", linewidth=1)
+            axes[ax_idx].set_ylabel(label)
+            ax_idx += 1
+
+        if events is not None:
+            if event_labels is None:
+                event_labels = ["event"] * len(events)
+            unique_labels = list(set(event_labels))
+            colors = plt.cm.get_cmap("tab10", len(unique_labels))
+            label_color_map = {lbl: colors(i) for i, lbl in enumerate(unique_labels)}
+            for ev_idx, ev_sample in enumerate(events):
+                lbl = event_labels[ev_idx]
+                for ax in axes:
+                    ax.axvline(ev_sample / fs, color=label_color_map[lbl], linestyle='--', alpha=0.5)
+
+        axes[-1].set_xlabel("Time (s)")
+        for ax in axes:
+            ax.set_xlim((0, time[-1]))
+
+        plt.tight_layout()
+        if savepath:
+            fig.savefig(savepath)
+            plt.close(fig)
+        else:
+            return fig, axes
