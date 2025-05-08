@@ -51,7 +51,7 @@ class RawSignal:
 
     def zscore(self):
         """
-        Normalizes the signal in-place to mean 0 and unit variance.
+        Normalises the signal in-place to mean 0 and unit variance.
         """
         self.ts = (self.ts - np.nanmean(self.ts)) / np.nanstd(self.ts)
         self._history.append("normalize()")
@@ -61,6 +61,19 @@ class RawSignal:
         sos = signal.butter(N=4, Wn=[low, high], btype="band", fs=self.fs, output="sos")
         self.ts = signal.sosfiltfilt(sos, self.ts)
         self._history.append(f"bandpass({low}-{high})")
+
+    @staticmethod
+    def _peak_finder(
+        ts, 
+        distance,
+        prominence
+        ):
+            
+        peaks, _ = signal.find_peaks(
+                ts, distance=distance, prominence=prominence
+        )
+        return peaks
+    
 
     def phase_hilbert(self):
         """
@@ -81,7 +94,7 @@ class RawSignal:
 
     def phase_linear(self, peak_finder=None, distance=100, prominence=0.01):
         """
-        Extract phase using linear interpolation between peaks and troughs.
+        Extract phase using linear interpolation between peaks and troughs at
 
         Args:
             peak_finder (callable): Optional custom function(ts, **kwargs) -> np.ndarray of peak indices.
@@ -93,15 +106,14 @@ class RawSignal:
             peaks
             troughs
         """
-        if peak_finder is None:
-            # Default logic
-            def peak_finder(ts, distance=distance, prominence=prominence):
-                peaks, _ = signal.find_peaks(
-                    ts, distance=distance, prominence=prominence
-                )
-                return peaks
 
-        peaks = peak_finder(self.ts, distance=distance, prominence=prominence)
+        if peak_finder is None:
+            peaks = self._peak_finder(self.ts, distance=distance, prominence=prominence)
+        else: 
+            try:
+                peaks = peak_finder(self.ts)
+            except Exception as e:
+                raise RuntimeError(f"Custom peak_finder function failed: {e}")
 
         # Troughs between peaks
         troughs = []
@@ -119,11 +131,38 @@ class RawSignal:
             phase[t] = np.pi
             phase[p2] = 2 * np.pi
 
-        # self._phase = phase
-        # self._peaks = peaks
-        # self._troughs = np.array(troughs)
-
         return (phase, peaks, troughs)
+
+    def phase_onepoint(
+        self,
+        peak_finder=None, distance=100, prominence=0.01
+    ):
+        """
+        Extract phase using linear interpolation between from 0 to 2pi between peaks.
+
+        Args:
+            peak_finder (callable): Optional custom function(ts, **kwargs) -> np.ndarray of peak indices.
+            distance (int): Minimum distance between peaks.
+            prominence (float): Prominence threshold for peak detection.
+
+        Returns:
+            phase
+            peaks
+        """
+
+
+        if peak_finder is None:
+            peaks = self._peak_finder(self.ts, distance=distance, prominence=prominence)
+        else:
+            peaks = peak_finder(self.ts)  # assume user handles their own params
+
+        phase = np.full_like(self.ts, np.nan, dtype=np.float32)
+        
+        for p1, p2 in zip(peaks[:-1], peaks[1:]):
+            phase[p1:p2] = np.linspace(0, 2 * np.pi, p2 - p1)
+            phase[p1] = 0
+            phase[p2] = 2 * np.pi
+        
 
     def phase_threepoint(
         self,

@@ -329,6 +329,42 @@ def plot_phase_diagnostics(
     interactive: bool = False,
     window_duration: float = 20.0,
 ):
+    """
+    Parameters
+    ----------
+    phase_angles : dict[str, np.ndarray]
+        Dictionary of named phase angle signals (e.g., {"3-point": ..., "Hilbert": ...}).
+        Each should be 1D array of same length as `data`.
+    fs : float
+        Sampling frequency (Hz).
+    data : np.ndarray, optional
+        Raw or preprocessed time series signal (same length as phase arrays).
+    events : list[int] or np.ndarray, optional
+        Sample indices of events to mark (e.g., stimulus or response times).
+    event_labels : list[str], optional
+        Label for each event (same length as `events`). Used for color grouping.
+    peaks : list[int] or np.ndarray, optional
+        Sample indices of identified peaks.
+    troughs : list[int] or np.ndarray, optional
+        Sample indices of identified troughs.
+    flat_start_stop : list[tuple[int, int]] or list[int], optional
+        Flat segments as start–stop index tuples or flat indices directly.
+    savepath : str or Path, optional
+        If provided, saves static plot to this location (only applies if interactive=False).
+    figsize : tuple[int, int], optional
+        Size of the figure in inches (only applies if interactive=False).
+    interactive : bool
+        If True, launches an interactive slider-based window viewer (Matplotlib).
+    window_duration : float
+        Duration (in seconds) of each visible window in interactive mode.
+
+    Returns
+    -------
+    fig : matplotlib.figure.Figure
+        The created figure.
+    axes : list[matplotlib.axes.Axes]
+        The axes used in the plot (one per row: signal + phase tracks).
+    """
     n_phase_axes = len(phase_angles)
     n_rows = n_phase_axes + (1 if data is not None else 0)
     time = np.arange(len(next(iter(phase_angles.values())))) / fs
