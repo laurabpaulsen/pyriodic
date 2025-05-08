@@ -6,21 +6,16 @@
 pyriodic documentation
 ======================
 
-Add your content using ``reStructuredText`` syntax. See the
-`reStructuredText <https://www.sphinx-doc.org/en/master/usage/restructuredtext/index.html>`_
-documentation for details.
-
+Welcome to the documentation for the `pyriodic` package.
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
-
-.. include:: modules.rst
-
-
-.. toctree::
-   :maxdepth: 2
-   :caption: Contents:
+   :caption: API
 
    pyriodic
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Tutorials
+
    tutorials
