@@ -41,6 +41,8 @@
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'modules';</script>
     <link rel="icon" href="_static/favicon.ico"/>
     <link rel="index" title="Index" href="genindex.html" />
@@ -317,7 +319,7 @@ document.write(`
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="pyriodic.html">pyriodic package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="pyriodic.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pyriodic.html#module-pyriodic.circular">pyriodic.circular module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pyriodic.html#module-pyriodic.circular">pyriodic.circular</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="pyriodic.html#pyriodic.circular.Circular"><code class="docutils literal notranslate"><span class="pre">Circular</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="pyriodic.html#pyriodic.circular.Circular.data"><code class="docutils literal notranslate"><span class="pre">Circular.data</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="pyriodic.html#pyriodic.circular.Circular.labels"><code class="docutils literal notranslate"><span class="pre">Circular.labels</span></code></a></li>
@@ -330,8 +332,14 @@ document.write(`
 </li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="pyriodic.html#pyriodic-descriptive-stats-module">pyriodic.descriptive_stats module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pyriodic.html#module-pyriodic.phase_events">pyriodic.phase_events module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pyriodic.html#module-pyriodic.desc">pyriodic.desc</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pyriodic.html#pyriodic.desc.angular_deviation"><code class="docutils literal notranslate"><span class="pre">angular_deviation()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyriodic.html#pyriodic.desc.circular_mean"><code class="docutils literal notranslate"><span class="pre">circular_mean()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyriodic.html#pyriodic.desc.circular_r"><code class="docutils literal notranslate"><span class="pre">circular_r()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyriodic.html#pyriodic.desc.circular_standard_deviation"><code class="docutils literal notranslate"><span class="pre">circular_standard_deviation()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pyriodic.html#module-pyriodic.phase_events">pyriodic.phase_events</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="pyriodic.html#pyriodic.phase_events.PhaseEvents"><code class="docutils literal notranslate"><span class="pre">PhaseEvents</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="pyriodic.html#pyriodic.phase_events.PhaseEvents.mean"><code class="docutils literal notranslate"><span class="pre">PhaseEvents.mean()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="pyriodic.html#pyriodic.phase_events.PhaseEvents.plot"><code class="docutils literal notranslate"><span class="pre">PhaseEvents.plot()</span></code></a></li>
@@ -371,8 +379,22 @@ document.write(`
 <li class="toctree-l3"><a class="reference internal" href="pyriodic.html#pyriodic.utils.rad2dat"><code class="docutils literal notranslate"><span class="pre">rad2dat()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="pyriodic.html#pyriodic-visualise-module">pyriodic.visualise module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pyriodic.html#module-pyriodic">Module contents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyriodic.html#module-pyriodic.viz">pyriodic.viz</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pyriodic.html#pyriodic.viz.CircPlot"><code class="docutils literal notranslate"><span class="pre">CircPlot</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pyriodic.html#pyriodic.viz.CircPlot.add_circular_mean"><code class="docutils literal notranslate"><span class="pre">CircPlot.add_circular_mean()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyriodic.html#pyriodic.viz.CircPlot.add_density"><code class="docutils literal notranslate"><span class="pre">CircPlot.add_density()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyriodic.html#pyriodic.viz.CircPlot.add_histogram"><code class="docutils literal notranslate"><span class="pre">CircPlot.add_histogram()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyriodic.html#pyriodic.viz.CircPlot.add_legend"><code class="docutils literal notranslate"><span class="pre">CircPlot.add_legend()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyriodic.html#pyriodic.viz.CircPlot.add_points"><code class="docutils literal notranslate"><span class="pre">CircPlot.add_points()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyriodic.html#pyriodic.viz.CircPlot.prepare_ax"><code class="docutils literal notranslate"><span class="pre">CircPlot.prepare_ax()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyriodic.html#pyriodic.viz.CircPlot.save"><code class="docutils literal notranslate"><span class="pre">CircPlot.save()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyriodic.html#pyriodic.viz.CircPlot.show"><code class="docutils literal notranslate"><span class="pre">CircPlot.show()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pyriodic.html#pyriodic.viz.plot_phase_diagnostics"><code class="docutils literal notranslate"><span class="pre">plot_phase_diagnostics()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyriodic.html#pyriodic.viz.vonmises_kde"><code class="docutils literal notranslate"><span class="pre">vonmises_kde()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
