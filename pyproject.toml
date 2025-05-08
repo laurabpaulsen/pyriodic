@@ -27,7 +27,8 @@ dev = [
     "ipykernel",     # for notebooks
     "matplotlib",    # assuming you're plotting
     "numpy",         # your project uses this
-    "scipy"          # for kde and signal tools
+    "scipy",          # for kde and signal tools
+    "nbsphinx"
 ]
 
 [tool.setuptools.packages.find]

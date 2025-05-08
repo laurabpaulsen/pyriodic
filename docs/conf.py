@@ -23,6 +23,8 @@ extensions = [
     "sphinx.ext.autodoc",
     "sphinx.ext.napoleon",
     "sphinx.ext.mathjax",  # Enables math rendering in HTML
+    "myst_nb",
+    "nbsphinx" # for ipynb files
 ]
 
 
