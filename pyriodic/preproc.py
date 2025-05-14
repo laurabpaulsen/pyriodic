@@ -62,6 +62,46 @@ class RawSignal:
         self.ts = signal.sosfiltfilt(sos, self.ts)
         self._history.append(f"bandpass({low}-{high})")
 
+    def resample(self, sfreq = Union[int, float]):
+        """
+        
+        Args:
+            sfreq: New sampling rate
+        """
+        raise NotImplementedError
+        # resample
+        
+        # update sfreq attribute
+        # add attribute that shows that data has been resampled
+        pass
+
+    def smoothing(self, window_size: int = 20):
+        """
+        Smooths the timeseries by calculating the moving average
+        
+        Args:
+            window_size (int): Number of time points on either side of the center point 
+                            to include in the moving average. The total window size 
+                            will be `2 * window_size + 1`.
+        """
+
+
+        padded_ts = np.pad(self.ts, window_size, constant_values = (np.nan,))
+
+        # moving average
+        wsize = window_size*2+1
+        tmp = np.vstack([padded_ts[i:i+wsize] for i in range(len(padded_ts)-wsize+1)])
+        
+        new_ts = np.nanmean(tmp, axis=1)
+
+        self.ts = new_ts
+
+
+        self._history.append(f"Smoothing has been applied with a window size of {window_size}")
+
+
+
+
     @staticmethod
     def _peak_finder(
         ts, 
@@ -163,6 +203,8 @@ class RawSignal:
             phase[p1] = 0
             phase[p2] = 2 * np.pi
         
+
+        return phase, peaks
 
     def phase_threepoint(
         self,
