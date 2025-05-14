@@ -328,12 +328,13 @@ def plot_phase_diagnostics(
     figsize=None,
     interactive: bool = False,
     window_duration: float = 20.0,
+    title = None
 ):
     """
     Parameters
     ----------
     phase_angles : dict[str, np.ndarray]
-        Dictionary of named phase angle signals (e.g., {"3-point": ..., "Hilbert": ...}).
+        Dictionary of named phase angle signals (e.g., {"Three-point": ..., "Hilbert": ...}).
         Each should be 1D array of same length as `data`.
     fs : float
         Sampling frequency (Hz).
@@ -383,6 +384,8 @@ def plot_phase_diagnostics(
         row_idx = 0
         start_idx = 0
         end_idx = start_idx + window_samples
+        if title:
+            fig.suptitle(title)
 
         if data is not None:
             ax = axes[row_idx]
@@ -410,6 +413,7 @@ def plot_phase_diagnostics(
 
             ax.legend(loc="upper right")
             row_idx += 1
+
 
         # --- Phase angles
         for label, phase in phase_angles.items():
