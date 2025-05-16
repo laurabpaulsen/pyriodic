@@ -58,8 +58,25 @@ class PhaseEvents:
         else:
             plt.show()
 
-    def to_circular(self, include: Union[str, list[str]]):
-        if isinstance(include, str):
+    def to_circular(self, include: Optional[Union[str, list[str]]] = None):
+        """
+        Convert selected events from the phase dictionary to a Circular object.
+
+        Parameters
+        ----------
+        include : str, list of str, or None
+            - If a string, includes all keys in the phase_dict that contain this substring.
+            - If a list of strings, includes matching keys directly.
+            - If None, includes all keys in phase_dict.
+
+        Returns
+        -------
+        Circular
+            A Circular object constructed from the selected phase values.
+        """
+        if include is None:
+            include = list(self.phase_dict.keys())
+        elif isinstance(include, str):
             include = [k for k in self.phase_dict if include in k]
             if not include:
                 raise KeyError(f"No matching labels containing '{include}'")
@@ -197,10 +214,9 @@ def create_phase_events(
 
     if unit == "degrees":
         phase_ts = np.deg2rad(phase_ts)
-    
+
     elif unit != "radians":
         raise ValueError("unit must be either 'radians' or 'degrees'")
-
 
     events = np.asarray(events)
 
@@ -237,10 +253,6 @@ def create_phase_events(
             falling_segments, falling_outliers
         )
 
-        print(
-            f"Found {len(rising_outliers)} rising outliers, {len(falling_outliers)} falling outliers"
-        )
-
     grouped_phases = defaultdict(list)
 
     for event, label in zip(events, labels):
@@ -263,11 +275,15 @@ def create_phase_events(
     unique_labels = set(labels)
     if len(unique_labels) == 1:
         all_angles = grouped_phases[labels[0]]
-        circ_obj = Circular(np.rad2deg(all_angles) if unit == "degrees" else all_angles, unit=unit)
+        circ_obj = Circular(
+            np.rad2deg(all_angles) if unit == "degrees" else all_angles, unit=unit
+        )
         return (circ_obj, rejected_indices) if return_rejected else circ_obj
     else:
         circular_dict = {
-            label: Circular(np.rad2deg(angles) if unit == "degrees" else angles, unit=unit)
+            label: Circular(
+                np.rad2deg(angles) if unit == "degrees" else angles, unit=unit
+            )
             for label, angles in grouped_phases.items()
         }
 
