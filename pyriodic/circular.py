@@ -46,7 +46,7 @@ class Circular:
     ):
 
         self.VALID_UNITS = {"degrees", "radians", "hours"}  # hours, years?
-        self.UNIT_RANGES = {"radians": 2 * np.pi +0.001, "degrees": 360, "hours": 24}
+        self.UNIT_RANGES = {"radians": 2 * np.pi + 0.001, "degrees": 360, "hours": 24}
 
         unit = unit.lower()
         if unit not in self.VALID_UNITS:
@@ -90,7 +90,6 @@ class Circular:
                     f"Input data values exceed the valid {unit} range (0 to {expected_range}), "
                     f"but unit is set to '{unit}'."
                 )
-
 
     def mean(self, group_by_label: bool = False):
         if not group_by_label:
