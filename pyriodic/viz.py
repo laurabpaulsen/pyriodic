@@ -85,6 +85,41 @@ class CircPlot:
         # Direction of theta
         self.ax.set_theta_direction(-1)
 
+    def _resolve_color(self, idx=None, label=None, override_color=None):
+        """
+        Determine the color to use for plotting.
+
+        Priority:
+        1. override_color passed directly by user
+        2. group-based color (via idx or label)
+        3. fallback to DEFAULT_COLOUR
+        """
+        if override_color is not None:
+            return override_color
+
+        if label is not None and self.circ.labels is not None:
+            # Use label-to-color matching if you want more control
+            unique_labels = np.unique(self.circ.labels)
+            idx = np.where(unique_labels == label)[0][0]
+
+        if idx is not None and hasattr(self, "colours"):
+            return self.colours[idx % len(self.colours)]
+
+        return DEFAULT_COLOUR
+    
+    def _update_kwargs(self, defaults, kwargs):
+        """
+        Merges default plotting kwargs with user overrides.
+        Extracts and removes 'color' from kwargs to prevent duplication.
+        
+        Returns:
+        - updated kwargs dict
+        - color override (if any)
+        """
+        overwrite_color = kwargs.pop("color", None)
+        updated_kwargs = {**defaults, **kwargs}
+        return updated_kwargs, overwrite_color
+
     def add_points(self, grouped: Optional[bool] = None, **kwargs):
         """
         Plot circular data points on the polar axis.
@@ -114,7 +149,7 @@ class CircPlot:
                 self.ax.scatter(
                     values,
                     [0.5] * len(values),
-                    color=self.colours[idx % len(self.colours)],
+                    color=self._resolve_color(idx=idx, label=label, override_color=kwargs.get("color")),
                     label=label,
                     **kwargs,
                 )
@@ -122,8 +157,8 @@ class CircPlot:
             self.ax.scatter(
                 self.circ.data,
                 [0.5] * len(self.circ.data),
-                color=DEFAULT_COLOUR,
-                label="all",
+                color=self._resolve_color(override_color=kwargs.get("color")),
+                label="Events",
                 **kwargs,
             )
 
@@ -179,7 +214,13 @@ class CircPlot:
             min_x, max_x = 0, self.circ.full_range
             xs, density_vals = vonmises_kde(values, kappa, min_x, max_x, n_bins)
 
-            self.ax.plot(xs, density_vals, color=DEFAULT_COLOUR, label="all", **kwargs)
+            self.ax.plot(
+                xs,
+                density_vals,
+                color=DEFAULT_COLOUR,
+                label="Density of events",
+                **kwargs,
+            )
 
     def add_histogram(
         self,
@@ -236,6 +277,54 @@ class CircPlot:
                 label=f"{label}",
             )
 
+    def add_arrows(
+        self,
+        angles: np.ndarray,
+        lengths: Optional[np.ndarray] = None,
+        labels: Optional[np.ndarray] = None,
+        **kwargs,
+    ):
+        """
+        Plot arrows at specified angles and lengths.
+
+        Parameters
+        ----------
+        angles : np.ndarray
+            1D array of angles (in radians) where arrows should be drawn.
+
+        lengths : np.ndarray, optional
+            Length of each arrow. If None, all arrows will have unit length.
+
+        labels : np.ndarray, optional
+            Optional label array (same length as angles) for grouping and coloring.
+
+        kwargs : dict
+            Additional keyword arguments passed to `ax.arrow`. Common examples: width, color, alpha.
+        """
+
+        arrow_defaults, overwrite_color = self._update_kwargs(dict(width=0.02, head_length=0.0), kwargs)
+
+        if lengths is None:
+            lengths = np.ones_like(angles)
+
+        if labels is not None:
+            unique_labels = np.unique(labels)
+            for idx, label in enumerate(unique_labels):
+                mask = labels == label
+                for angle, r in zip(angles[mask], lengths[mask]):
+                    self.ax.arrow(
+                        angle,
+                        0,
+                        0,
+                        r,
+                        color=self._resolve_color(idx=idx, label=label, override_color=overwrite_color),
+                        label=label,
+                        **arrow_defaults,
+                    )
+        else:
+            for angle, r in zip(angles, lengths):
+                self.ax.arrow(angle, 0, 0, r, color=self._resolve_color(override_color=overwrite_color), **arrow_defaults)
+
     def add_circular_mean(self, grouped: Optional[bool] = None, **kwargs):
         """
         Plot mean resultant vector(s) as arrows.
@@ -248,13 +337,9 @@ class CircPlot:
             If False, plots a single mean vector for all data.
         kwargs : dict
             Additional keyword arguments passed to `ax.arrow`.
-            Common kwargs: width, color, alpha, linewidth.
         """
         if grouped is None:
             grouped = self.group_by_labels
-
-        arrow_defaults = dict(width=0.02, head_length=0.0)  # small arrow body
-        arrow_defaults.update(kwargs)
 
         if grouped:
             if self.circ.labels is None:
@@ -262,33 +347,31 @@ class CircPlot:
                     "Cannot group by labels: no labels present in the Circular object."
                 )
 
+            angles = []
+            lengths = []
+            labels = []
+
             unique_labels = np.unique(self.circ.labels)
-            for idx, label in enumerate(unique_labels):
+            for label in unique_labels:
                 values = self.circ.data[self.circ.labels == label]
                 if len(values) == 0:
                     continue
+                angles.append(circular_mean(values))
+                lengths.append(circular_r(values))
+                labels.append(label)
 
-                mean_angle = circular_mean(values)
-                r = circular_r(values)
+            self.add_arrows(
+                np.array(angles), np.array(lengths), np.array(labels), **kwargs
+            )
 
-                self.ax.arrow(
-                    mean_angle,
-                    0,
-                    0,
-                    r,
-                    color=self.colours[idx % len(self.colours)],
-                    label=label,
-                    **arrow_defaults,
-                )
         else:
             values = self.circ.data
             if len(values) == 0:
                 return
 
-            mean_angle = circular_mean(values)
-            r = circular_r(values)
-
-            self.ax.arrow(mean_angle, 0, 0, r, color=DEFAULT_COLOUR, **arrow_defaults)
+            angle = circular_mean(values)
+            length = circular_r(values)
+            self.add_arrows(np.array([angle]), np.array([length]), **kwargs)
 
     def add_legend(self, location="upper right", **kwargs):
         """
@@ -328,7 +411,7 @@ def plot_phase_diagnostics(
     figsize=None,
     interactive: bool = False,
     window_duration: float = 20.0,
-    title = None
+    title=None,
 ):
     """
     Parameters
@@ -377,7 +460,14 @@ def plot_phase_diagnostics(
             axes = [axes]
 
         slider_ax = plt.axes([0.1, 0.01, 0.8, 0.03])
-        slider = Slider(slider_ax, 'Time (s)', 0, time[-1] - window_duration, valinit=0, valstep=1/fs)
+        slider = Slider(
+            slider_ax,
+            "Time (s)",
+            0,
+            time[-1] - window_duration,
+            valinit=0,
+            valstep=1 / fs,
+        )
 
         lines = []
         marker_objs = []
@@ -389,35 +479,46 @@ def plot_phase_diagnostics(
 
         if data is not None:
             ax = axes[row_idx]
-            line, = ax.plot(time[start_idx:end_idx], data[start_idx:end_idx], color='green', label='Signal')
+            (line,) = ax.plot(
+                time[start_idx:end_idx],
+                data[start_idx:end_idx],
+                color="green",
+                label="Signal",
+            )
             lines.append((line, data))
 
             def scatter_pts(indices, color, label):
-                return ax.plot([], [], 'o', color=color, label=label, markersize=4)[0]
+                return ax.plot([], [], "o", color=color, label=label, markersize=4)[0]
 
             # --- Markers
             if peaks is not None:
-                peak_sc = scatter_pts(peaks, 'blue', 'Peaks')
+                peak_sc = scatter_pts(peaks, "blue", "Peaks")
                 marker_objs.append((peak_sc, np.asarray(peaks)))
             if troughs is not None:
-                trough_sc = scatter_pts(troughs, 'purple', 'Troughs')
+                trough_sc = scatter_pts(troughs, "purple", "Troughs")
                 marker_objs.append((trough_sc, np.asarray(troughs)))
             flat_idxs = []
             if flat_start_stop is not None:
                 if isinstance(flat_start_stop[0], (tuple, list)):
-                    flat_idxs = [i for start, end in flat_start_stop for i in range(start, end)]
+                    flat_idxs = [
+                        i for start, end in flat_start_stop for i in range(start, end)
+                    ]
                 else:
                     flat_idxs = flat_start_stop
-                flat_sc = scatter_pts(flat_idxs, 'orange', 'Flat')
+                flat_sc = scatter_pts(flat_idxs, "orange", "Flat")
                 marker_objs.append((flat_sc, np.asarray(flat_idxs)))
 
             ax.legend(loc="upper right")
             row_idx += 1
 
-
         # --- Phase angles
         for label, phase in phase_angles.items():
-            line, = axes[row_idx].plot(time[start_idx:end_idx], phase[start_idx:end_idx], color='grey', label=label)
+            (line,) = axes[row_idx].plot(
+                time[start_idx:end_idx],
+                phase[start_idx:end_idx],
+                color="grey",
+                label=label,
+            )
             axes[row_idx].set_ylabel(label)
             lines.append((line, phase))
             row_idx += 1
@@ -434,7 +535,13 @@ def plot_phase_diagnostics(
             for ax in axes:
                 ev_objs = []
                 for ev_sample, ev_label in zip(events, event_labels):
-                    line = ax.axvline(x=0, color=label_colors[ev_label], linestyle="--", alpha=0.5, visible=False)
+                    line = ax.axvline(
+                        x=0,
+                        color=label_colors[ev_label],
+                        linestyle="--",
+                        alpha=0.5,
+                        visible=False,
+                    )
                     ev_objs.append((line, ev_sample))
                 event_lines.append(ev_objs)
 
@@ -480,20 +587,26 @@ def plot_phase_diagnostics(
         ax_idx = 0
 
         if data is not None:
-            axes[ax_idx].plot(time, data, label="Signal", color="forestgreen", linewidth=1)
+            axes[ax_idx].plot(
+                time, data, label="Signal", color="forestgreen", linewidth=1
+            )
             for arr, label, color in zip(
                 [peaks, flat_start_stop, troughs],
                 ["Peaks", "Flat", "Troughs"],
-                ["blue", "orange", "purple"]
+                ["blue", "orange", "purple"],
             ):
                 if arr is not None and len(arr) > 0:
                     if isinstance(arr[0], (tuple, list)):
                         flat_idx = [i for start, end in arr for i in range(start, end)]
                         y_vals = [data[i] for i in flat_idx]
-                        axes[ax_idx].scatter(time[flat_idx], y_vals, s=3, label=label, color=color)
+                        axes[ax_idx].scatter(
+                            time[flat_idx], y_vals, s=3, label=label, color=color
+                        )
                     else:
                         y_vals = [data[i] for i in arr]
-                        axes[ax_idx].scatter(time[arr], y_vals, s=3, label=label, color=color)
+                        axes[ax_idx].scatter(
+                            time[arr], y_vals, s=3, label=label, color=color
+                        )
             axes[ax_idx].legend(loc="upper right")
             ax_idx += 1
 
@@ -511,7 +624,12 @@ def plot_phase_diagnostics(
             for ev_idx, ev_sample in enumerate(events):
                 lbl = event_labels[ev_idx]
                 for ax in axes:
-                    ax.axvline(ev_sample / fs, color=label_color_map[lbl], linestyle='--', alpha=0.5)
+                    ax.axvline(
+                        ev_sample / fs,
+                        color=label_color_map[lbl],
+                        linestyle="--",
+                        alpha=0.5,
+                    )
 
         axes[-1].set_xlabel("Time (s)")
         for ax in axes:
