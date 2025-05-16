@@ -62,15 +62,15 @@ class RawSignal:
         self.ts = signal.sosfiltfilt(sos, self.ts)
         self._history.append(f"bandpass({low}-{high})")
 
-    def resample(self, sfreq = Union[int, float]):
+    def resample(self, sfreq=Union[int, float]):
         """
-        
+
         Args:
             sfreq: New sampling rate
         """
         raise NotImplementedError
         # resample
-        
+
         # update sfreq attribute
         # add attribute that shows that data has been resampled
         pass
@@ -78,42 +78,34 @@ class RawSignal:
     def smoothing(self, window_size: int = 20):
         """
         Smooths the timeseries by calculating the moving average
-        
+
         Args:
-            window_size (int): Number of time points on either side of the center point 
-                            to include in the moving average. The total window size 
+            window_size (int): Number of time points on either side of the center point
+                            to include in the moving average. The total window size
                             will be `2 * window_size + 1`.
         """
 
-
-        padded_ts = np.pad(self.ts, window_size, constant_values = (np.nan,))
+        padded_ts = np.pad(self.ts, window_size, constant_values=(np.nan,))
 
         # moving average
-        wsize = window_size*2+1
-        tmp = np.vstack([padded_ts[i:i+wsize] for i in range(len(padded_ts)-wsize+1)])
-        
+        wsize = window_size * 2 + 1
+        tmp = np.vstack(
+            [padded_ts[i : i + wsize] for i in range(len(padded_ts) - wsize + 1)]
+        )
+
         new_ts = np.nanmean(tmp, axis=1)
 
         self.ts = new_ts
 
-
-        self._history.append(f"Smoothing has been applied with a window size of {window_size}")
-
-
-
+        self._history.append(
+            f"Smoothing has been applied with a window size of {window_size}"
+        )
 
     @staticmethod
-    def _peak_finder(
-        ts, 
-        distance,
-        prominence
-        ):
-            
-        peaks, _ = signal.find_peaks(
-                ts, distance=distance, prominence=prominence
-        )
+    def _peak_finder(ts, distance, prominence):
+
+        peaks, _ = signal.find_peaks(ts, distance=distance, prominence=prominence)
         return peaks
-    
 
     def phase_hilbert(self):
         """
@@ -149,7 +141,7 @@ class RawSignal:
 
         if peak_finder is None:
             peaks = self._peak_finder(self.ts, distance=distance, prominence=prominence)
-        else: 
+        else:
             try:
                 peaks = peak_finder(self.ts)
             except Exception as e:
@@ -173,10 +165,7 @@ class RawSignal:
 
         return (phase, peaks, troughs)
 
-    def phase_onepoint(
-        self,
-        peak_finder=None, distance=100, prominence=0.01
-    ):
+    def phase_onepoint(self, peak_finder=None, distance=100, prominence=0.01):
         """
         Extract phase using linear interpolation between from 0 to 2pi between peaks.
 
@@ -190,19 +179,17 @@ class RawSignal:
             peaks
         """
 
-
         if peak_finder is None:
             peaks = self._peak_finder(self.ts, distance=distance, prominence=prominence)
         else:
             peaks = peak_finder(self.ts)  # assume user handles their own params
 
         phase = np.full_like(self.ts, np.nan, dtype=np.float32)
-        
+
         for p1, p2 in zip(peaks[:-1], peaks[1:]):
             phase[p1:p2] = np.linspace(0, 2 * np.pi, p2 - p1)
             phase[p1] = 0
             phase[p2] = 2 * np.pi
-        
 
         return phase, peaks
 
