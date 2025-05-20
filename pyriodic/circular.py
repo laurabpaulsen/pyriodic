@@ -116,7 +116,7 @@ class Circular:
     def r(self):
         return circular_r(self.data)
 
-    def plot(self, ax=None, histogram=False, group_by_labels=False):
+    def plot(self, ax=None, histogram=None, group_by_labels=False):
         """"""
         from .viz import CircPlot
 
