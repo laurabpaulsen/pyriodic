@@ -355,12 +355,9 @@ document.write(`
 </li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-pyriodic.stats">pyriodic.stats module</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.stats.angular_randomisation_test"><code class="docutils literal notranslate"><span class="pre">angular_randomisation_test()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.stats.kuiper_test"><code class="docutils literal notranslate"><span class="pre">kuiper_test()</span></code></a></li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic-stats-module">pyriodic.stats module</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-pyriodic.utils">pyriodic.utils module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.utils.calculate_p_value"><code class="docutils literal notranslate"><span class="pre">calculate_p_value()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.utils.dat2rad"><code class="docutils literal notranslate"><span class="pre">dat2rad()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.utils.rad2dat"><code class="docutils literal notranslate"><span class="pre">rad2dat()</span></code></a></li>
 </ul>
@@ -464,7 +461,7 @@ Values should be in the range appropriate to the specified <cite>unit</cite>.</p
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pyriodic.circular.Circular.plot">
-<span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">histogram</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">group_by_labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyriodic.circular.Circular.plot" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">histogram</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">group_by_labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyriodic.circular.Circular.plot" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -783,41 +780,35 @@ will be <cite>2 * window_size + 1</cite>.</p>
 </dd></dl>
 
 </section>
-<section id="module-pyriodic.stats">
-<span id="pyriodic-stats-module"></span><h2>pyriodic.stats module<a class="headerlink" href="#module-pyriodic.stats" title="Link to this heading">#</a></h2>
+<section id="pyriodic-stats-module">
+<h2>pyriodic.stats module<a class="headerlink" href="#pyriodic-stats-module" title="Link to this heading">#</a></h2>
+</section>
+<section id="module-pyriodic.utils">
+<span id="pyriodic-utils-module"></span><h2>pyriodic.utils module<a class="headerlink" href="#module-pyriodic.utils" title="Link to this heading">#</a></h2>
 <dl class="py function">
-<dt class="sig sig-object py" id="pyriodic.stats.angular_randomisation_test">
-<span class="sig-prename descclassname"><span class="pre">pyriodic.stats.</span></span><span class="sig-name descname"><span class="pre">angular_randomisation_test</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pyriodic.circular.Circular" title="pyriodic.circular.Circular"><span class="pre">Circular</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pyriodic.circular.Circular" title="pyriodic.circular.Circular"><span class="pre">Circular</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyriodic.stats.angular_randomisation_test" title="Link to this definition">#</a></dt>
-<dd><p>This function performs the angular randomisation test for homogeneity of 2 groups</p>
-<p><a class="reference external" href="https://ijnaa.semnan.ac.ir/article_5992_e5a258374dedcbb40d792b81bfc94591.pdf">https://ijnaa.semnan.ac.ir/article_5992_e5a258374dedcbb40d792b81bfc94591.pdf</a></p>
-<p>H0: the samples come from the same population
-HA: the samples do not come from the same population</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="pyriodic.stats.kuiper_test">
-<span class="sig-prename descclassname"><span class="pre">pyriodic.stats.</span></span><span class="sig-name descname"><span class="pre">kuiper_test</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pyriodic.circular.Circular" title="pyriodic.circular.Circular"><span class="pre">Circular</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyriodic.stats.kuiper_test" title="Link to this definition">#</a></dt>
-<dd><p>Perform Kuiper’s test for uniformity on circular data.</p>
+<dt class="sig sig-object py" id="pyriodic.utils.calculate_p_value">
+<span class="sig-prename descclassname"><span class="pre">pyriodic.utils.</span></span><span class="sig-name descname"><span class="pre">calculate_p_value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">observed_stat</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">null_distribution</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alternative</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'greater'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'less'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'two-sided'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'greater'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#pyriodic.utils.calculate_p_value" title="Link to this definition">#</a></dt>
+<dd><p>Compute the p-value for a given observed statistic against a null distribution.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>a</strong> (<a class="reference internal" href="#pyriodic.circular.Circular" title="pyriodic.circular.Circular"><em>Circular</em></a>) – An instance of the Circular class containing the data to test.</p></li>
-<li><p><strong>return_stat</strong> (<em>bool</em>) – If True, return the test statistic in addition to the p-value.</p></li>
+<li><p><strong>observed_stat</strong> (<em>float</em>) – The observed test statistic.</p></li>
+<li><p><strong>null_distribution</strong> (<em>np.ndarray</em>) – Array of test statistics computed under the null hypothesis.</p></li>
+<li><p><strong>alternative</strong> (<em>{'greater'</em><em>, </em><em>'less'</em><em>, </em><em>'two-sided'}</em><em>, </em><em>default='greater'</em>) – Defines the alternative hypothesis:
+- ‘greater’: test if observed &gt; null
+- ‘less’: test if observed &lt; null
+- ‘two-sided’: test if observed is different from null (absolute deviation)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><ul class="simple">
-<li><p><strong>p_value</strong> (<em>float</em>) – The p-value for the test.</p></li>
-<li><p><strong>stat</strong> (<em>float</em>) – The Kuiper test statistic.</p></li>
-</ul>
-</p>
+<dd class="field-even"><p><strong>p_value</strong> – The computed p-value.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
 </dd>
 </dl>
 </dd></dl>
 
-</section>
-<section id="module-pyriodic.utils">
-<span id="pyriodic-utils-module"></span><h2>pyriodic.utils module<a class="headerlink" href="#module-pyriodic.utils" title="Link to this heading">#</a></h2>
 <dl class="py function">
 <dt class="sig sig-object py" id="pyriodic.utils.dat2rad">
 <span class="sig-prename descclassname"><span class="pre">pyriodic.utils.</span></span><span class="sig-name descname"><span class="pre">dat2rad</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">full_range</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">360</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyriodic.utils.dat2rad" title="Link to this definition">#</a></dt>
@@ -1072,12 +1063,9 @@ Each should be 1D array of same length as <cite>data</cite>.</p></li>
 </li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-pyriodic.stats">pyriodic.stats module</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.stats.angular_randomisation_test"><code class="docutils literal notranslate"><span class="pre">angular_randomisation_test()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.stats.kuiper_test"><code class="docutils literal notranslate"><span class="pre">kuiper_test()</span></code></a></li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic-stats-module">pyriodic.stats module</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-pyriodic.utils">pyriodic.utils module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.utils.calculate_p_value"><code class="docutils literal notranslate"><span class="pre">calculate_p_value()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.utils.dat2rad"><code class="docutils literal notranslate"><span class="pre">dat2rad()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.utils.rad2dat"><code class="docutils literal notranslate"><span class="pre">rad2dat()</span></code></a></li>
 </ul>
