@@ -14,22 +14,14 @@ def test_create_phase_events_unit_handling():
     events = np.array([0, 25, 50, 75, 99])  # evenly spaced
 
     # --- Case 1: Radians input/output ---
-    result_rad = create_phase_events(
-        phase_ts=radians_ts,
-        events=events,
-        unit="radians"
-    )
+    result_rad = create_phase_events(phase_ts=radians_ts, events=events, unit="radians")
 
     assert isinstance(result_rad, Circular)
     assert result_rad.unit == "radians"
     np.testing.assert_allclose(result_rad.data, radians_ts[events])
 
     # --- Case 2: Degrees input/output ---
-    result_deg = create_phase_events(
-        phase_ts=degrees_ts,
-        events=events,
-        unit="degrees"
-    )
+    result_deg = create_phase_events(phase_ts=degrees_ts, events=events, unit="degrees")
 
     assert isinstance(result_deg, Circular)
     assert result_deg.unit == "degrees"

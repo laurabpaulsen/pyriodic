@@ -106,12 +106,12 @@ class CircPlot:
             return self.colours[idx % len(self.colours)]
 
         return DEFAULT_COLOUR
-    
+
     def _update_kwargs(self, defaults, kwargs):
         """
         Merges default plotting kwargs with user overrides.
         Extracts and removes 'color' from kwargs to prevent duplication.
-        
+
         Returns:
         - updated kwargs dict
         - color override (if any)
@@ -149,7 +149,9 @@ class CircPlot:
                 self.ax.scatter(
                     values,
                     [0.5] * len(values),
-                    color=self._resolve_color(idx=idx, label=label, override_color=kwargs.get("color")),
+                    color=self._resolve_color(
+                        idx=idx, label=label, override_color=kwargs.get("color")
+                    ),
                     label=label,
                     **kwargs,
                 )
@@ -302,7 +304,9 @@ class CircPlot:
             Additional keyword arguments passed to `ax.arrow`. Common examples: width, color, alpha.
         """
 
-        arrow_defaults, overwrite_color = self._update_kwargs(dict(width=0.02, head_length=0.0), kwargs)
+        arrow_defaults, overwrite_color = self._update_kwargs(
+            dict(width=0.02, head_length=0.0), kwargs
+        )
 
         if lengths is None:
             lengths = np.ones_like(angles)
@@ -317,13 +321,22 @@ class CircPlot:
                         0,
                         0,
                         r,
-                        color=self._resolve_color(idx=idx, label=label, override_color=overwrite_color),
+                        color=self._resolve_color(
+                            idx=idx, label=label, override_color=overwrite_color
+                        ),
                         label=label,
                         **arrow_defaults,
                     )
         else:
             for angle, r in zip(angles, lengths):
-                self.ax.arrow(angle, 0, 0, r, color=self._resolve_color(override_color=overwrite_color), **arrow_defaults)
+                self.ax.arrow(
+                    angle,
+                    0,
+                    0,
+                    r,
+                    color=self._resolve_color(override_color=overwrite_color),
+                    **arrow_defaults,
+                )
 
     def add_circular_mean(self, grouped: Optional[bool] = None, **kwargs):
         """

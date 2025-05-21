@@ -3,6 +3,7 @@ from typing import Callable, Optional, Literal
 import inspect
 from .utils import calculate_p_value
 
+
 def ecdf(data: np.ndarray, points: np.ndarray) -> np.ndarray:
     """
     Compute the Empirical Cumulative Distribution Function (ECDF) of the given data at specified points.
@@ -48,8 +49,7 @@ def permutation_test_against_null(
     n_bins: int = 30,
     verbose: bool = True,
     return_null_distribution=False,
-    return_null_samples=False
-
+    return_null_samples=False,
 ) -> tuple:
     """
 
@@ -117,13 +117,12 @@ def permutation_test_against_null(
 
     def compute_stat(x, y):
         return stat_fun(x, y, n_bins=n_bins) if accepts_n_bins else stat_fun(x, y)
-    
+
     n_events = len(observed)
 
     # generate null samples
     null_samples = [
-        rng.choice(phase_pool, size=n_events, replace=False)
-        for _ in range(n_null)
+        rng.choice(phase_pool, size=n_events, replace=False) for _ in range(n_null)
     ]
 
     # Compute observed-to-null distances
@@ -152,19 +151,18 @@ def permutation_test_against_null(
     return tuple(result)
 
 
-
 def permutation_test_between_samples(
-        sample1: np.ndarray,
-        sample2: np.ndarray,
-        stat_fun: Optional[Callable] = None,
-        alternative: Literal["greater", "less", "two-sided"] = "greater",
-        n_permutations: int = 1000,
-        rng: Optional[np.random.Generator] = None,
-        n_bins: int = 30,
-        verbose: bool = True,
-        return_null_distribution: bool = False,
+    sample1: np.ndarray,
+    sample2: np.ndarray,
+    stat_fun: Optional[Callable] = None,
+    alternative: Literal["greater", "less", "two-sided"] = "greater",
+    n_permutations: int = 1000,
+    rng: Optional[np.random.Generator] = None,
+    n_bins: int = 30,
+    verbose: bool = True,
+    return_null_distribution: bool = False,
 ) -> tuple:
-    
+
     if rng is None:
         rng = np.random.default_rng()
 
@@ -201,4 +199,3 @@ def permutation_test_between_samples(
         return observed_stat, p_value, null_distribution
     else:
         return observed_stat, p_value
-    

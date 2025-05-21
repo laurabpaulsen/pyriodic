@@ -15,7 +15,7 @@ def rad2dat(rad: Union[np.ndarray, float, int], full_range: Union[float, int] = 
 def calculate_p_value(
     observed_stat: float,
     null_distribution: np.ndarray,
-    alternative: Literal["greater", "less", "two-sided"] = "greater"
+    alternative: Literal["greater", "less", "two-sided"] = "greater",
 ) -> float:
     """
     Compute the p-value for a given observed statistic against a null distribution.
@@ -48,8 +48,16 @@ def calculate_p_value(
         p = (np.sum(null_distribution <= observed_stat) + 1) / (n + 1)
     elif alternative == "two-sided":
         null_mean = np.mean(null_distribution)
-        p = (np.sum(np.abs(null_distribution - null_mean) >= np.abs(observed_stat - null_mean)) + 1) / (n + 1)
+        p = (
+            np.sum(
+                np.abs(null_distribution - null_mean)
+                >= np.abs(observed_stat - null_mean)
+            )
+            + 1
+        ) / (n + 1)
     else:
-        raise ValueError("Invalid alternative. Choose from 'greater', 'less', or 'two-sided'.")
+        raise ValueError(
+            "Invalid alternative. Choose from 'greater', 'less', or 'two-sided'."
+        )
 
     return p

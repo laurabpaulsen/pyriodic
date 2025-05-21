@@ -2,6 +2,7 @@ import numpy as np
 from scipy import stats
 from sklearn.linear_model import LinearRegression
 
+
 class CircularLinearRegressor:
     def __init__(self):
         self.slope_sin = None
@@ -67,7 +68,6 @@ class CircularLinearRegressor:
         return rho
 
 
-
 class LinearCircularRegressor:
     """
     Linear-circular regression model.
@@ -129,7 +129,6 @@ class LinearCircularRegressor:
         X = np.column_stack((np.cos(angles), np.sin(angles)))
         return self.model.predict(X)
 
-
     def permutation_test(self, angles, y, n_perm=1000, random_state=None):
         """
         Perform a permutation test on the model's R^2.
@@ -161,5 +160,3 @@ class LinearCircularRegressor:
 
         p_value = np.mean(r2_null >= self.r_squared)
         return p_value
-
-
