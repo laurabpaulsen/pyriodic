@@ -169,6 +169,7 @@ def create_phase_events(
     first_samp: int = 0,
     rejection_method: Optional[str] = None,
     rejection_criterion: Optional[float] = None,
+    bad_segments: Optional[np.ndarray] = None,
     return_rejected: bool = False,
 ) -> Union["PhaseEvents", tuple["PhaseEvents", list[int]]]:
     """
@@ -200,6 +201,8 @@ def create_phase_events(
     rejection_criterion : float, optional
         Threshold (in standard deviation units) for identifying outlier segments.
         Only used if `rejection_method='segment_duration_sd'`. Default is 3.
+    bad_segments : Optional[np.ndarray]
+        For ignoring events that fall within specific segments of the phase time series. Shape should be (n_segments, 2), where each row is a (start, stop) index pair in samples.
     return_rejected : bool
         If True, also return a list of rejected event indices.
 
@@ -264,6 +267,14 @@ def create_phase_events(
                 n_rejected += 1
                 rejected_indices.append(event)
                 continue
+        
+        if bad_segments is not None:
+            # check if the event falls within any bad segment
+            for start, stop in bad_segments:
+                if start <= idx < stop:
+                    n_rejected += 1
+                    rejected_indices.append(event)
+                    continue
 
         grouped_phases[label].append(phase_val)
 
