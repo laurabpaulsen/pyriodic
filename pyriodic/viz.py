@@ -80,7 +80,8 @@ class CircPlot:
         self.prepare_ax(radius_lim=radius_lim, angles=angles, labels=labels, title=title)
 
         if colours:
-            self.colours = [colours] if colours.type() == "str" else colours
+            # Allow either a single colour string or an iterable of colours
+            self.colours = [colours] if isinstance(colours, str) else colours
         else:
             # Automatically pick colors from matplotlib's default cycle
             prop_cycle = plt.rcParams["axes.prop_cycle"]
