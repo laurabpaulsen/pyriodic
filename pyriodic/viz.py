@@ -2,25 +2,12 @@ import matplotlib.pyplot as plt
 from matplotlib.widgets import Slider
 import numpy as np
 from .circular import Circular
-from math import pi
+from .density import vonmises_kde
 from typing import Union, Optional
 from .desc import circular_mean, circular_r
 
 
 DEFAULT_COLOUR = "forestgreen"
-
-
-def vonmises_kde(data, kappa, min_x=0, max_x=2 * pi, n_bins=100):
-    from scipy.special import i0
-
-    bins = np.linspace(min_x, max_x, n_bins)
-    x = np.linspace(min_x, max_x, n_bins)
-    # integrate vonmises kernels
-    kde = np.exp(kappa * np.cos(x[:, None] - data[None, :])).sum(1) / (
-        2 * np.pi * i0(kappa)
-    )
-    kde /= np.trapz(kde, x=bins)
-    return bins, kde
 
 
 class CircPlot:
@@ -499,7 +486,7 @@ def plot_phase_diagnostics(
     """
     if type(phase_angles) is not dict:
         phase_angles = {"Phase": phase_angles}
-        
+
     n_phase_axes = len(phase_angles)
     n_rows = n_phase_axes + (1 if data is not None else 0)
     time = np.arange(len(next(iter(phase_angles.values())))) / fs
