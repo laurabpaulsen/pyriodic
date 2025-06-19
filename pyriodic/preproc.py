@@ -1,5 +1,5 @@
 import numpy as np
-from typing import Union, Optional, Callable
+from typing import Union, Optional, Callable, Literal
 from scipy import interpolate, signal
 from scipy.signal import hilbert
 import logging
@@ -14,6 +14,7 @@ class RawSignal:
 
         self.fs = fs
         self.info = info or {}
+        self.bad_segments : Union[None, np.ndarray] = None
         # self._phase = None
         # self._peaks = None
         # self._troughs = None
@@ -73,6 +74,7 @@ class RawSignal:
 
         # update sfreq attribute
         # add attribute that shows that data has been resampled
+        # also resample annotations if any
         pass
 
     def smoothing(self, window_size: int = 20):
@@ -100,6 +102,47 @@ class RawSignal:
         self._history.append(
             f"Smoothing has been applied with a window size of {window_size}"
         )
+
+    def convert_seconds_to_samples(self, array):
+        # this could probably be done in a more simple way?
+        array_shape = array.shape
+        flat_array = array.flatten()
+
+        flat_array = np.array([int(second*self.fs) for second in flat_array])
+                
+        return flat_array.reshape(array_shape)
+
+    def annotate_bad_segments(self, segments:np.ndarray, unit:Literal["s", "sample"]):
+        """
+        Annotates bad segments in the signal.
+        Args:
+            segments (np.ndarray): Array of segments to annotate. Dimensions should be (n, 2) where n is the number of segments. Each segment is defined by a start and end point.
+            unit (str): Unit of the segments, either "s" for seconds or "sample" for samples.
+        """
+        if unit == "sample":
+            # assume segments are already in samples
+            segments = np.asarray(segments, dtype=int)
+
+        elif unit== "s":
+            segments = self.convert_seconds_to_samples(segments)
+        
+        else: 
+            raise ValueError("Only accepts 's' or 'sample' as unit")
+        
+        # Validate segments
+        if segments.ndim != 2 or segments.shape[1] != 2:
+            raise ValueError("Segments must be a 2D array with shape (n, 2)")
+        
+        # check if segments are within bounds
+        if np.any(segments < 0) or np.any(segments[:, 1]
+                     > len(self.ts)):
+                raise ValueError("Segments must be within the bounds of the time series")
+        
+        # check if start is less than end
+        if np.any(segments[:, 0] >= segments[:, 1]):
+            raise ValueError("Start of segment must be less than end of segment")
+        
+        self.bad_segments = segments
 
     @staticmethod
     def _peak_finder(ts, distance, prominence):
