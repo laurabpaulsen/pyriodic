@@ -2,49 +2,35 @@ name: Deploy Docs
 
 on:
   push:
-    branches-ignore: # does not trigger anymore, kept in case we want to use it later
-      - '**'
-    #branches:
-    #  - main
+    branches: [main]
 
 permissions:
-  contents: write  # Allows GitHub Actions to push to gh-pages
+  contents: write
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo
+      - name: Checkout code
         uses: actions/checkout@v3
 
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: 3.13
+          python-version: 3.10
 
-      - name: Install packages
+      - name: Install dependencies
         run: |
-          pip install .
-      
-      - name: Install documentation dependencies
-        run: pip install -r docs/requirements.txt
+          pip install -r docs_src/requirements.txt
+          pip install .  # your local package
 
-      - name: Install Pandoc
-        run: sudo apt-get update && sudo apt-get install -y pandoc
-
-        
-      - name: Install Sphinx and theme
+      - name: Build documentation
         run: |
-          pip install --upgrade pip
-          pip install sphinx furo sphinx-book-theme
-
-      - name: Build HTML
-        run: |
-          sphinx-build docs docs/_build/html
+          sphinx-build -M html docs_src docs/_site
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: docs/_build/html
+          publish_dir: docs/_site/html
