@@ -180,17 +180,25 @@ class RawSignal:
 
     def phase_linear(self, peak_finder=None, distance=100, prominence=0.01):
         """
-        Extract phase using linear interpolation between peaks and troughs at
+        Extract phase using linear interpolation between peaks and troughs.
 
-        Args:
-            peak_finder (callable): Optional custom function(ts, **kwargs) -> np.ndarray of peak indices.
-            distance (int): Minimum distance between peaks.
-            prominence (float): Prominence threshold for peak detection.
+        Parameters
+        ----------
+        peak_finder : callable, optional
+            Optional custom function of the form ``func(ts, **kwargs) -> np.ndarray`` returning peak indices.
+        distance : int
+            Minimum distance between peaks.
+        prominence : float
+            Prominence threshold for peak detection.
 
-        Returns:
-            phase
-            peaks
-            troughs
+        Returns
+        -------
+        phase : np.ndarray
+            The extracted phase values (in radians).
+        peaks : np.ndarray
+            Indices of detected peaks.
+        troughs : np.ndarray
+            Indices of detected troughs.
         """
 
         if peak_finder is None:
@@ -221,16 +229,23 @@ class RawSignal:
 
     def phase_onepoint(self, peak_finder=None, distance=100, prominence=0.01):
         """
-        Extract phase using linear interpolation between from 0 to 2pi between peaks.
+        Extract phase by linearly interpolating from 0 to 2π between detected peaks.
 
-        Args:
-            peak_finder (callable): Optional custom function(ts, **kwargs) -> np.ndarray of peak indices.
-            distance (int): Minimum distance between peaks.
-            prominence (float): Prominence threshold for peak detection.
+        Parameters
+        ----------
+        peak_finder : callable, optional
+            Optional custom function of the form ``func(ts, **kwargs) -> np.ndarray`` returning peak indices.
+        distance : int
+            Minimum distance between peaks, passed to the peak detection algorithm.
+        prominence : float
+            Prominence threshold for peak detection.
 
-        Returns:
-            phase
-            peaks
+        Returns
+        -------
+        phase : np.ndarray
+            The interpolated phase values (ranging from 0 to 2π).
+        peaks : np.ndarray
+            Indices of the detected peaks used for phase interpolation.
         """
 
         if peak_finder is None:
@@ -259,17 +274,27 @@ class RawSignal:
         Extract phase using a three-point method:
         Peak → descending slope → flat region → ascending slope → next peak.
 
-        Args:
-            peak_finder (callable): Optional function(ts, **kwargs) → np.ndarray of peak indices.
-            distance (int): Min distance between peaks (used if no custom peak_finder).
-            prominence (float): Prominence threshold for peak detection.
-            percentile (float): Percentile of absolute gradient below which region is considered 'flat'.
-            descent_window (int): Number of samples used to confirm descent/ascent before/after flat region.
+        Parameters
+        ----------
+        peak_finder : callable, optional
+            Optional custom function of the form ``func(ts, **kwargs) -> np.ndarray`` returning peak indices.
+        distance : int
+            Minimum distance between peaks, used if no custom peak finder is provided.
+        prominence : float
+            Prominence threshold for peak detection.
+        percentile : float
+            Percentile of the absolute gradient below which a region is considered flat.
+        descent_window : int
+            Number of samples used to confirm descending and ascending slopes before and after flat regions.
 
-        Returns:
-            phase (np.ndarray): Phase array in radians (0 to 2π)
-            peaks (np.ndarray): Indices of detected peaks
-            troughs (list of tuples): List of (trough_start, trough_end) for flat segments
+        Returns
+        -------
+        phase : np.ndarray
+            Phase array in radians (0 to 2π).
+        peaks : np.ndarray
+            Indices of detected peaks.
+        troughs : list of tuple
+            Each tuple contains the (start_index, end_index) of a flat region between peaks.
         """
         if peak_finder is None:
 

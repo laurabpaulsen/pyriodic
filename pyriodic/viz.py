@@ -85,7 +85,7 @@ class CircPlot:
         Prepare and customize a polar plot axis (`self.ax`) with standard aesthetic settings.
 
         Parameters:
-        ----------
+        -----------
         radius_lim : tuple or None
             Optional tuple (min, max) for setting radial (r-axis) limits.
         angles : list of float or None

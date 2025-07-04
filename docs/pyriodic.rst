@@ -12,13 +12,6 @@ pyriodic.circular
    :show-inheritance:
    :undoc-members:
 
-pyriodic.desc
-----------------------------------
-
-.. automodule:: pyriodic.desc
-   :members:
-   :show-inheritance:
-   :undoc-members:
 
 pyriodic.phase\_events
 -----------------------------
@@ -36,10 +29,10 @@ pyriodic.preproc module
    :show-inheritance:
    :undoc-members:
 
-pyriodic.stats module
+pyriodic.desc module
 ---------------------
 
-.. automodule:: pyriodic.stats
+.. automodule:: pyriodic.desc
    :members:
    :show-inheritance:
    :undoc-members:

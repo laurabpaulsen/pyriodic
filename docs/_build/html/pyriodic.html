@@ -48,7 +48,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="pyriodic" href="modules.html" />
-    <link rel="prev" title="pyriodic documentation" href="index.html" />
+    <link rel="prev" title="Why circular statistics matter - the case of respiratory signals" href="tutorials/03_why_circular_stats.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -152,21 +152,24 @@
  </script></div>
         <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
-        <p aria-level="2" class="caption" role="heading"><span class="caption-text">API</span></p>
-<ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">pyriodic package</a></li>
-</ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Contents:</span></p>
-<ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active has-children"><a class="reference internal" href="modules.html">pyriodic</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
-<li class="toctree-l2 current active"><a class="current reference internal" href="#">pyriodic package</a></li>
-</ul>
-</details></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="tutorials.html">Tutorials</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="tutorials/index.html">Tutorials</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="tutorials/01_getting_started.html">testing</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tutorials/02_phase_diagnostics.html">Comparisions of methods for phase extraction from time series data</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tutorials/03_why_circular_stats.html">Why circular statistics matter - the case of respiratory signals</a></li>
 
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">API Reference</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">pyriodic package</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Full Module Index</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="modules.html">pyriodic</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">pyriodic package</a></li>
 </ul>
 </details></li>
 </ul>
@@ -331,13 +334,6 @@ document.write(`
 </li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-pyriodic.desc">pyriodic.desc</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.desc.angular_deviation"><code class="docutils literal notranslate"><span class="pre">angular_deviation()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.desc.circular_mean"><code class="docutils literal notranslate"><span class="pre">circular_mean()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.desc.circular_r"><code class="docutils literal notranslate"><span class="pre">circular_r()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.desc.circular_standard_deviation"><code class="docutils literal notranslate"><span class="pre">circular_standard_deviation()</span></code></a></li>
-</ul>
-</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-pyriodic.phase_events">pyriodic.phase_events</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.phase_events.PhaseEvents"><code class="docutils literal notranslate"><span class="pre">PhaseEvents</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.phase_events.PhaseEvents.mean"><code class="docutils literal notranslate"><span class="pre">PhaseEvents.mean()</span></code></a></li>
@@ -372,7 +368,13 @@ document.write(`
 </li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic-stats-module">pyriodic.stats module</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-pyriodic.desc">pyriodic.desc module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.desc.angular_deviation"><code class="docutils literal notranslate"><span class="pre">angular_deviation()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.desc.circular_mean"><code class="docutils literal notranslate"><span class="pre">circular_mean()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.desc.circular_r"><code class="docutils literal notranslate"><span class="pre">circular_r()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.desc.circular_standard_deviation"><code class="docutils literal notranslate"><span class="pre">circular_standard_deviation()</span></code></a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-pyriodic.utils">pyriodic.utils module</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.utils.calculate_p_value"><code class="docutils literal notranslate"><span class="pre">calculate_p_value()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.utils.dat2rad"><code class="docutils literal notranslate"><span class="pre">dat2rad()</span></code></a></li>
@@ -488,49 +490,6 @@ Values should be in the range appropriate to the specified <cite>unit</cite>.</p
 </dd></dl>
 
 </section>
-<section id="module-pyriodic.desc">
-<span id="pyriodic-desc"></span><h2>pyriodic.desc<a class="headerlink" href="#module-pyriodic.desc" title="Link to this heading">#</a></h2>
-<dl class="py function">
-<dt class="sig sig-object py" id="pyriodic.desc.angular_deviation">
-<span class="sig-prename descclassname"><span class="pre">pyriodic.desc.</span></span><span class="sig-name descname"><span class="pre">angular_deviation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rad</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyriodic.desc.angular_deviation" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="pyriodic.desc.circular_mean">
-<span class="sig-prename descclassname"><span class="pre">pyriodic.desc.</span></span><span class="sig-name descname"><span class="pre">circular_mean</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rad</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wrap_to_2pi</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyriodic.desc.circular_mean" title="Link to this definition">#</a></dt>
-<dd><p>Compute the mean angle from a list of angles in radians.</p>
-<section id="parameters">
-<h3>Parameters:<a class="headerlink" href="#parameters" title="Link to this heading">#</a></h3>
-<dl class="simple">
-<dt>rad<span class="classifier">np.ndarray</span></dt><dd><p>Array of angles in radians.</p>
-</dd>
-<dt>wrap_to_2pi<span class="classifier">bool, default=True</span></dt><dd><p>If True, wraps result to range [0, 2π]. If False, result is in [-π, π].</p>
-</dd>
-</dl>
-</section>
-<section id="returns">
-<h3>Returns:<a class="headerlink" href="#returns" title="Link to this heading">#</a></h3>
-<dl class="simple">
-<dt>mean<span class="classifier">float</span></dt><dd><p>The circular mean angle.</p>
-</dd>
-</dl>
-</section>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="pyriodic.desc.circular_r">
-<span class="sig-prename descclassname"><span class="pre">pyriodic.desc.</span></span><span class="sig-name descname"><span class="pre">circular_r</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rad</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyriodic.desc.circular_r" title="Link to this definition">#</a></dt>
-<dd><p>Compute the length of the mean resultant vector ( r ), a measure of circular concentration.</p>
-<div class="math notranslate nohighlight">
-\[r = \sqrt{\bar{C}^2 + \bar{S}^2}\]</div>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="pyriodic.desc.circular_standard_deviation">
-<span class="sig-prename descclassname"><span class="pre">pyriodic.desc.</span></span><span class="sig-name descname"><span class="pre">circular_standard_deviation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rad</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyriodic.desc.circular_standard_deviation" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-</section>
 <section id="module-pyriodic.phase_events">
 <span id="pyriodic-phase-events"></span><h2>pyriodic.phase_events<a class="headerlink" href="#module-pyriodic.phase_events" title="Link to this heading">#</a></h2>
 <dl class="py class">
@@ -599,16 +558,8 @@ otherwise, returns a PhaseEvents container grouped by unique labels.</p></li>
 Must be either ‘radians’ or ‘degrees’. Internally, all computations are performed in radians.</p></li>
 <li><p><strong>first_samp</strong> (<em>int</em>) – Offset to subtract from each event index to align with the phase time series
 (useful if phase_ts is a segment of a longer recording).</p></li>
-<li><p><strong>rejection_method</strong> (<em>str</em><em>, </em><em>optional</em>) – <p>Method to reject events based on surrounding phase dynamics.
-Currently supported:</p>
-<blockquote>
-<div><ul>
-<li><p>’segment_duration_sd’ : excludes events occurring during rising or falling phase
-segments whose durations deviate more than <cite>rejection_criterion</cite> standard deviations
-from the mean across cycles.</p></li>
-</ul>
-</div></blockquote>
-</p></li>
+<li><p><strong>rejection_method</strong> (<em>str</em><em>, </em><em>optional</em>) – Method to reject events based on surrounding phase dynamics.
+Supported values: ‘segment_duration_sd’ — excludes events during rising/falling phase segments whose durations deviate more than <cite>rejection_criterion</cite> standard deviations from the mean.</p></li>
 <li><p><strong>rejection_criterion</strong> (<em>float</em><em>, </em><em>optional</em>) – Threshold (in standard deviation units) for identifying outlier segments.
 Only used if <cite>rejection_method=’segment_duration_sd’</cite>. Default is 3.</p></li>
 <li><p><strong>bad_segments</strong> (<em>Optional</em><em>[</em><em>np.ndarray</em><em>]</em>) – For ignoring events that fall within specific segments of the phase time series. Shape should be (n_segments, 2), where each row is a (start, stop) index pair in samples.</p></li>
@@ -712,19 +663,22 @@ Otherwise, returns a PhaseEvents object containing condition-grouped Circular da
 <dl class="py method">
 <dt class="sig sig-object py" id="pyriodic.preproc.RawSignal.phase_linear">
 <span class="sig-name descname"><span class="pre">phase_linear</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">peak_finder</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">distance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prominence</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.01</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyriodic.preproc.RawSignal.phase_linear" title="Link to this definition">#</a></dt>
-<dd><p>Extract phase using linear interpolation between peaks and troughs at</p>
+<dd><p>Extract phase using linear interpolation between peaks and troughs.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>peak_finder</strong> (<em>callable</em>) – Optional custom function(ts, <a href="#id1"><span class="problematic" id="id2">**</span></a>kwargs) -&gt; np.ndarray of peak indices.</p></li>
+<li><p><strong>peak_finder</strong> (<em>callable</em><em>, </em><em>optional</em>) – Optional custom function of the form <code class="docutils literal notranslate"><span class="pre">func(ts,</span> <span class="pre">**kwargs)</span> <span class="pre">-&gt;</span> <span class="pre">np.ndarray</span></code> returning peak indices.</p></li>
 <li><p><strong>distance</strong> (<em>int</em>) – Minimum distance between peaks.</p></li>
 <li><p><strong>prominence</strong> (<em>float</em>) – Prominence threshold for peak detection.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>phase
-peaks
-troughs</p>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>phase</strong> (<em>np.ndarray</em>) – The extracted phase values (in radians).</p></li>
+<li><p><strong>peaks</strong> (<em>np.ndarray</em>) – Indices of detected peaks.</p></li>
+<li><p><strong>troughs</strong> (<em>np.ndarray</em>) – Indices of detected troughs.</p></li>
+</ul>
+</p>
 </dd>
 </dl>
 </dd></dl>
@@ -732,18 +686,21 @@ troughs</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="pyriodic.preproc.RawSignal.phase_onepoint">
 <span class="sig-name descname"><span class="pre">phase_onepoint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">peak_finder</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">distance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prominence</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.01</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyriodic.preproc.RawSignal.phase_onepoint" title="Link to this definition">#</a></dt>
-<dd><p>Extract phase using linear interpolation between from 0 to 2pi between peaks.</p>
+<dd><p>Extract phase by linearly interpolating from 0 to 2π between detected peaks.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>peak_finder</strong> (<em>callable</em>) – Optional custom function(ts, <a href="#id3"><span class="problematic" id="id4">**</span></a>kwargs) -&gt; np.ndarray of peak indices.</p></li>
-<li><p><strong>distance</strong> (<em>int</em>) – Minimum distance between peaks.</p></li>
+<li><p><strong>peak_finder</strong> (<em>callable</em><em>, </em><em>optional</em>) – Optional custom function of the form <code class="docutils literal notranslate"><span class="pre">func(ts,</span> <span class="pre">**kwargs)</span> <span class="pre">-&gt;</span> <span class="pre">np.ndarray</span></code> returning peak indices.</p></li>
+<li><p><strong>distance</strong> (<em>int</em>) – Minimum distance between peaks, passed to the peak detection algorithm.</p></li>
 <li><p><strong>prominence</strong> (<em>float</em>) – Prominence threshold for peak detection.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>phase
-peaks</p>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>phase</strong> (<em>np.ndarray</em>) – The interpolated phase values (ranging from 0 to 2π).</p></li>
+<li><p><strong>peaks</strong> (<em>np.ndarray</em>) – Indices of the detected peaks used for phase interpolation.</p></li>
+</ul>
+</p>
 </dd>
 </dl>
 </dd></dl>
@@ -756,20 +713,20 @@ Peak → descending slope → flat region → ascending slope → next peak.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>peak_finder</strong> (<em>callable</em>) – Optional function(ts, <a href="#id5"><span class="problematic" id="id6">**</span></a>kwargs) → np.ndarray of peak indices.</p></li>
-<li><p><strong>distance</strong> (<em>int</em>) – Min distance between peaks (used if no custom peak_finder).</p></li>
+<li><p><strong>peak_finder</strong> (<em>callable</em><em>, </em><em>optional</em>) – Optional custom function of the form <code class="docutils literal notranslate"><span class="pre">func(ts,</span> <span class="pre">**kwargs)</span> <span class="pre">-&gt;</span> <span class="pre">np.ndarray</span></code> returning peak indices.</p></li>
+<li><p><strong>distance</strong> (<em>int</em>) – Minimum distance between peaks, used if no custom peak finder is provided.</p></li>
 <li><p><strong>prominence</strong> (<em>float</em>) – Prominence threshold for peak detection.</p></li>
-<li><p><strong>percentile</strong> (<em>float</em>) – Percentile of absolute gradient below which region is considered ‘flat’.</p></li>
-<li><p><strong>descent_window</strong> (<em>int</em>) – Number of samples used to confirm descent/ascent before/after flat region.</p></li>
+<li><p><strong>percentile</strong> (<em>float</em>) – Percentile of the absolute gradient below which a region is considered flat.</p></li>
+<li><p><strong>descent_window</strong> (<em>int</em>) – Number of samples used to confirm descending and ascending slopes before and after flat regions.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Phase array in radians (0 to 2π)
-peaks (np.ndarray): Indices of detected peaks
-troughs (list of tuples): List of (trough_start, trough_end) for flat segments</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>phase (np.ndarray)</p>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>phase</strong> (<em>np.ndarray</em>) – Phase array in radians (0 to 2π).</p></li>
+<li><p><strong>peaks</strong> (<em>np.ndarray</em>) – Indices of detected peaks.</p></li>
+<li><p><strong>troughs</strong> (<em>list of tuple</em>) – Each tuple contains the (start_index, end_index) of a flat region between peaks.</p></li>
+</ul>
+</p>
 </dd>
 </dl>
 </dd></dl>
@@ -810,8 +767,48 @@ troughs (list of tuples): List of (trough_start, trough_end) for flat segments</
 </dd></dl>
 
 </section>
-<section id="pyriodic-stats-module">
-<h2>pyriodic.stats module<a class="headerlink" href="#pyriodic-stats-module" title="Link to this heading">#</a></h2>
+<section id="module-pyriodic.desc">
+<span id="pyriodic-desc-module"></span><h2>pyriodic.desc module<a class="headerlink" href="#module-pyriodic.desc" title="Link to this heading">#</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="pyriodic.desc.angular_deviation">
+<span class="sig-prename descclassname"><span class="pre">pyriodic.desc.</span></span><span class="sig-name descname"><span class="pre">angular_deviation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rad</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyriodic.desc.angular_deviation" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyriodic.desc.circular_mean">
+<span class="sig-prename descclassname"><span class="pre">pyriodic.desc.</span></span><span class="sig-name descname"><span class="pre">circular_mean</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rad</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wrap_to_2pi</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyriodic.desc.circular_mean" title="Link to this definition">#</a></dt>
+<dd><p>Compute the mean angle from a list of angles in radians.</p>
+<section id="parameters">
+<h3>Parameters:<a class="headerlink" href="#parameters" title="Link to this heading">#</a></h3>
+<dl class="simple">
+<dt>rad<span class="classifier">np.ndarray</span></dt><dd><p>Array of angles in radians.</p>
+</dd>
+<dt>wrap_to_2pi<span class="classifier">bool, default=True</span></dt><dd><p>If True, wraps result to range [0, 2π]. If False, result is in [-π, π].</p>
+</dd>
+</dl>
+</section>
+<section id="returns">
+<h3>Returns:<a class="headerlink" href="#returns" title="Link to this heading">#</a></h3>
+<dl class="simple">
+<dt>mean<span class="classifier">float</span></dt><dd><p>The circular mean angle.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyriodic.desc.circular_r">
+<span class="sig-prename descclassname"><span class="pre">pyriodic.desc.</span></span><span class="sig-name descname"><span class="pre">circular_r</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rad</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyriodic.desc.circular_r" title="Link to this definition">#</a></dt>
+<dd><p>Compute the length of the mean resultant vector ( r ), a measure of circular concentration.</p>
+<div class="math notranslate nohighlight">
+\[r = \sqrt{\bar{C}^2 + \bar{S}^2}\]</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyriodic.desc.circular_standard_deviation">
+<span class="sig-prename descclassname"><span class="pre">pyriodic.desc.</span></span><span class="sig-name descname"><span class="pre">circular_standard_deviation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rad</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyriodic.desc.circular_standard_deviation" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
 </section>
 <section id="module-pyriodic.utils">
 <span id="pyriodic-utils-module"></span><h2>pyriodic.utils module<a class="headerlink" href="#module-pyriodic.utils" title="Link to this heading">#</a></h2>
@@ -948,8 +945,8 @@ If False, plots all data points together, ignoring labels.</p></li>
 <dt class="sig sig-object py" id="pyriodic.viz.CircPlot.prepare_ax">
 <span class="sig-name descname"><span class="pre">prepare_ax</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">radius_lim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">angles</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyriodic.viz.CircPlot.prepare_ax" title="Link to this definition">#</a></dt>
 <dd><p>Prepare and customize a polar plot axis (<cite>self.ax</cite>) with standard aesthetic settings.</p>
-<section id="id7">
-<h3>Parameters:<a class="headerlink" href="#id7" title="Link to this heading">#</a></h3>
+<section id="id1">
+<h3>Parameters:<a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
 <dl class="simple">
 <dt>radius_lim<span class="classifier">tuple or None</span></dt><dd><p>Optional tuple (min, max) for setting radial (r-axis) limits.</p>
 </dd>
@@ -1020,12 +1017,12 @@ Each should be 1D array of same length as <cite>data</cite>.</p></li>
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="index.html"
+       href="tutorials/03_why_circular_stats.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">pyriodic documentation</p>
+        <p class="prev-next-title">Why circular statistics matter - the case of respiratory signals</p>
       </div>
     </a>
     <a class="right-next"
@@ -1067,13 +1064,6 @@ Each should be 1D array of same length as <cite>data</cite>.</p></li>
 </li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-pyriodic.desc">pyriodic.desc</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.desc.angular_deviation"><code class="docutils literal notranslate"><span class="pre">angular_deviation()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.desc.circular_mean"><code class="docutils literal notranslate"><span class="pre">circular_mean()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.desc.circular_r"><code class="docutils literal notranslate"><span class="pre">circular_r()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.desc.circular_standard_deviation"><code class="docutils literal notranslate"><span class="pre">circular_standard_deviation()</span></code></a></li>
-</ul>
-</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-pyriodic.phase_events">pyriodic.phase_events</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.phase_events.PhaseEvents"><code class="docutils literal notranslate"><span class="pre">PhaseEvents</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.phase_events.PhaseEvents.mean"><code class="docutils literal notranslate"><span class="pre">PhaseEvents.mean()</span></code></a></li>
@@ -1108,7 +1098,13 @@ Each should be 1D array of same length as <cite>data</cite>.</p></li>
 </li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic-stats-module">pyriodic.stats module</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-pyriodic.desc">pyriodic.desc module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.desc.angular_deviation"><code class="docutils literal notranslate"><span class="pre">angular_deviation()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.desc.circular_mean"><code class="docutils literal notranslate"><span class="pre">circular_mean()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.desc.circular_r"><code class="docutils literal notranslate"><span class="pre">circular_r()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.desc.circular_standard_deviation"><code class="docutils literal notranslate"><span class="pre">circular_standard_deviation()</span></code></a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-pyriodic.utils">pyriodic.utils module</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.utils.calculate_p_value"><code class="docutils literal notranslate"><span class="pre">calculate_p_value()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.utils.dat2rad"><code class="docutils literal notranslate"><span class="pre">dat2rad()</span></code></a></li>

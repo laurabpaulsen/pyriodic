@@ -194,10 +194,7 @@ def create_phase_events(
         (useful if phase_ts is a segment of a longer recording).
     rejection_method : str, optional
         Method to reject events based on surrounding phase dynamics.
-        Currently supported:
-            - 'segment_duration_sd' : excludes events occurring during rising or falling phase
-              segments whose durations deviate more than `rejection_criterion` standard deviations
-              from the mean across cycles.
+        Supported values: 'segment_duration_sd' — excludes events during rising/falling phase segments whose durations deviate more than `rejection_criterion` standard deviations from the mean.
     rejection_criterion : float, optional
         Threshold (in standard deviation units) for identifying outlier segments.
         Only used if `rejection_method='segment_duration_sd'`. Default is 3.
