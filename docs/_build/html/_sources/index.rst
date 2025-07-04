@@ -15,8 +15,8 @@ Welcome to the documentation for `pyriodic`.
    pyriodic
 
 .. toctree::
-   :maxdepth: 1
-   :caption: Tutorials
+   :maxdepth: 2
+   :caption: Contents:
 
-   tutorials/index  # points to tutorials/index.rst
-
+   modules
+   tutorials
