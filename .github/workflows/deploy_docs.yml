@@ -2,32 +2,33 @@ name: Deploy Docs
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
 
 permissions:
-  contents: write
+  contents: write  # Required to push to gh-pages
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      - name: Checkout repository
         uses: actions/checkout@v3
 
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: 3.10
+          python-version: 3.11
 
-      - name: Install dependencies
-        run: |
-          pip install -r docs_src/requirements.txt
-          pip install .  # your local package
+      - name: Install package
+        run: pip install .
 
-      - name: Build documentation
-        run: |
-          sphinx-build -M html docs_src docs/_site
+      - name: Install documentation dependencies
+        run: pip install -r docs_src/requirements.txt
+
+      - name: Build docs
+        run: sphinx-build -M html docs_src docs/_site
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
