@@ -3,7 +3,8 @@ Tutorials
 
 .. toctree::
    :maxdepth: 1
-   :caption: Interactive Examples
+   :caption: Tutorials
 
-   notebooks/01_getting_started.ipynb
-   notebooks/02_phase_diagnostics.ipynb
+   tutorials/01_getting_started
+   tutorials/02_phase_diagnostics
+   tutorials/03_why_circular_stats
