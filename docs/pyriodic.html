@@ -1,0 +1,1184 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>pyriodic package &#8212; pyriodic documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=720ed60b" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=e645c8fa"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'pyriodic';</script>
+    <link rel="icon" href="_static/favicon.ico"/>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="pyriodic" href="modules.html" />
+    <link rel="prev" title="Why circular statistics matter - the case of respiratory signals" href="tutorials/03_why_circular_stats.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">pyriodic documentation</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="tutorials/index.html">Tutorials</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/01_getting_started.html">testing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/02_phase_diagnostics.html">Comparisions of methods for phase extraction from time series data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/03_why_circular_stats.html">Why circular statistics matter - the case of respiratory signals</a></li>
+
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">API Reference</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">pyriodic package</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Full Module Index</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="modules.html">pyriodic</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">pyriodic package</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/pyriodic.rst" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.rst</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>pyriodic package</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#submodules">Submodules</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-pyriodic.circular">pyriodic.circular</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.circular.Circular"><code class="docutils literal notranslate"><span class="pre">Circular</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.circular.Circular.data"><code class="docutils literal notranslate"><span class="pre">Circular.data</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.circular.Circular.labels"><code class="docutils literal notranslate"><span class="pre">Circular.labels</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.circular.Circular.unit"><code class="docutils literal notranslate"><span class="pre">Circular.unit</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.circular.Circular.from_multiple"><code class="docutils literal notranslate"><span class="pre">Circular.from_multiple()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.circular.Circular.mean"><code class="docutils literal notranslate"><span class="pre">Circular.mean()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.circular.Circular.plot"><code class="docutils literal notranslate"><span class="pre">Circular.plot()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.circular.Circular.r"><code class="docutils literal notranslate"><span class="pre">Circular.r()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-pyriodic.phase_events">pyriodic.phase_events</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.phase_events.PhaseEvents"><code class="docutils literal notranslate"><span class="pre">PhaseEvents</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.phase_events.PhaseEvents.mean"><code class="docutils literal notranslate"><span class="pre">PhaseEvents.mean()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.phase_events.PhaseEvents.plot"><code class="docutils literal notranslate"><span class="pre">PhaseEvents.plot()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.phase_events.PhaseEvents.r"><code class="docutils literal notranslate"><span class="pre">PhaseEvents.r()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.phase_events.PhaseEvents.to_circular"><code class="docutils literal notranslate"><span class="pre">PhaseEvents.to_circular()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.phase_events.compute_segment_outliers"><code class="docutils literal notranslate"><span class="pre">compute_segment_outliers()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.phase_events.create_phase_events"><code class="docutils literal notranslate"><span class="pre">create_phase_events()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.phase_events.get_outlier_sample_indices"><code class="docutils literal notranslate"><span class="pre">get_outlier_sample_indices()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.phase_events.get_phase_segments"><code class="docutils literal notranslate"><span class="pre">get_phase_segments()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-pyriodic.preproc">pyriodic.preproc module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.preproc.RawSignal"><code class="docutils literal notranslate"><span class="pre">RawSignal</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.preproc.RawSignal.annotate_bad_segments"><code class="docutils literal notranslate"><span class="pre">RawSignal.annotate_bad_segments()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.preproc.RawSignal.convert_seconds_to_samples"><code class="docutils literal notranslate"><span class="pre">RawSignal.convert_seconds_to_samples()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.preproc.RawSignal.copy"><code class="docutils literal notranslate"><span class="pre">RawSignal.copy()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.preproc.RawSignal.filter_bandpass"><code class="docutils literal notranslate"><span class="pre">RawSignal.filter_bandpass()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.preproc.RawSignal.history"><code class="docutils literal notranslate"><span class="pre">RawSignal.history</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.preproc.RawSignal.interpolate_missing"><code class="docutils literal notranslate"><span class="pre">RawSignal.interpolate_missing()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.preproc.RawSignal.phase_hilbert"><code class="docutils literal notranslate"><span class="pre">RawSignal.phase_hilbert()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.preproc.RawSignal.phase_linear"><code class="docutils literal notranslate"><span class="pre">RawSignal.phase_linear()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.preproc.RawSignal.phase_onepoint"><code class="docutils literal notranslate"><span class="pre">RawSignal.phase_onepoint()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.preproc.RawSignal.phase_threepoint"><code class="docutils literal notranslate"><span class="pre">RawSignal.phase_threepoint()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.preproc.RawSignal.remove_outliers"><code class="docutils literal notranslate"><span class="pre">RawSignal.remove_outliers()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.preproc.RawSignal.resample"><code class="docutils literal notranslate"><span class="pre">RawSignal.resample()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.preproc.RawSignal.smoothing"><code class="docutils literal notranslate"><span class="pre">RawSignal.smoothing()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.preproc.RawSignal.zscore"><code class="docutils literal notranslate"><span class="pre">RawSignal.zscore()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-pyriodic.desc">pyriodic.desc module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.desc.angular_deviation"><code class="docutils literal notranslate"><span class="pre">angular_deviation()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.desc.circular_mean"><code class="docutils literal notranslate"><span class="pre">circular_mean()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.desc.circular_r"><code class="docutils literal notranslate"><span class="pre">circular_r()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.desc.circular_standard_deviation"><code class="docutils literal notranslate"><span class="pre">circular_standard_deviation()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-pyriodic.utils">pyriodic.utils module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.utils.calculate_p_value"><code class="docutils literal notranslate"><span class="pre">calculate_p_value()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.utils.dat2rad"><code class="docutils literal notranslate"><span class="pre">dat2rad()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.utils.rad2dat"><code class="docutils literal notranslate"><span class="pre">rad2dat()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-pyriodic.viz">pyriodic.viz</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.viz.CircPlot"><code class="docutils literal notranslate"><span class="pre">CircPlot</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.viz.CircPlot.add_arrows"><code class="docutils literal notranslate"><span class="pre">CircPlot.add_arrows()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.viz.CircPlot.add_circular_mean"><code class="docutils literal notranslate"><span class="pre">CircPlot.add_circular_mean()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.viz.CircPlot.add_density"><code class="docutils literal notranslate"><span class="pre">CircPlot.add_density()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.viz.CircPlot.add_histogram"><code class="docutils literal notranslate"><span class="pre">CircPlot.add_histogram()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.viz.CircPlot.add_legend"><code class="docutils literal notranslate"><span class="pre">CircPlot.add_legend()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.viz.CircPlot.add_points"><code class="docutils literal notranslate"><span class="pre">CircPlot.add_points()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.viz.CircPlot.prepare_ax"><code class="docutils literal notranslate"><span class="pre">CircPlot.prepare_ax()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.viz.CircPlot.save"><code class="docutils literal notranslate"><span class="pre">CircPlot.save()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.viz.CircPlot.show"><code class="docutils literal notranslate"><span class="pre">CircPlot.show()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.viz.plot_phase_diagnostics"><code class="docutils literal notranslate"><span class="pre">plot_phase_diagnostics()</span></code></a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="pyriodic-package">
+<h1>pyriodic package<a class="headerlink" href="#pyriodic-package" title="Link to this heading">#</a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">#</a></h2>
+</section>
+<section id="module-pyriodic.circular">
+<span id="pyriodic-circular"></span><h2>pyriodic.circular<a class="headerlink" href="#module-pyriodic.circular" title="Link to this heading">#</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="pyriodic.circular.Circular">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyriodic.circular.</span></span><span class="sig-name descname"><span class="pre">Circular</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unit</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'radians'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">full_range</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyriodic.circular.Circular" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A class for representing and working with circular data (e.g., angles, time-of-day, phase).</p>
+<p>This class supports circular statistics and visualization of data that wraps around a fixed range,
+such as angles (in radians or degrees), phases, hours, or other cyclic measurements. It provides
+basic unit validation, conversion between degrees and radians, and visualisation tools.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>array-like</em>) – A sequence of numerical values representing circular measurements.
+Values should be in the range appropriate to the specified <cite>unit</cite>.</p></li>
+<li><p><strong>labels</strong> (<em>array-like</em><em> of </em><em>str</em><em> or </em><em>int</em><em>, </em><em>optional</em>) – Optional condition labels or identifiers corresponding to each data point.</p></li>
+<li><p><strong>unit</strong> (<em>str</em><em>, </em><em>optional</em>) – The unit of the input data. Must be one of {“radians”, “degrees”}. Default is “radians”. Assumes radian range to be from 0 to 2pi.</p></li>
+<li><p><strong>full_range</strong> (<em>int</em><em>, </em><em>optional</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyriodic.circular.Circular.data">
+<span class="sig-name descname"><span class="pre">data</span></span><a class="headerlink" href="#pyriodic.circular.Circular.data" title="Link to this definition">#</a></dt>
+<dd><p>The circular data as a NumPy array.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyriodic.circular.Circular.labels">
+<span class="sig-name descname"><span class="pre">labels</span></span><a class="headerlink" href="#pyriodic.circular.Circular.labels" title="Link to this definition">#</a></dt>
+<dd><p>Optional labels (e.g., condition tags) for each data point.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ndarray or list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyriodic.circular.Circular.unit">
+<span class="sig-name descname"><span class="pre">unit</span></span><a class="headerlink" href="#pyriodic.circular.Circular.unit" title="Link to this definition">#</a></dt>
+<dd><p>Unit of measurement, either “radians” or “degrees”.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyriodic.circular.Circular.from_multiple">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_multiple</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">circular_objects</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyriodic.circular.Circular.from_multiple" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyriodic.circular.Circular.mean">
+<span class="sig-name descname"><span class="pre">mean</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">group_by_label</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyriodic.circular.Circular.mean" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyriodic.circular.Circular.plot">
+<span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">histogram</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">group_by_labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyriodic.circular.Circular.plot" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyriodic.circular.Circular.r">
+<span class="sig-name descname"><span class="pre">r</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyriodic.circular.Circular.r" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-pyriodic.phase_events">
+<span id="pyriodic-phase-events"></span><h2>pyriodic.phase_events<a class="headerlink" href="#module-pyriodic.phase_events" title="Link to this heading">#</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="pyriodic.phase_events.PhaseEvents">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyriodic.phase_events.</span></span><span class="sig-name descname"><span class="pre">PhaseEvents</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">phase_dict</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyriodic.phase_events.PhaseEvents" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="pyriodic.phase_events.PhaseEvents.mean">
+<span class="sig-name descname"><span class="pre">mean</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyriodic.phase_events.PhaseEvents.mean" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyriodic.phase_events.PhaseEvents.plot">
+<span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">histogram</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">savepath</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyriodic.phase_events.PhaseEvents.plot" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyriodic.phase_events.PhaseEvents.r">
+<span class="sig-name descname"><span class="pre">r</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyriodic.phase_events.PhaseEvents.r" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyriodic.phase_events.PhaseEvents.to_circular">
+<span class="sig-name descname"><span class="pre">to_circular</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">include</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyriodic.phase_events.PhaseEvents.to_circular" title="Link to this definition">#</a></dt>
+<dd><p>Convert selected events from the phase dictionary to a Circular object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>include</strong> (<em>str</em><em>, </em><em>list</em><em> of </em><em>str</em><em>, or </em><em>None</em>) – <ul class="simple">
+<li><p>If a string, includes all keys in the phase_dict that contain this substring.</p></li>
+<li><p>If a list of strings, includes matching keys directly.</p></li>
+<li><p>If None, includes all keys in phase_dict.</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A Circular object constructed from the selected phase values.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#pyriodic.circular.Circular" title="pyriodic.circular.Circular">Circular</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyriodic.phase_events.compute_segment_outliers">
+<span class="sig-prename descclassname"><span class="pre">pyriodic.phase_events.</span></span><span class="sig-name descname"><span class="pre">compute_segment_outliers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">segments</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sampling_rate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyriodic.phase_events.compute_segment_outliers" title="Link to this definition">#</a></dt>
+<dd><p>Identify segment durations that deviate &gt; threshold * SD from the mean.
+Optionally normalize by sampling_rate.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyriodic.phase_events.create_phase_events">
+<span class="sig-prename descclassname"><span class="pre">pyriodic.phase_events.</span></span><span class="sig-name descname"><span class="pre">create_phase_events</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">phase_ts</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">events</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">event_labels</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unit</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'radians'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">first_samp</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rejection_method</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rejection_criterion</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bad_segments</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_rejected</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#pyriodic.phase_events.PhaseEvents" title="pyriodic.phase_events.PhaseEvents"><span class="pre">PhaseEvents</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#pyriodic.phase_events.PhaseEvents" title="pyriodic.phase_events.PhaseEvents"><span class="pre">PhaseEvents</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#pyriodic.phase_events.create_phase_events" title="Link to this definition">#</a></dt>
+<dd><p>Create Circular object(s) from a phase angle time series and event markers.
+Optionally apply cycle-based rejection criteria to exclude events occurring during atypical phase dynamics.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>phase_ts</strong> (<em>np.ndarray</em>) – 1D array of phase values (in radians), typically spanning multiple 0–2π cycles.</p></li>
+<li><p><strong>events</strong> (<em>np.ndarray</em>) – 1D array of sample indices at which to extract phase values.</p></li>
+<li><p><strong>event_labels</strong> (<em>np.ndarray</em><em>, </em><em>optional</em>) – Labels for grouping events. If None, returns a single Circular object;
+otherwise, returns a PhaseEvents container grouped by unique labels.</p></li>
+<li><p><strong>unit</strong> (<em>str</em>) – Unit of the input phase time series and the desired unit for output Circular objects.
+Must be either ‘radians’ or ‘degrees’. Internally, all computations are performed in radians.</p></li>
+<li><p><strong>first_samp</strong> (<em>int</em>) – Offset to subtract from each event index to align with the phase time series
+(useful if phase_ts is a segment of a longer recording).</p></li>
+<li><p><strong>rejection_method</strong> (<em>str</em><em>, </em><em>optional</em>) – Method to reject events based on surrounding phase dynamics.
+Supported values: ‘segment_duration_sd’ — excludes events during rising/falling phase segments whose durations deviate more than <cite>rejection_criterion</cite> standard deviations from the mean.</p></li>
+<li><p><strong>rejection_criterion</strong> (<em>float</em><em>, </em><em>optional</em>) – Threshold (in standard deviation units) for identifying outlier segments.
+Only used if <cite>rejection_method=’segment_duration_sd’</cite>. Default is 3.</p></li>
+<li><p><strong>bad_segments</strong> (<em>Optional</em><em>[</em><em>np.ndarray</em><em>]</em>) – For ignoring events that fall within specific segments of the phase time series. Shape should be (n_segments, 2), where each row is a (start, stop) index pair in samples.</p></li>
+<li><p><strong>return_rejected</strong> (<em>bool</em>) – If True, also return a list of rejected event indices.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><em>Circular or PhaseEvents</em> – If event_labels is None, returns a single Circular object.
+Otherwise, returns a PhaseEvents object containing condition-grouped Circular data.</p></li>
+<li><p><em>(optional) list[int]</em> – If <cite>return_rejected</cite> is True, returns a second value: the list of event indices that were rejected.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyriodic.phase_events.get_outlier_sample_indices">
+<span class="sig-prename descclassname"><span class="pre">pyriodic.phase_events.</span></span><span class="sig-name descname"><span class="pre">get_outlier_sample_indices</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">segments</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outlier_indices</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyriodic.phase_events.get_outlier_sample_indices" title="Link to this definition">#</a></dt>
+<dd><p>Convert outlier segments to a flat set of sample indices for fast lookup.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyriodic.phase_events.get_phase_segments">
+<span class="sig-prename descclassname"><span class="pre">pyriodic.phase_events.</span></span><span class="sig-name descname"><span class="pre">get_phase_segments</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">phase_ts</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyriodic.phase_events.get_phase_segments" title="Link to this definition">#</a></dt>
+<dd><p>Identify rising (0→π) and falling (π→2π) phase segments in a wrapped phase signal.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>phase_ts</strong> (<em>np.ndarray</em>) – 1D array of phase values (in radians), assumed to evolve continuously over time.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>rising_segments</strong> (<em>list of (start_idx, stop_idx)</em>) – List of index tuples for rising phase segments (0 to π).</p></li>
+<li><p><strong>falling_segments</strong> (<em>list of (start_idx, stop_idx)</em>) – List of index tuples for falling phase segments (π to 2π).</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-pyriodic.preproc">
+<span id="pyriodic-preproc-module"></span><h2>pyriodic.preproc module<a class="headerlink" href="#module-pyriodic.preproc" title="Link to this heading">#</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="pyriodic.preproc.RawSignal">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyriodic.preproc.</span></span><span class="sig-name descname"><span class="pre">RawSignal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">info</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bad_segments</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">None</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">ndarray</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyriodic.preproc.RawSignal" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="pyriodic.preproc.RawSignal.annotate_bad_segments">
+<span class="sig-name descname"><span class="pre">annotate_bad_segments</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">segments</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unit</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'s'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'sample'</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyriodic.preproc.RawSignal.annotate_bad_segments" title="Link to this definition">#</a></dt>
+<dd><p>Annotates bad segments in the signal.
+:param segments: Array of segments to annotate. Dimensions should be (n, 2) where n is the number of segments. Each segment is defined by a start and end point.
+:type segments: np.ndarray
+:param unit: Unit of the segments, either “s” for seconds or “sample” for samples.
+:type unit: str</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyriodic.preproc.RawSignal.convert_seconds_to_samples">
+<span class="sig-name descname"><span class="pre">convert_seconds_to_samples</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">array</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyriodic.preproc.RawSignal.convert_seconds_to_samples" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyriodic.preproc.RawSignal.copy">
+<span class="sig-name descname"><span class="pre">copy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyriodic.preproc.RawSignal.copy" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyriodic.preproc.RawSignal.filter_bandpass">
+<span class="sig-name descname"><span class="pre">filter_bandpass</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">low</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">high</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5.0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyriodic.preproc.RawSignal.filter_bandpass" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pyriodic.preproc.RawSignal.history">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">history</span></span><a class="headerlink" href="#pyriodic.preproc.RawSignal.history" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyriodic.preproc.RawSignal.interpolate_missing">
+<span class="sig-name descname"><span class="pre">interpolate_missing</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyriodic.preproc.RawSignal.interpolate_missing" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyriodic.preproc.RawSignal.phase_hilbert">
+<span class="sig-name descname"><span class="pre">phase_hilbert</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyriodic.preproc.RawSignal.phase_hilbert" title="Link to this definition">#</a></dt>
+<dd><p>Extract instantaneous phase angle using the Hilbert Transform.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ts</strong> (<em>np.ndarray</em>) – 1D time series</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>phase angles in radians (0 to 2π)</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyriodic.preproc.RawSignal.phase_linear">
+<span class="sig-name descname"><span class="pre">phase_linear</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">peak_finder</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">distance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prominence</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.01</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyriodic.preproc.RawSignal.phase_linear" title="Link to this definition">#</a></dt>
+<dd><p>Extract phase using linear interpolation between peaks and troughs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>peak_finder</strong> (<em>callable</em><em>, </em><em>optional</em>) – Optional custom function of the form <code class="docutils literal notranslate"><span class="pre">func(ts,</span> <span class="pre">**kwargs)</span> <span class="pre">-&gt;</span> <span class="pre">np.ndarray</span></code> returning peak indices.</p></li>
+<li><p><strong>distance</strong> (<em>int</em>) – Minimum distance between peaks.</p></li>
+<li><p><strong>prominence</strong> (<em>float</em>) – Prominence threshold for peak detection.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>phase</strong> (<em>np.ndarray</em>) – The extracted phase values (in radians).</p></li>
+<li><p><strong>peaks</strong> (<em>np.ndarray</em>) – Indices of detected peaks.</p></li>
+<li><p><strong>troughs</strong> (<em>np.ndarray</em>) – Indices of detected troughs.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyriodic.preproc.RawSignal.phase_onepoint">
+<span class="sig-name descname"><span class="pre">phase_onepoint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">peak_finder</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">distance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prominence</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.01</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyriodic.preproc.RawSignal.phase_onepoint" title="Link to this definition">#</a></dt>
+<dd><p>Extract phase by linearly interpolating from 0 to 2π between detected peaks.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>peak_finder</strong> (<em>callable</em><em>, </em><em>optional</em>) – Optional custom function of the form <code class="docutils literal notranslate"><span class="pre">func(ts,</span> <span class="pre">**kwargs)</span> <span class="pre">-&gt;</span> <span class="pre">np.ndarray</span></code> returning peak indices.</p></li>
+<li><p><strong>distance</strong> (<em>int</em>) – Minimum distance between peaks, passed to the peak detection algorithm.</p></li>
+<li><p><strong>prominence</strong> (<em>float</em>) – Prominence threshold for peak detection.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>phase</strong> (<em>np.ndarray</em>) – The interpolated phase values (ranging from 0 to 2π).</p></li>
+<li><p><strong>peaks</strong> (<em>np.ndarray</em>) – Indices of the detected peaks used for phase interpolation.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyriodic.preproc.RawSignal.phase_threepoint">
+<span class="sig-name descname"><span class="pre">phase_threepoint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">peak_finder</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">distance</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prominence</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.01</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">percentile</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">50</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">descent_window</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">5</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyriodic.preproc.RawSignal.phase_threepoint" title="Link to this definition">#</a></dt>
+<dd><p>Extract phase using a three-point method:
+Peak → descending slope → flat region → ascending slope → next peak.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>peak_finder</strong> (<em>callable</em><em>, </em><em>optional</em>) – Optional custom function of the form <code class="docutils literal notranslate"><span class="pre">func(ts,</span> <span class="pre">**kwargs)</span> <span class="pre">-&gt;</span> <span class="pre">np.ndarray</span></code> returning peak indices.</p></li>
+<li><p><strong>distance</strong> (<em>int</em>) – Minimum distance between peaks, used if no custom peak finder is provided.</p></li>
+<li><p><strong>prominence</strong> (<em>float</em>) – Prominence threshold for peak detection.</p></li>
+<li><p><strong>percentile</strong> (<em>float</em>) – Percentile of the absolute gradient below which a region is considered flat.</p></li>
+<li><p><strong>descent_window</strong> (<em>int</em>) – Number of samples used to confirm descending and ascending slopes before and after flat regions.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>phase</strong> (<em>np.ndarray</em>) – Phase array in radians (0 to 2π).</p></li>
+<li><p><strong>peaks</strong> (<em>np.ndarray</em>) – Indices of detected peaks.</p></li>
+<li><p><strong>troughs</strong> (<em>list of tuple</em>) – Each tuple contains the (start_index, end_index) of a flat region between peaks.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyriodic.preproc.RawSignal.remove_outliers">
+<span class="sig-name descname"><span class="pre">remove_outliers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">linear_interpolation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyriodic.preproc.RawSignal.remove_outliers" title="Link to this definition">#</a></dt>
+<dd><p>Removes outliers …. threshold + linear interpolation</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyriodic.preproc.RawSignal.resample">
+<span class="sig-name descname"><span class="pre">resample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sfreq</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">typing.Union[int,</span> <span class="pre">float]</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyriodic.preproc.RawSignal.resample" title="Link to this definition">#</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>sfreq</strong> – New sampling rate</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyriodic.preproc.RawSignal.smoothing">
+<span class="sig-name descname"><span class="pre">smoothing</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">window_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">50.0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyriodic.preproc.RawSignal.smoothing" title="Link to this definition">#</a></dt>
+<dd><p>Smooths the timeseries by calculating the moving average</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>window_size</strong> (<em>float</em>) – Size of the moving window in milliseconds. Default is 50 milliseconds.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyriodic.preproc.RawSignal.zscore">
+<span class="sig-name descname"><span class="pre">zscore</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyriodic.preproc.RawSignal.zscore" title="Link to this definition">#</a></dt>
+<dd><p>Normalises the signal in-place to mean 0 and unit variance.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-pyriodic.desc">
+<span id="pyriodic-desc-module"></span><h2>pyriodic.desc module<a class="headerlink" href="#module-pyriodic.desc" title="Link to this heading">#</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="pyriodic.desc.angular_deviation">
+<span class="sig-prename descclassname"><span class="pre">pyriodic.desc.</span></span><span class="sig-name descname"><span class="pre">angular_deviation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rad</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyriodic.desc.angular_deviation" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyriodic.desc.circular_mean">
+<span class="sig-prename descclassname"><span class="pre">pyriodic.desc.</span></span><span class="sig-name descname"><span class="pre">circular_mean</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rad</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wrap_to_2pi</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyriodic.desc.circular_mean" title="Link to this definition">#</a></dt>
+<dd><p>Compute the mean angle from a list of angles in radians.</p>
+<section id="parameters">
+<h3>Parameters:<a class="headerlink" href="#parameters" title="Link to this heading">#</a></h3>
+<dl class="simple">
+<dt>rad<span class="classifier">np.ndarray</span></dt><dd><p>Array of angles in radians.</p>
+</dd>
+<dt>wrap_to_2pi<span class="classifier">bool, default=True</span></dt><dd><p>If True, wraps result to range [0, 2π]. If False, result is in [-π, π].</p>
+</dd>
+</dl>
+</section>
+<section id="returns">
+<h3>Returns:<a class="headerlink" href="#returns" title="Link to this heading">#</a></h3>
+<dl class="simple">
+<dt>mean<span class="classifier">float</span></dt><dd><p>The circular mean angle.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyriodic.desc.circular_r">
+<span class="sig-prename descclassname"><span class="pre">pyriodic.desc.</span></span><span class="sig-name descname"><span class="pre">circular_r</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rad</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyriodic.desc.circular_r" title="Link to this definition">#</a></dt>
+<dd><p>Compute the length of the mean resultant vector ( r ), a measure of circular concentration.</p>
+<div class="math notranslate nohighlight">
+\[r = \sqrt{\bar{C}^2 + \bar{S}^2}\]</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyriodic.desc.circular_standard_deviation">
+<span class="sig-prename descclassname"><span class="pre">pyriodic.desc.</span></span><span class="sig-name descname"><span class="pre">circular_standard_deviation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rad</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyriodic.desc.circular_standard_deviation" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="module-pyriodic.utils">
+<span id="pyriodic-utils-module"></span><h2>pyriodic.utils module<a class="headerlink" href="#module-pyriodic.utils" title="Link to this heading">#</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="pyriodic.utils.calculate_p_value">
+<span class="sig-prename descclassname"><span class="pre">pyriodic.utils.</span></span><span class="sig-name descname"><span class="pre">calculate_p_value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">observed_stat</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">null_distribution</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alternative</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'greater'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'less'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'two-sided'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'greater'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#pyriodic.utils.calculate_p_value" title="Link to this definition">#</a></dt>
+<dd><p>Compute the p-value for a given observed statistic against a null distribution.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>observed_stat</strong> (<em>float</em>) – The observed test statistic.</p></li>
+<li><p><strong>null_distribution</strong> (<em>np.ndarray</em>) – Array of test statistics computed under the null hypothesis.</p></li>
+<li><p><strong>alternative</strong> (<em>{'greater'</em><em>, </em><em>'less'</em><em>, </em><em>'two-sided'}</em><em>, </em><em>default='greater'</em>) – Defines the alternative hypothesis:
+- ‘greater’: test if observed &gt; null
+- ‘less’: test if observed &lt; null
+- ‘two-sided’: test if observed is different from null (absolute deviation)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>p_value</strong> – The computed p-value.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyriodic.utils.dat2rad">
+<span class="sig-prename descclassname"><span class="pre">pyriodic.utils.</span></span><span class="sig-name descname"><span class="pre">dat2rad</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">full_range</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">360</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyriodic.utils.dat2rad" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyriodic.utils.rad2dat">
+<span class="sig-prename descclassname"><span class="pre">pyriodic.utils.</span></span><span class="sig-name descname"><span class="pre">rad2dat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rad</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">full_range</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">360</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyriodic.utils.rad2dat" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="module-pyriodic.viz">
+<span id="pyriodic-viz"></span><h2>pyriodic.viz<a class="headerlink" href="#module-pyriodic.viz" title="Link to this heading">#</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="pyriodic.viz.CircPlot">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyriodic.viz.</span></span><span class="sig-name descname"><span class="pre">CircPlot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">circ</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pyriodic.circular.Circular" title="pyriodic.circular.Circular"><span class="pre">Circular</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">group_by_labels</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">colours</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fig_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(6,</span> <span class="pre">6)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dpi</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">300</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">radius_lim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">angles</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyriodic.viz.CircPlot" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="pyriodic.viz.CircPlot.add_arrows">
+<span class="sig-name descname"><span class="pre">add_arrows</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">angles</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lengths</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyriodic.viz.CircPlot.add_arrows" title="Link to this definition">#</a></dt>
+<dd><p>Plot arrows at specified angles and lengths.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>angles</strong> (<em>np.ndarray</em>) – 1D array of angles (in radians) where arrows should be drawn.</p></li>
+<li><p><strong>lengths</strong> (<em>np.ndarray</em><em>, </em><em>optional</em>) – Length of each arrow. If None, all arrows will have unit length.</p></li>
+<li><p><strong>labels</strong> (<em>np.ndarray</em><em>, </em><em>optional</em>) – Optional label array (same length as angles) for grouping and coloring.</p></li>
+<li><p><strong>kwargs</strong> (<em>dict</em>) – Additional keyword arguments passed to <cite>ax.arrow</cite>. Common examples: width, color, alpha.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyriodic.viz.CircPlot.add_circular_mean">
+<span class="sig-name descname"><span class="pre">add_circular_mean</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">grouped</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyriodic.viz.CircPlot.add_circular_mean" title="Link to this definition">#</a></dt>
+<dd><p>Plot mean resultant vector(s) as arrows.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>grouped</strong> (<em>bool</em><em>, </em><em>optional</em>) – If None, uses <cite>self.group_by_labels</cite>.
+If True, plots a vector per label.
+If False, plots a single mean vector for all data.</p></li>
+<li><p><strong>kwargs</strong> (<em>dict</em>) – Additional keyword arguments passed to <cite>ax.arrow</cite>.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyriodic.viz.CircPlot.add_density">
+<span class="sig-name descname"><span class="pre">add_density</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">kappa</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_bins</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">500</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grouped</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyriodic.viz.CircPlot.add_density" title="Link to this definition">#</a></dt>
+<dd><p>Add a circular density estimate using Von Mises KDE.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>kappa</strong> (<em>float</em>) – Concentration parameter of the Von Mises distribution (higher = sharper).</p></li>
+<li><p><strong>n_bins</strong> (<em>int</em>) – Number of angular bins to evaluate the density on.</p></li>
+<li><p><strong>grouped</strong> (<em>bool</em><em>, </em><em>optional</em>) – If None, uses <cite>self.group_by_labels</cite>.
+If True, plots a density curve for each label separately.
+If False, plots a single joint density curve for all data.</p></li>
+<li><p><strong>kwargs</strong> (<em>dict</em>) – Additional keyword arguments passed to <cite>ax.plot</cite> (e.g., linewidth, linestyle, alpha).</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyriodic.viz.CircPlot.add_histogram">
+<span class="sig-name descname"><span class="pre">add_histogram</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bins</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">36</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'grey'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyriodic.viz.CircPlot.add_histogram" title="Link to this definition">#</a></dt>
+<dd><p>Plot histogram as radial bars on the polar axis.
+If <cite>data</cite> is None, uses circular data in <cite>self.circs</cite>.</p>
+<p>Parameters:
+- data: np.array
+- bins: Number of angular bins (default 36).
+- alpha: Transparency of bars.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyriodic.viz.CircPlot.add_legend">
+<span class="sig-name descname"><span class="pre">add_legend</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyriodic.viz.CircPlot.add_legend" title="Link to this definition">#</a></dt>
+<dd><p>Add a legend to the plot.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>kwargs</strong> (<em>dict</em>) – Additional arguments passed to <cite>ax.legend()</cite>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyriodic.viz.CircPlot.add_points">
+<span class="sig-name descname"><span class="pre">add_points</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">grouped</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyriodic.viz.CircPlot.add_points" title="Link to this definition">#</a></dt>
+<dd><p>Plot circular data points on the polar axis.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>grouped</strong> (<em>bool</em><em>, </em><em>optional</em>) – If None, uses the <cite>self.group_by_labels</cite> setting.
+If True, plots each label separately.
+If False, plots all data points together, ignoring labels.</p></li>
+<li><p><strong>kwargs</strong> (<em>dict</em>) – Additional keyword arguments passed to <cite>ax.scatter</cite>, such as <cite>s</cite>, <cite>alpha</cite>, or <cite>marker</cite>.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyriodic.viz.CircPlot.prepare_ax">
+<span class="sig-name descname"><span class="pre">prepare_ax</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">radius_lim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">angles</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyriodic.viz.CircPlot.prepare_ax" title="Link to this definition">#</a></dt>
+<dd><p>Prepare and customize a polar plot axis (<cite>self.ax</cite>) with standard aesthetic settings.</p>
+<section id="id1">
+<h3>Parameters:<a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
+<dl class="simple">
+<dt>radius_lim<span class="classifier">tuple or None</span></dt><dd><p>Optional tuple (min, max) for setting radial (r-axis) limits.</p>
+</dd>
+<dt>angles<span class="classifier">list of float or None</span></dt><dd><p>Angles (in degrees) where labels should be placed on the theta axis.
+Default is [0, 90, 180, 270, 360].</p>
+</dd>
+<dt>labels<span class="classifier">list of str or None</span></dt><dd><p>Labels corresponding to <cite>angles</cite>. Default is [“0/2π”, “”, “π”, “”, “”].</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyriodic.viz.CircPlot.save">
+<span class="sig-name descname"><span class="pre">save</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyriodic.viz.CircPlot.save" title="Link to this definition">#</a></dt>
+<dd><p>Save the figure to a file</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyriodic.viz.CircPlot.show">
+<span class="sig-name descname"><span class="pre">show</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyriodic.viz.CircPlot.show" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyriodic.viz.plot_phase_diagnostics">
+<span class="sig-prename descclassname"><span class="pre">pyriodic.viz.</span></span><span class="sig-name descname"><span class="pre">plot_phase_diagnostics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">phase_angles</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">events</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">event_labels</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">peaks</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">troughs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flat_start_stop</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">savepath</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">window_duration</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">20.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyriodic.viz.plot_phase_diagnostics" title="Link to this definition">#</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>phase_angles</strong> (<em>dict</em><em>[</em><em>str</em><em>, </em><em>np.ndarray</em><em>]</em>) – Dictionary of named phase angle signals (e.g., {“Three-point”: …, “Hilbert”: …}).
+Each should be 1D array of same length as <cite>data</cite>.</p></li>
+<li><p><strong>fs</strong> (<em>float</em>) – Sampling frequency (Hz).</p></li>
+<li><p><strong>data</strong> (<em>np.ndarray</em><em>, </em><em>optional</em>) – Raw or preprocessed time series signal (same length as phase arrays).</p></li>
+<li><p><strong>events</strong> (<em>list</em><em>[</em><em>int</em><em>] or </em><em>np.ndarray</em><em>, </em><em>optional</em>) – Sample indices of events to mark (e.g., stimulus or response times).</p></li>
+<li><p><strong>event_labels</strong> (<em>list</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – Label for each event (same length as <cite>events</cite>). Used for color grouping.</p></li>
+<li><p><strong>peaks</strong> (<em>list</em><em>[</em><em>int</em><em>] or </em><em>np.ndarray</em><em>, </em><em>optional</em>) – Sample indices of identified peaks.</p></li>
+<li><p><strong>troughs</strong> (<em>list</em><em>[</em><em>int</em><em>] or </em><em>np.ndarray</em><em>, </em><em>optional</em>) – Sample indices of identified troughs.</p></li>
+<li><p><strong>flat_start_stop</strong> (<em>list</em><em>[</em><em>tuple</em><em>[</em><em>int</em><em>, </em><em>int</em><em>]</em><em>] or </em><em>list</em><em>[</em><em>int</em><em>]</em><em>, </em><em>optional</em>) – Flat segments as start–stop index tuples or flat indices directly.</p></li>
+<li><p><strong>savepath</strong> (<em>str</em><em> or </em><em>Path</em><em>, </em><em>optional</em>) – If provided, saves static plot to this location (only applies if interactive=False).</p></li>
+<li><p><strong>figsize</strong> (<em>tuple</em><em>[</em><em>int</em><em>, </em><em>int</em><em>]</em><em>, </em><em>optional</em>) – Size of the figure in inches (only applies if interactive=False).</p></li>
+<li><p><strong>window_duration</strong> (<em>float</em>) – Duration (in seconds) of each visible window in interactive mode.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>fig</strong> (<em>matplotlib.figure.Figure</em>) – The created figure.</p></li>
+<li><p><strong>axes</strong> (<em>list[matplotlib.axes.Axes]</em>) – The axes used in the plot (one per row: signal + phase tracks).</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="tutorials/03_why_circular_stats.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Why circular statistics matter - the case of respiratory signals</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="modules.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">pyriodic</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#submodules">Submodules</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-pyriodic.circular">pyriodic.circular</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.circular.Circular"><code class="docutils literal notranslate"><span class="pre">Circular</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.circular.Circular.data"><code class="docutils literal notranslate"><span class="pre">Circular.data</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.circular.Circular.labels"><code class="docutils literal notranslate"><span class="pre">Circular.labels</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.circular.Circular.unit"><code class="docutils literal notranslate"><span class="pre">Circular.unit</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.circular.Circular.from_multiple"><code class="docutils literal notranslate"><span class="pre">Circular.from_multiple()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.circular.Circular.mean"><code class="docutils literal notranslate"><span class="pre">Circular.mean()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.circular.Circular.plot"><code class="docutils literal notranslate"><span class="pre">Circular.plot()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.circular.Circular.r"><code class="docutils literal notranslate"><span class="pre">Circular.r()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-pyriodic.phase_events">pyriodic.phase_events</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.phase_events.PhaseEvents"><code class="docutils literal notranslate"><span class="pre">PhaseEvents</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.phase_events.PhaseEvents.mean"><code class="docutils literal notranslate"><span class="pre">PhaseEvents.mean()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.phase_events.PhaseEvents.plot"><code class="docutils literal notranslate"><span class="pre">PhaseEvents.plot()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.phase_events.PhaseEvents.r"><code class="docutils literal notranslate"><span class="pre">PhaseEvents.r()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.phase_events.PhaseEvents.to_circular"><code class="docutils literal notranslate"><span class="pre">PhaseEvents.to_circular()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.phase_events.compute_segment_outliers"><code class="docutils literal notranslate"><span class="pre">compute_segment_outliers()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.phase_events.create_phase_events"><code class="docutils literal notranslate"><span class="pre">create_phase_events()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.phase_events.get_outlier_sample_indices"><code class="docutils literal notranslate"><span class="pre">get_outlier_sample_indices()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.phase_events.get_phase_segments"><code class="docutils literal notranslate"><span class="pre">get_phase_segments()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-pyriodic.preproc">pyriodic.preproc module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.preproc.RawSignal"><code class="docutils literal notranslate"><span class="pre">RawSignal</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.preproc.RawSignal.annotate_bad_segments"><code class="docutils literal notranslate"><span class="pre">RawSignal.annotate_bad_segments()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.preproc.RawSignal.convert_seconds_to_samples"><code class="docutils literal notranslate"><span class="pre">RawSignal.convert_seconds_to_samples()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.preproc.RawSignal.copy"><code class="docutils literal notranslate"><span class="pre">RawSignal.copy()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.preproc.RawSignal.filter_bandpass"><code class="docutils literal notranslate"><span class="pre">RawSignal.filter_bandpass()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.preproc.RawSignal.history"><code class="docutils literal notranslate"><span class="pre">RawSignal.history</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.preproc.RawSignal.interpolate_missing"><code class="docutils literal notranslate"><span class="pre">RawSignal.interpolate_missing()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.preproc.RawSignal.phase_hilbert"><code class="docutils literal notranslate"><span class="pre">RawSignal.phase_hilbert()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.preproc.RawSignal.phase_linear"><code class="docutils literal notranslate"><span class="pre">RawSignal.phase_linear()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.preproc.RawSignal.phase_onepoint"><code class="docutils literal notranslate"><span class="pre">RawSignal.phase_onepoint()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.preproc.RawSignal.phase_threepoint"><code class="docutils literal notranslate"><span class="pre">RawSignal.phase_threepoint()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.preproc.RawSignal.remove_outliers"><code class="docutils literal notranslate"><span class="pre">RawSignal.remove_outliers()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.preproc.RawSignal.resample"><code class="docutils literal notranslate"><span class="pre">RawSignal.resample()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.preproc.RawSignal.smoothing"><code class="docutils literal notranslate"><span class="pre">RawSignal.smoothing()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.preproc.RawSignal.zscore"><code class="docutils literal notranslate"><span class="pre">RawSignal.zscore()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-pyriodic.desc">pyriodic.desc module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.desc.angular_deviation"><code class="docutils literal notranslate"><span class="pre">angular_deviation()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.desc.circular_mean"><code class="docutils literal notranslate"><span class="pre">circular_mean()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.desc.circular_r"><code class="docutils literal notranslate"><span class="pre">circular_r()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.desc.circular_standard_deviation"><code class="docutils literal notranslate"><span class="pre">circular_standard_deviation()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-pyriodic.utils">pyriodic.utils module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.utils.calculate_p_value"><code class="docutils literal notranslate"><span class="pre">calculate_p_value()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.utils.dat2rad"><code class="docutils literal notranslate"><span class="pre">dat2rad()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.utils.rad2dat"><code class="docutils literal notranslate"><span class="pre">rad2dat()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-pyriodic.viz">pyriodic.viz</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.viz.CircPlot"><code class="docutils literal notranslate"><span class="pre">CircPlot</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.viz.CircPlot.add_arrows"><code class="docutils literal notranslate"><span class="pre">CircPlot.add_arrows()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.viz.CircPlot.add_circular_mean"><code class="docutils literal notranslate"><span class="pre">CircPlot.add_circular_mean()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.viz.CircPlot.add_density"><code class="docutils literal notranslate"><span class="pre">CircPlot.add_density()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.viz.CircPlot.add_histogram"><code class="docutils literal notranslate"><span class="pre">CircPlot.add_histogram()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.viz.CircPlot.add_legend"><code class="docutils literal notranslate"><span class="pre">CircPlot.add_legend()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.viz.CircPlot.add_points"><code class="docutils literal notranslate"><span class="pre">CircPlot.add_points()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.viz.CircPlot.prepare_ax"><code class="docutils literal notranslate"><span class="pre">CircPlot.prepare_ax()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.viz.CircPlot.save"><code class="docutils literal notranslate"><span class="pre">CircPlot.save()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.viz.CircPlot.show"><code class="docutils literal notranslate"><span class="pre">CircPlot.show()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.viz.plot_phase_diagnostics"><code class="docutils literal notranslate"><span class="pre">plot_phase_diagnostics()</span></code></a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Laura Bock Paulsen
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025, Laura Bock Paulsen.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
