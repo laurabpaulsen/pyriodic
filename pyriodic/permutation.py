@@ -1,5 +1,5 @@
 import numpy as np
-from typing import Callable, Optional, Literal
+from typing import Callable, Optional, Literal, Union
 import inspect
 from .utils import calculate_p_value
 
@@ -41,7 +41,7 @@ def watson_u2(sample1: np.ndarray, sample2: np.ndarray, n_bins: int = 30) -> flo
 
 def permutation_test_against_null(
     observed: np.ndarray,
-    phase_pool: np.ndarray,
+    phase_pool: Union[np.ndarray, Literal["uniform"]] = "uniform",
     n_null: int = 1000,
     stat_fun: Optional[Callable] = None,
     alternative: Literal["greater", "less", "two-sided"] = "greater",
@@ -61,8 +61,8 @@ def permutation_test_against_null(
     observed : np.ndarray
         1D array of observed angular data in radians (values should be in [0, 2π]).
 
-    phase_pool : np.ndarray
-        1D array of phase values from which to extract null samples.
+    phase_pool : Union[np.ndarray, Literal["uniform"]]
+        1D array of phase values from which to extract null samples or a string "uniform" to use a uniform distribution.
 
 
     n_null : int, default=1000
@@ -121,6 +121,10 @@ def permutation_test_against_null(
     n_events = len(observed)
 
     # generate null samples
+    if isinstance(phase_pool, str) and phase_pool == "uniform":
+        phase_pool = np.linspace(0, 2 * np.pi, len(observed), endpoint=False)
+    elif not isinstance(phase_pool, np.ndarray):
+        raise ValueError("phase_pool must be a numpy array or 'uniform'.")
     null_samples = [
         rng.choice(phase_pool, size=n_events, replace=False) for _ in range(n_null)
     ]
@@ -162,6 +166,9 @@ def permutation_test_between_samples(
     verbose: bool = True,
     return_null_distribution: bool = False,
 ) -> tuple:
+    """
+    NOTE: Documentation to be added
+    """
 
     if rng is None:
         rng = np.random.default_rng()

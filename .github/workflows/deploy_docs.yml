@@ -2,8 +2,10 @@ name: Deploy Docs
 
 on:
   push:
-    branches:
-      - main
+    branches-ignore: # does not trigger anymore, kept in case we want to use it later
+      - '**'
+    #branches:
+    #  - main
 
 permissions:
   contents: write  # Allows GitHub Actions to push to gh-pages

@@ -9,16 +9,12 @@ logger = logging.getLogger(__name__)
 
 
 class RawSignal:
-    def __init__(self, data, fs, info=None):
+    def __init__(self, data, fs, info=None, bad_segments:Union[None, np.ndarray]=None):
         self.ts = np.asarray(data).copy()
-
         self.fs = fs
         self.info = info or {}
-        self.bad_segments : Union[None, np.ndarray] = None
-        # self._phase = None
-        # self._peaks = None
-        # self._troughs = None
-        self._history = []
+        self.bad_segments = bad_segments
+        self._history : list[str] = []
 
     def copy(self):
         return deepcopy(self)
@@ -57,7 +53,7 @@ class RawSignal:
         self.ts = (self.ts - np.nanmean(self.ts)) / np.nanstd(self.ts)
         self._history.append("normalize()")
 
-    def filter_bandpass(self, low, high):
+    def filter_bandpass(self, low = 0.1, high = 5.0):
         """ """
         sos = signal.butter(N=4, Wn=[low, high], btype="band", fs=self.fs, output="sos")
         self.ts = signal.sosfiltfilt(sos, self.ts)
@@ -77,20 +73,35 @@ class RawSignal:
         # also resample annotations if any
         pass
 
-    def smoothing(self, window_size: int = 20):
+    def smoothing(self, window_size: float = 50.0):
         """
         Smooths the timeseries by calculating the moving average
 
         Args:
-            window_size (int): Number of time points on either side of the center point
-                            to include in the moving average. The total window size
-                            will be `2 * window_size + 1`.
+            window_size (float): Size of the moving window in milliseconds. Default is 50 milliseconds.
         """
+        
+        # convert window size from milliseconds to samples
+        sample_window_size_tmp = window_size * self.fs / 1000
+        sample_window_size = int(window_size * self.fs / 1000)
 
-        padded_ts = np.pad(self.ts, window_size, constant_values=(np.nan,))
+        # check if it is an even number
+        if sample_window_size_tmp % 2 != 0:
+            # print the warning
+            raise Warning(
+                f"As the window size is not divisible by the sampling frequency, "
+                f"the window size will be rounded to the nearest even number: {int(sample_window_size_tmp)} samples, corresponding to {sample_window_size * 1000/self.fs} ms."
+            )
+
+        if sample_window_size < 1:
+            raise ValueError(
+                f"Window size must be at least 1 sample. Increase the window size to a least 1 sample, corresponding to {1000/self.fs} ms. given the sampling frequency of {self.fs} Hz."
+                )
+
+        padded_ts = np.pad(self.ts, sample_window_size, constant_values=(np.nan,))
 
         # moving average
-        wsize = window_size * 2 + 1
+        wsize = sample_window_size
         tmp = np.vstack(
             [padded_ts[i : i + wsize] for i in range(len(padded_ts) - wsize + 1)]
         )

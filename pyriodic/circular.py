@@ -45,7 +45,7 @@ class Circular:
         full_range: Optional[Union[int, None]] = None,
     ):
 
-        self.VALID_UNITS = {"degrees", "radians", "hours"}  # hours, years?
+        self.VALID_UNITS = {"degrees", "radians"}  # hours, years?
         self.UNIT_RANGES = {"radians": 2 * np.pi + 0.001, "degrees": 360, "hours": 24}
 
         unit = unit.lower()
@@ -78,6 +78,7 @@ class Circular:
         # convert to radians if needed
         if unit != "radians":
             self.data = dat2rad(data, full_range=full_range or self.UNIT_RANGES[unit])
+            self.full_range = self.UNIT_RANGES["radians"]  # always set to radians range
         else:
             self.data = data
 

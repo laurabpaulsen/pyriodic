@@ -76,7 +76,7 @@ class CircPlot:
             if group_by_labels:
                 if self.circ.labels is None:
                     raise ValueError(
-                        "Can only group by labels if labels are present in the circular object"
+                        "Can only group by labels if labels are present in the circular object. Either add labels to the circular object, or set `group_by_labels=False` when initialising the CircPlot."
                     )
                 self.colours = color_cycle[: len(np.unique(self.circ.labels))]
 
@@ -118,7 +118,12 @@ class CircPlot:
         # Set theta direction to clockwise
         self.ax.set_theta_direction(-1)
 
+    def _pop_kwarg(self, kwargs, key, default=None):
+        return kwargs.pop(key, default)
 
+    def _extract_kwargs(self, kwargs, *keys):
+        return {key: kwargs.pop(key, None) for key in keys}
+    
     def _resolve_color(self, idx=None, label=None, override_color=None):
         """
         Determine the color to use for plotting.
@@ -171,6 +176,9 @@ class CircPlot:
         if grouped is None:
             grouped = self.group_by_labels
 
+        label = self._pop_kwarg(kwargs, "label", "Events")
+        color = self._pop_kwarg(kwargs, "color", None)
+
         if grouped:
             if self.circ.labels is None:
                 raise ValueError(
@@ -178,23 +186,23 @@ class CircPlot:
                 )
 
             unique_labels = np.unique(self.circ.labels)
-            for idx, label in enumerate(unique_labels):
+            for idx, group_label in enumerate(unique_labels):
                 values = self.circ.data[self.circ.labels == label]
                 self.ax.scatter(
                     values,
                     [0.5] * len(values),
                     color=self._resolve_color(
-                        idx=idx, label=label, override_color=kwargs.get("color")
+                        idx=idx, label=label, override_color=color
                     ),
-                    label=label,
+                    label=group_label,
                     **kwargs,
                 )
         else:
             self.ax.scatter(
                 self.circ.data,
                 [0.5] * len(self.circ.data),
-                color=self._resolve_color(override_color=kwargs.get("color")),
-                label="Events",
+                color=self._resolve_color(override_color=color),
+                label=label,
                 **kwargs,
             )
 
@@ -220,6 +228,9 @@ class CircPlot:
         if grouped is None:
             grouped = self.group_by_labels
 
+        label = self._pop_kwarg(kwargs, "label", "Density")
+        color = self._pop_kwarg(kwargs, "color", None)
+
         if grouped:
             if self.circ.labels is None:
                 raise ValueError(
@@ -227,7 +238,7 @@ class CircPlot:
                 )
 
             unique_labels = np.unique(self.circ.labels)
-            for idx, label in enumerate(unique_labels):
+            for idx, group_label in enumerate(unique_labels):
                 values = self.circ.data[self.circ.labels == label]
                 if len(values) == 0:
                     continue
@@ -239,7 +250,7 @@ class CircPlot:
                     xs,
                     density_vals,
                     color=self.colours[idx % len(self.colours)],
-                    label=label,
+                    label=group_label,
                     **kwargs,
                 )
         else:
@@ -253,8 +264,8 @@ class CircPlot:
             self.ax.plot(
                 xs,
                 density_vals,
-                color=DEFAULT_COLOUR,
-                label="Density of events",
+                color=self._resolve_color(override_color=color),
+                label=label,
                 **kwargs,
             )
 
@@ -330,9 +341,10 @@ class CircPlot:
             Additional keyword arguments passed to `ax.arrow`. Common examples: width, color, alpha.
         """
 
-        arrow_defaults, overwrite_color = self._update_kwargs(
-            dict(width=0.02, head_length=0.0), kwargs
-        )
+        arrow_kwargs = dict(width=0.02, head_length=0.0)
+        color = self._pop_kwarg(kwargs, "color", None)
+        arrow_kwargs.update(kwargs)
+
 
         if lengths is None:
             lengths = np.ones_like(angles)
@@ -348,10 +360,10 @@ class CircPlot:
                         0,
                         r,
                         color=self._resolve_color(
-                            idx=idx, label=label, override_color=overwrite_color
+                            idx=idx, label=label, override_color=color
                         ),
                         label=label,
-                        **arrow_defaults,
+                        **arrow_kwargs,
                     )
         else:
             for angle, r in zip(angles, lengths):
@@ -360,8 +372,8 @@ class CircPlot:
                     0,
                     0,
                     r,
-                    color=self._resolve_color(override_color=overwrite_color),
-                    **arrow_defaults,
+                    color=self._resolve_color(override_color=color),
+                    **arrow_kwargs,
                 )
 
     def add_circular_mean(self, grouped: Optional[bool] = None, **kwargs):
