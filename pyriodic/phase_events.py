@@ -89,7 +89,10 @@ class PhaseEvents:
         return self.phase_dict[key]
 
     def __repr__(self):
-        return f"<PhaseEvents: conditions={list(self.phase_dict.keys())}>"
+        conds = sorted(str(k) for k in self.phase_dict.keys())
+        conds_str = ",\n    ".join(conds)
+        return f"<PhaseEvents:\n  conditions=[\n    {conds_str}\n  ]>"
+
 
 
 def get_outlier_sample_indices(segments, outlier_indices):
