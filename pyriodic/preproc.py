@@ -85,8 +85,7 @@ class RawSignal:
         sample_window_size_tmp = window_size * self.fs / 1000
         sample_window_size = int(window_size * self.fs / 1000)
 
-        # check if it is an even number
-        if sample_window_size_tmp % 2 != 0:
+        if sample_window_size_tmp % 1 != 0:
             # print the warning
             raise Warning(
                 f"As the window size is not divisible by the sampling frequency, "
@@ -97,13 +96,18 @@ class RawSignal:
             raise ValueError(
                 f"Window size must be at least 1 sample. Increase the window size to a least 1 sample, corresponding to {1000/self.fs} ms. given the sampling frequency of {self.fs} Hz."
                 )
+                # enforce odd window size so we can center it
+        
+        if sample_window_size % 2 == 0:
+            sample_window_size += 1  # make it odd to preserve centering
 
-        padded_ts = np.pad(self.ts, sample_window_size, constant_values=(np.nan,))
+        half_window = sample_window_size // 2
+
+        padded_ts = np.pad(self.ts, (half_window, half_window), constant_values=(np.nan,))
 
         # moving average
-        wsize = sample_window_size
         tmp = np.vstack(
-            [padded_ts[i : i + wsize] for i in range(len(padded_ts) - wsize + 1)]
+            [padded_ts[i : i + sample_window_size] for i in range(len(padded_ts) - sample_window_size + 1)]
         )
 
         new_ts = np.nanmean(tmp, axis=1)
