@@ -137,15 +137,17 @@ class CircPlot:
             return override_color
 
         if label is not None and self.circ.labels is not None:
-            # Use label-to-color matching if you want more control
             unique_labels = np.unique(self.circ.labels)
-            idx = np.where(unique_labels == label)[0][0]
+            if label in unique_labels:
+                idx = np.where(unique_labels == label)[0][0]
+            else:
+                print(f"Label '{label}' not found in data labels. Falling back to default color.")
+                return DEFAULT_COLOUR
 
         if idx is not None and hasattr(self, "colours"):
             return self.colours[idx % len(self.colours)]
 
         return DEFAULT_COLOUR
-
     def _update_kwargs(self, defaults, kwargs):
         """
         Merges default plotting kwargs with user overrides.
@@ -187,12 +189,13 @@ class CircPlot:
 
             unique_labels = np.unique(self.circ.labels)
             for idx, group_label in enumerate(unique_labels):
-                values = self.circ.data[self.circ.labels == label]
+                print("group_label", group_label)
+                values = self.circ.data[self.circ.labels == group_label]
                 self.ax.scatter(
                     values,
                     [0.5] * len(values),
                     color=self._resolve_color(
-                        idx=idx, label=label, override_color=color
+                        idx=idx, label=group_label, override_color=color
                     ),
                     label=group_label,
                     **kwargs,
@@ -239,7 +242,7 @@ class CircPlot:
 
             unique_labels = np.unique(self.circ.labels)
             for idx, group_label in enumerate(unique_labels):
-                values = self.circ.data[self.circ.labels == label]
+                values = self.circ.data[self.circ.labels == group_label]
                 if len(values) == 0:
                     continue
 
