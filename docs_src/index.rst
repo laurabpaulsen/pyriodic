@@ -9,7 +9,7 @@ Check out the tutorials to get started, or jump to the API reference.
    :maxdepth: 2
    :caption: 🚀 Tutorials
 
-   tutorials/01_getting_started
+   tutorials/01_intro
    tutorials/02_phase_diagnostics
    tutorials/03_why_circular_stats
 
