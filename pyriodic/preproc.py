@@ -1,9 +1,11 @@
 import numpy as np
+import matplotlib.pyplot as plt
 from typing import Union, Optional, Callable, Literal
 from scipy import interpolate, signal
 from scipy.signal import hilbert
 import logging
 from copy import deepcopy
+
 
 logger = logging.getLogger(__name__)
 
@@ -18,6 +20,38 @@ class RawSignal:
 
     def copy(self):
         return deepcopy(self)
+
+    def plot(self, ax=None, start=0, duration=20):
+        """
+        Plots the time series data.
+
+        Args:
+            ax: Matplotlib axis to plot on. If None, creates a new figure.
+            start: Start time in seconds.
+            duration: Duration in seconds to plot.
+        """
+        if ax is None:
+            fig, ax = plt.subplots(figsize=(10, 4))
+
+        times = np.arange(len(self.ts)) / self.fs
+
+
+        start_sample = int(start * self.fs)
+        end_sample = int((start + duration) * self.fs)
+
+        tmp_ts = self.ts.copy()[start_sample:end_sample]
+
+        ax.plot(times[start_sample:end_sample], tmp_ts)
+        ax.set_xlim([start, start + duration])
+        #ax.set_ylim([np.min(tmp_ts), np.max(tmp_ts)])
+        ax.set_xlabel("Time (s)")
+        ax.set_ylabel("Amplitude")
+        
+        if self.bad_segments is not None:
+            for segment in self.bad_segments:
+                ax.axvspan(segment[0], segment[1], color='red', alpha=0.5, label='Bad Segment')
+
+        return ax
 
     def remove_outliers(self, threshold=2.5, linear_interpolation=True):
         """
@@ -51,13 +85,13 @@ class RawSignal:
         Normalises the signal in-place to mean 0 and unit variance.
         """
         self.ts = (self.ts - np.nanmean(self.ts)) / np.nanstd(self.ts)
-        self._history.append("normalize()")
+        self._history.append("zscore()")
 
-    def filter_bandpass(self, low = 0.1, high = 5.0):
+    def filter_bandpass(self, low = 0.1, high = 1.0):
         """ """
         sos = signal.butter(N=4, Wn=[low, high], btype="band", fs=self.fs, output="sos")
         self.ts = signal.sosfiltfilt(sos, self.ts)
-        self._history.append(f"bandpass({low}-{high})")
+        self._history.append(f"bandpass({low} Hz - {high} Hz)")
 
     def resample(self, sfreq=Union[int, float]):
         """
@@ -182,7 +216,7 @@ class RawSignal:
 
         return phase_angles % (2 * np.pi)  # return from 0 to 2pi instead
 
-    def phase_linear(self, peak_finder=None, distance=100, prominence=0.01):
+    def phase_linear(self, peak_finder=None, distance=1, prominence=0.01):
         """
         Extract phase using linear interpolation between peaks and troughs.
 
@@ -191,7 +225,7 @@ class RawSignal:
         peak_finder : callable, optional
             Optional custom function of the form ``func(ts, **kwargs) -> np.ndarray`` returning peak indices.
         distance : int
-            Minimum distance between peaks.
+            Minimum distance in seconds between peaks, passed to the peak detection algorithm.
         prominence : float
             Prominence threshold for peak detection.
 
@@ -206,6 +240,7 @@ class RawSignal:
         """
 
         if peak_finder is None:
+            distance = int(distance * self.fs)  # convert seconds to samples
             peaks = self._peak_finder(self.ts, distance=distance, prominence=prominence)
         else:
             try:
