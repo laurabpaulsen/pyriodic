@@ -460,10 +460,9 @@ def plot_phase_diagnostics(
     peaks=None,
     troughs=None,
     flat_start_stop=None,
-    savepath=None,
-    figsize=None,
     window_duration: float = 20.0,
     title=None,
+    start = 0,
 ):
     """
     Parameters
@@ -485,12 +484,10 @@ def plot_phase_diagnostics(
         Sample indices of identified troughs.
     flat_start_stop : list[tuple[int, int]] or list[int], optional
         Flat segments as start–stop index tuples or flat indices directly.
-    savepath : str or Path, optional
-        If provided, saves static plot to this location (only applies if interactive=False).
-    figsize : tuple[int, int], optional
-        Size of the figure in inches (only applies if interactive=False).
     window_duration : float
         Duration (in seconds) of each visible window in interactive mode.
+    start : float
+        Start time (in seconds) for the initial view of the plot.
 
     Returns
     -------
@@ -506,6 +503,7 @@ def plot_phase_diagnostics(
     n_rows = n_phase_axes + (1 if data is not None else 0)
     time = np.arange(len(next(iter(phase_angles.values())))) / fs
 
+    start = min(start, time[-1] - window_duration)
 
     window_samples = int(window_duration * fs)
     fig, axes = plt.subplots(n_rows, 1, figsize=(12, 2.5 * n_rows), sharex=True)
@@ -518,7 +516,7 @@ def plot_phase_diagnostics(
             "Time (s)",
             0,
             time[-1] - window_duration,
-            valinit=0,
+            valinit=int(start),
             valstep=1 / fs,
         )
     
@@ -535,7 +533,8 @@ def plot_phase_diagnostics(
     lines = []
     marker_objs = []
     row_idx = 0
-    start_idx = 0
+    start_idx = int(start * fs)
+    print("start_idx", start_idx)
     end_idx = start_idx + window_samples
     if title:
         fig.suptitle(title)
@@ -550,26 +549,37 @@ def plot_phase_diagnostics(
         )
         lines.append((line, data))
 
-        def scatter_pts(indices, color, label):
-            return ax.plot([], [], "o", color=color, label=label, markersize=4)[0]
+        def scatter_pts(ax, indices, color, label, start_idx, end_idx):
+            indices = np.asarray(indices)
+            mask = (indices >= start_idx) & (indices < end_idx)
+            in_window = indices[mask]
+            sc = ax.plot(
+                time[in_window],
+                data[in_window],
+                "o",
+                color=color,
+                label=label,
+                markersize=4,
+            )[0]
+            return sc, indices
+
 
         # --- Markers
         if peaks is not None:
-            peak_sc = scatter_pts(peaks, "blue", "Peaks")
-            marker_objs.append((peak_sc, np.asarray(peaks)))
+            peak_sc, peak_indices = scatter_pts(ax, peaks, "blue", "Peaks", start_idx, end_idx)
+            marker_objs.append((peak_sc, peak_indices))
+
         if troughs is not None:
-            trough_sc = scatter_pts(troughs, "purple", "Troughs")
-            marker_objs.append((trough_sc, np.asarray(troughs)))
-        flat_idxs = []
+            trough_sc, trough_indices = scatter_pts(ax, troughs, "purple", "Troughs", start_idx, end_idx)
+            marker_objs.append((trough_sc, trough_indices))
+
         if flat_start_stop is not None:
             if isinstance(flat_start_stop[0], (tuple, list)):
-                flat_idxs = [
-                    i for start, end in flat_start_stop for i in range(start, end)
-                ]
+                flat_idxs = [i for start, end in flat_start_stop for i in range(start, end)]
             else:
                 flat_idxs = flat_start_stop
-            flat_sc = scatter_pts(flat_idxs, "orange", "Flat")
-            marker_objs.append((flat_sc, np.asarray(flat_idxs)))
+            flat_sc, flat_indices = scatter_pts(ax, flat_idxs, "orange", "Flat", start_idx, end_idx)
+            marker_objs.append((flat_sc, flat_indices))
 
         ax.legend(loc="upper right")
         row_idx += 1
