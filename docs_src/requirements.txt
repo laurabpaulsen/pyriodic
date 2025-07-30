@@ -2,3 +2,4 @@ sphinx
 sphinx-book-theme
 nbsphinx
 ipython
+pydata-sphinx-theme
