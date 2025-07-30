@@ -39,6 +39,28 @@ These tutorials walk you through using **Pyriodic** for circular data analysis, 
         </div>
       </div>
 
+      <div class="col-md-4">
+        <div class="card shadow-sm mb-4">
+          <a href="04_permutation_against_null.html" class="stretched-link"></a>
+          <img src="../_static/tutorials/04_permutation_against_null.png" class="card-img-top" alt="Permutation test against null distribution of respiratory phase angles">
+          <div class="card-body">
+            <h5 class="card-title">Permutation test against null distribution of respiratory phase angles</h5>
+            <p class="card-text">This notebook demonstrates how to make a permutation-based test to determine whether events (e.g., target stimuli) tend to occur at a specific phase of the respiratory cycle. As some phase angles are more common than others (exhalation tend to last longer than inspiration), we compare the observed phase angles at stimulus onset to a null distribution derived from the underlying respiratory signal.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="card shadow-sm mb-4">
+          <a href="05_permutation_two_samples.html" class="stretched-link"></a>
+          <img src="../_static/tutorials/05_permutation_two_samples.png" class="card-img-top" alt="Two sample permutation test of respiratory phase angles">
+          <div class="card-body">
+            <h5 class="card-title">Two sample permutation test of respiratory phase angles</h5>
+            <p class="card-text">This notebook runs permutation tests to compare two samples of respiratory phase angles. This is useful when you want to compare the phase angles of two different conditions or groups.</p>
+          </div>
+        </div>
+      </div>
+
     </div>
 
 .. include:: _image_manifest.rst
@@ -49,3 +71,5 @@ These tutorials walk you through using **Pyriodic** for circular data analysis, 
    01_intro
    02_phase_extraction
    03_why_circular_stats
+   04_permutation_against_null
+   05_permutation_two_samples
