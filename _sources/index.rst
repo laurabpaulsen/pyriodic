@@ -6,6 +6,15 @@ Welcome to Pyriodic's documentation!
 Check out the tutorials to get started, or jump to the API reference.
 
 .. toctree::
+   :maxdepth: 1
+   :caption: 📚 Contents
+   :hidden:
+
+   installation
+   tutorials/index
+   api/index
+
+.. toctree::
    :maxdepth: 2
    :caption: 🚀 Tutorials
 
