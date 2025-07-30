@@ -11,6 +11,6 @@ Check out the tutorials to get started, or jump to the API reference.
    :caption: Navigation
    :hidden:
 
-   installation
+   installation/index
    tutorials/index
    api/index
