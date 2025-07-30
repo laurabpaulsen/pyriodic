@@ -28,20 +28,21 @@ extensions = [
 
 html_theme = 'pydata_sphinx_theme'
 
+
+
 html_theme_options = {
-    "navbar_start": ["navbar-logo"],
-    "navbar_center": ["navbar-nav"],
-    "navbar_end": ["navbar-icon-links"],
-    "navbar_persistent": ["search-button"],
+    "navbar_align": "content",
+    "show_prev_next": False,
+    "navigation_with_keys": True,
+    "navbar_end": ["search-field.html", "navbar-icon-links"],
     "icon_links": [
         {
             "name": "GitHub",
-            "url": "https://github.com/laurabpaulsen/pyriodic",
+            "url": "https://github.com/yourusername/pyriodic",
             "icon": "fab fa-github",
         },
     ],
-    "navigation_with_keys": True
-    }
+}
 
 
 
