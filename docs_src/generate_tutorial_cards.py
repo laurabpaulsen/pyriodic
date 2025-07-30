@@ -24,7 +24,7 @@ card_template = """\
       <div class="col-md-4">
         <div class="card shadow-sm mb-4">
           <a href="{notebook_html}" class="stretched-link"></a>
-          <img src="_static/tutorials/{image_file}" class="card-img-top" alt="{alt_text}">
+          <img src="_images/{image_file}" class="card-img-top" alt="{alt_text}">
           <div class="card-body">
             <h5 class="card-title">{title}</h5>
             <p class="card-text">{description}</p>
