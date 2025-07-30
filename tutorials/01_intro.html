@@ -314,6 +314,7 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Extract-phase-angles">Extract phase angles</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Extract-phase-angles-at-the-time-of-stimulus-presentation">Extract phase angles at the time of stimulus presentation</a></li>
 </ul>
             </nav>
         </div>
@@ -330,13 +331,14 @@ document.write(`
 <p>This tutorial covers a basic pipeline for preprocessing and analysis of respiration data collected during a experimental task. It introduces core <code class="docutils literal notranslate"><span class="pre">pyriodic</span></code> classes.</p>
 <p>At first, we import the necessary Python modules:</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[70]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pickle</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">pyriodic.preproc</span><span class="w"> </span><span class="kn">import</span> <span class="n">RawSignal</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pyriodic.viz</span><span class="w"> </span><span class="kn">import</span> <span class="n">plot_phase_diagnostics</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pyriodic.phase_events</span><span class="w"> </span><span class="kn">import</span> <span class="n">create_phase_events</span>
 <br/></pre></div>
 </div>
 </div>
@@ -344,7 +346,7 @@ document.write(`
 <h2>Load in data and create <code class="docutils literal notranslate"><span class="pre">RawSignal</span></code> object<a class="headerlink" href="#Load-in-data-and-create-RawSignal-object" title="Link to this heading">#</a></h2>
 <p>The first step is to load in the respiration time series data. Together with the sampling frequency, this is used to create a <code class="docutils literal notranslate"><span class="pre">RawSignal</span></code> object. This object holds many useful methods for preprocessing the raw data.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[71]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># load data</span>
@@ -363,7 +365,7 @@ document.write(`
 </div>
 <p>The <code class="docutils literal notranslate"><span class="pre">RawSignal</span></code> object has a built-in plotting method that allows you to visualise the data. You can specify the start time and duration of the segment you want to plot. If no arguments are provided, it will plot the first 20 seconds of the signal.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[72]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">raw</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">start</span> <span class="o">=</span> <span class="mi">20</span><span class="p">,</span> <span class="n">duration</span> <span class="o">=</span> <span class="mi">20</span><span class="p">)</span>
@@ -371,7 +373,7 @@ document.write(`
 </div>
 </div>
 <div class="nboutput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[72]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -390,7 +392,7 @@ document.write(`
 <section id="Preprocessing">
 <h2>Preprocessing<a class="headerlink" href="#Preprocessing" title="Link to this heading">#</a></h2>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[73]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">raw</span><span class="o">.</span><span class="n">filter_bandpass</span><span class="p">(</span><span class="n">low</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">,</span> <span class="n">high</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
@@ -399,7 +401,7 @@ document.write(`
 </div>
 </div>
 <div class="nboutput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[73]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -415,7 +417,7 @@ document.write(`
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[74]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">raw</span><span class="o">.</span><span class="n">smoothing</span><span class="p">(</span><span class="n">window_size</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
@@ -424,7 +426,7 @@ document.write(`
 </div>
 </div>
 <div class="nboutput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[74]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -440,7 +442,7 @@ document.write(`
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[75]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">raw</span><span class="o">.</span><span class="n">zscore</span><span class="p">()</span>
@@ -449,7 +451,7 @@ document.write(`
 </div>
 </div>
 <div class="nboutput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[75]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -466,7 +468,7 @@ document.write(`
 </div>
 <p>As the data is modified in-place, the original signal is lost. If you want to keep the original signal, make a copy before applying any modifications. To see which modifications have been applied to the signal, you can print the history:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[76]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">raw</span><span class="o">.</span><span class="n">history</span>
@@ -474,7 +476,7 @@ document.write(`
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[76]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -487,7 +489,7 @@ document.write(`
 <section id="Extract-phase-angles">
 <h3>Extract phase angles<a class="headerlink" href="#Extract-phase-angles" title="Link to this heading">#</a></h3>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[77]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">phase</span><span class="p">,</span> <span class="n">peaks</span><span class="p">,</span> <span class="n">troughs</span> <span class="o">=</span> <span class="n">raw</span><span class="o">.</span><span class="n">phase_linear</span><span class="p">(</span><span class="n">prominence</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">distance</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
@@ -520,7 +522,7 @@ start_idx 1200000
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[77]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -530,6 +532,117 @@ start_idx 1200000
 </pre></div></div>
 </div>
 </section>
+</section>
+<section id="Extract-phase-angles-at-the-time-of-stimulus-presentation">
+<h2>Extract phase angles at the time of stimulus presentation<a class="headerlink" href="#Extract-phase-angles-at-the-time-of-stimulus-presentation" title="Link to this heading">#</a></h2>
+<p>Now, we will extract the phase angles corresponding to the events of interest. This will allow us to analyse the whether the respiration phase is aligned with the timing of the stimuli presented during the task.</p>
+<p>To acheive this, we first need to get the event timings. In the data used for this tutorial, the events are stored in a numpy array with <span class="math notranslate nohighlight">\(n\)</span> rows and 3 columns. The first column holds the the sample index of the event, and the third column holds the trigger value (i.e. an integer that identifes the type of event).</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[78]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">events</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;events&quot;</span><span class="p">]</span>
+
+<span class="n">trigger_vals</span> <span class="o">=</span> <span class="n">events</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]</span>
+<span class="n">sample_indices</span> <span class="o">=</span> <span class="n">events</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Triggers:&quot;</span><span class="p">,</span> <span class="n">trigger_vals</span><span class="p">[:</span><span class="mi">10</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Sample indices:&quot;</span><span class="p">,</span> <span class="n">sample_indices</span><span class="p">[:</span><span class="mi">10</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Triggers: [  3   5   9  35  37  41 416   3   5   9]
+Sample indices: [121550 122000 122449 122891 123329 123797 124246 124920 125370 125819]
+</pre></div></div>
+</div>
+<p>To make it easier to understand the data, we will convert the trigger values into a list of event names.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[79]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">event_ids</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="c1"># stimulus leading up to the target stimulus</span>
+    <span class="c1">## all are salient, but the fourth, fifth and sixth can be either regular or irregular</span>
+    <span class="c1">## (i.e. they are either presented at the expected time or jittered)</span>
+    <span class="mi">3</span><span class="p">:</span> <span class="s2">&quot;salient/first&quot;</span><span class="p">,</span>
+    <span class="mi">5</span><span class="p">:</span> <span class="s2">&quot;salient/second&quot;</span><span class="p">,</span>
+    <span class="mi">9</span><span class="p">:</span> <span class="s2">&quot;salient/third&quot;</span><span class="p">,</span>
+    <span class="mi">19</span><span class="p">:</span> <span class="s2">&quot;salient/regular/fourth&quot;</span><span class="p">,</span>
+    <span class="mi">21</span><span class="p">:</span> <span class="s2">&quot;salient/regular/fifth&quot;</span><span class="p">,</span>
+    <span class="mi">25</span><span class="p">:</span> <span class="s2">&quot;salient/regular/sixth&quot;</span><span class="p">,</span>
+    <span class="mi">35</span><span class="p">:</span> <span class="s2">&quot;salient/irregular/fourth&quot;</span><span class="p">,</span>
+    <span class="mi">37</span><span class="p">:</span> <span class="s2">&quot;salient/irregular/fifth&quot;</span><span class="p">,</span>
+    <span class="mi">41</span><span class="p">:</span> <span class="s2">&quot;salient/irregular/sixth&quot;</span><span class="p">,</span>
+
+    <span class="c1"># target stimulus</span>
+    <span class="c1">## can either be weak or omission</span>
+    <span class="c1">## the regular and irregular is used to indicate whether the proceeding stimulus was presented at the expected time or jittered</span>
+    <span class="c1">## the target is always presented at the expected time</span>
+    <span class="mi">337</span><span class="p">:</span> <span class="s2">&quot;weak/target/regular/hit&quot;</span><span class="p">,</span>
+    <span class="mi">593</span><span class="p">:</span> <span class="s2">&quot;weak/target/regular/miss&quot;</span><span class="p">,</span>
+    <span class="mi">353</span><span class="p">:</span> <span class="s2">&quot;weak/target/irregular/hit&quot;</span><span class="p">,</span>
+    <span class="mi">609</span><span class="p">:</span> <span class="s2">&quot;weak/target/irregular/miss&quot;</span><span class="p">,</span>
+    <span class="mi">400</span><span class="p">:</span> <span class="s2">&quot;omission/target/regular/hit&quot;</span><span class="p">,</span>
+    <span class="mi">416</span><span class="p">:</span> <span class="s2">&quot;omission/target/irregular/hit&quot;</span><span class="p">,</span>
+    <span class="mi">656</span><span class="p">:</span> <span class="s2">&quot;omission/target/regular/miss&quot;</span><span class="p">,</span>
+    <span class="mi">672</span><span class="p">:</span> <span class="s2">&quot;omission/target/irregular/miss&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="n">event_labels</span> <span class="o">=</span> <span class="p">[</span><span class="n">event_ids</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">trig</span><span class="p">,</span> <span class="s2">&quot;unknown&quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">trig</span> <span class="ow">in</span> <span class="n">trigger_vals</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Event labels: </span><span class="si">{</span><span class="n">event_labels</span><span class="p">[:</span><span class="mi">10</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Event labels: [&#39;salient/first&#39;, &#39;salient/second&#39;, &#39;salient/third&#39;, &#39;salient/irregular/fourth&#39;, &#39;salient/irregular/fifth&#39;, &#39;salient/irregular/sixth&#39;, &#39;omission/target/irregular/hit&#39;, &#39;salient/first&#39;, &#39;salient/second&#39;, &#39;salient/third&#39;]
+</pre></div></div>
+</div>
+<p>Now that we have our event labels and the phase angles, we can find the phase angles corresponding to the experimental events.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[82]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">phase_events</span> <span class="o">=</span> <span class="n">create_phase_events</span><span class="p">(</span>
+    <span class="n">phase_ts</span><span class="o">=</span><span class="n">phase</span><span class="p">,</span>
+    <span class="n">events</span><span class="o">=</span><span class="n">sample_indices</span><span class="p">,</span>
+    <span class="n">event_labels</span><span class="o">=</span><span class="n">event_labels</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Rejected 0 out of 2100 events (0.0%)
+</pre></div></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">PhaseEvents</span></code> object has a plotting function, so we can visualise the phase angles at the time of the events. This will allow us to see how the phase angles are distributed across the different event types.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[83]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">phase_events</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/tutorials_01_intro_21_0.png" src="../_images/tutorials_01_intro_21_0.png" />
+</div>
+</div>
 </section>
 </section>
 
@@ -583,6 +696,7 @@ start_idx 1200000
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Extract-phase-angles">Extract phase angles</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Extract-phase-angles-at-the-time-of-stimulus-presentation">Extract phase angles at the time of stimulus presentation</a></li>
 </ul>
   </nav></div>
 
