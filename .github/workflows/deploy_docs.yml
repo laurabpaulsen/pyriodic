@@ -25,10 +25,15 @@ jobs:
         run: pip install .
 
       - name: Install documentation dependencies
-        run: pip install -r docs_src/requirements.txt
+        run: |
+          pip install -r docs_src/requirements.txt
+          pip install nbformat  # needed by generate_tutorial_cards.py
 
       - name: Install pandoc
         run: sudo apt-get install -y pandoc
+
+      - name: Generate tutorial cards
+        run: python docs_src/generate_tutorial_cards.py
 
       - name: Build docs
         run: sphinx-build -M html docs_src docs/_site
