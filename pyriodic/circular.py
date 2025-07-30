@@ -10,7 +10,7 @@ class Circular:
     """
     A class for representing and working with circular data (e.g., angles, time-of-day, phase).
 
-    This class supports circular statistics and visualization of data that wraps around a fixed range,
+    This class supports circular statistics and visualisation of data that wraps around a fixed range,
     such as angles (in radians or degrees), phases, hours, or other cyclic measurements. It provides
     basic unit validation, conversion between degrees and radians, and visualisation tools.
 
