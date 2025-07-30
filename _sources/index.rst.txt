@@ -8,7 +8,7 @@ Check out the tutorials to get started, or jump to the API reference.
 
 .. toctree::
    :maxdepth: 1
-   :caption: 📚 Sections
+   :caption: Navigation
    :hidden:
 
    installation
