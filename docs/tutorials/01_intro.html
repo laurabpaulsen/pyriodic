@@ -1,0 +1,811 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Overview of respiration data preprocessing and analysis &#8212; pyriodic 0.0.1 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/nbsphinx-code-cells.css?v=2aa19091" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=f539c95a"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'tutorials/01_intro';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Comparisions of methods for phase extraction from time series data" href="02_phase_diagnostics.html" />
+    <link rel="prev" title="Tutorials" href="index.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">pyriodic 0.0.1 documentation</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../installation/index.html">
+    Installation
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="index.html">
+    Tutorials
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../api/index.html">
+    API Reference
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script>
+        </div>
+      
+      
+        <div class="navbar-item">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/laurabpaulsen/pyriodic" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../installation/index.html">
+    Installation
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="index.html">
+    Tutorials
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../api/index.html">
+    API Reference
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/laurabpaulsen/pyriodic" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Overview of respiration data preprocessing and analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_phase_diagnostics.html">Comparisions of methods for phase extraction from time series data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_why_circular_stats.html">Why circular statistics matter - the case of respiratory signals</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">Tutorials</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page">Overview of...</li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="Overview-of-respiration-data-preprocessing-and-analysis">
+<h1>Overview of respiration data preprocessing and analysis<a class="headerlink" href="#Overview-of-respiration-data-preprocessing-and-analysis" title="Link to this heading">#</a></h1>
+<p>This tutorial covers a basic pipeline for preprocessing and analysis of respiration data collected during a experimental task. It introduces core <code class="docutils literal notranslate"><span class="pre">pyriodic</span></code> classes.</p>
+<p>At first, we import the necessary Python modules:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[109]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pickle</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">pyriodic.preproc</span><span class="w"> </span><span class="kn">import</span> <span class="n">RawSignal</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pyriodic.viz</span><span class="w"> </span><span class="kn">import</span> <span class="n">plot_phase_diagnostics</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pyriodic.phase_events</span><span class="w"> </span><span class="kn">import</span> <span class="n">create_phase_events</span>
+<br/></pre></div>
+</div>
+</div>
+<section id="Load-in-data-and-create-RawSignal-object">
+<h2>Load in data and create <code class="docutils literal notranslate"><span class="pre">RawSignal</span></code> object<a class="headerlink" href="#Load-in-data-and-create-RawSignal-object" title="Link to this heading">#</a></h2>
+<p>The first step is to load in the respiration time series data. Together with the sampling frequency, this is used to create a <code class="docutils literal notranslate"><span class="pre">RawSignal</span></code> object. This object holds many useful methods for preprocessing the raw data.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[110]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># load data</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;../../data/respiration/example.pkl&quot;</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+
+<span class="c1"># extract respiration timeseries and sampling frequency</span>
+<span class="n">resp_ts</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;respiration_timeseries&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get_data</span><span class="p">()</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span>
+<span class="n">sfreq</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;respiration_timeseries&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;sfreq&quot;</span><span class="p">]</span>
+
+
+<span class="c1"># initialise RawSignal object</span>
+<span class="n">raw</span> <span class="o">=</span> <span class="n">RawSignal</span><span class="p">(</span><span class="n">resp_ts</span><span class="p">,</span> <span class="n">fs</span> <span class="o">=</span> <span class="n">sfreq</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">RawSignal</span></code> object has a built-in plotting method that allows you to visualise the data. You can specify the start time and duration of the segment you want to plot. If no arguments are provided, it will plot the first 20 seconds of the signal.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[111]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">raw</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">start</span> <span class="o">=</span> <span class="mi">20</span><span class="p">,</span> <span class="n">duration</span> <span class="o">=</span> <span class="mi">20</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[111]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;Axes: xlabel=&#39;Time (s)&#39;, ylabel=&#39;Amplitude&#39;&gt;
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/tutorials_01_intro_5_1.png" src="../_images/tutorials_01_intro_5_1.png" />
+</div>
+</div>
+</section>
+<section id="Preprocessing">
+<h2>Preprocessing<a class="headerlink" href="#Preprocessing" title="Link to this heading">#</a></h2>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[112]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">raw</span><span class="o">.</span><span class="n">filter_bandpass</span><span class="p">(</span><span class="n">low</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">,</span> <span class="n">high</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">raw</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">start</span> <span class="o">=</span> <span class="mi">20</span><span class="p">,</span> <span class="n">duration</span> <span class="o">=</span> <span class="mi">20</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[112]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;Axes: xlabel=&#39;Time (s)&#39;, ylabel=&#39;Amplitude&#39;&gt;
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/tutorials_01_intro_7_1.png" src="../_images/tutorials_01_intro_7_1.png" />
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[113]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">raw</span><span class="o">.</span><span class="n">smoothing</span><span class="p">(</span><span class="n">window_size</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+<span class="n">raw</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">start</span> <span class="o">=</span> <span class="mi">20</span><span class="p">,</span> <span class="n">duration</span> <span class="o">=</span> <span class="mi">20</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[113]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;Axes: xlabel=&#39;Time (s)&#39;, ylabel=&#39;Amplitude&#39;&gt;
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/tutorials_01_intro_8_1.png" src="../_images/tutorials_01_intro_8_1.png" />
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[114]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">raw</span><span class="o">.</span><span class="n">zscore</span><span class="p">()</span>
+<span class="n">raw</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">start</span> <span class="o">=</span> <span class="mi">20</span><span class="p">,</span> <span class="n">duration</span> <span class="o">=</span> <span class="mi">20</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[114]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;Axes: xlabel=&#39;Time (s)&#39;, ylabel=&#39;Amplitude&#39;&gt;
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/tutorials_01_intro_9_1.png" src="../_images/tutorials_01_intro_9_1.png" />
+</div>
+</div>
+<p>As the data is modified in-place, the original signal is lost. If you want to keep the original signal, make a copy before applying any modifications. To see which modifications have been applied to the signal, you can print the history:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[115]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">raw</span><span class="o">.</span><span class="n">history</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[115]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[&#39;bandpass(0.1 Hz - 1 Hz)&#39;,
+ &#39;Smoothing has been applied with a window size of 50&#39;,
+ &#39;zscore()&#39;]
+</pre></div></div>
+</div>
+</section>
+<section id="Extract-phase-angles">
+<h2>Extract phase angles<a class="headerlink" href="#Extract-phase-angles" title="Link to this heading">#</a></h2>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[116]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">phase</span><span class="p">,</span> <span class="n">peaks</span><span class="p">,</span> <span class="n">troughs</span> <span class="o">=</span> <span class="n">raw</span><span class="o">.</span><span class="n">phase_linear</span><span class="p">(</span><span class="n">prominence</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">distance</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+
+<span class="n">plot_phase_diagnostics</span><span class="p">(</span>
+            <span class="p">{</span><span class="s2">&quot;Two-point&quot;</span><span class="p">:</span> <span class="n">phase</span><span class="p">},</span>
+            <span class="n">start</span> <span class="o">=</span> <span class="mi">20</span><span class="p">,</span>
+            <span class="n">window_duration</span> <span class="o">=</span> <span class="mi">20</span><span class="p">,</span>
+            <span class="n">fs</span> <span class="o">=</span> <span class="n">raw</span><span class="o">.</span><span class="n">fs</span><span class="p">,</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">raw</span><span class="o">.</span><span class="n">ts</span><span class="p">,</span> <span class="c1">#the preproccessed data</span>
+            <span class="n">peaks</span><span class="o">=</span><span class="n">peaks</span><span class="p">,</span>
+            <span class="n">troughs</span><span class="o">=</span><span class="n">troughs</span>
+        <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+start_idx 6000
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/tutorials_01_intro_13_1.png" src="../_images/tutorials_01_intro_13_1.png" />
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[116]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+(&lt;Figure size 1200x500 with 4 Axes&gt;,
+ array([&lt;Axes: &gt;, &lt;Axes: ylabel=&#39;Two-point&#39;&gt;], dtype=object))
+</pre></div></div>
+</div>
+<p>Now, we will extract the phase angles corresponding to the events of interest. This will allow us to analyse the whether the respiration phase is aligned with the timing of the stimuli presented during the task.</p>
+<p>To acheive this, we first need to get the event timings. In the data used for this tutorial, the events are stored in a numpy array with <span class="math notranslate nohighlight">\(n\)</span> rows and 3 columns. The first column holds the the sample index of the event, and the third column holds the trigger value (i.e. an integer that identifes the type of event).</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[117]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">events</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;events&quot;</span><span class="p">]</span>
+
+<span class="n">trigger_vals</span> <span class="o">=</span> <span class="n">events</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]</span>
+<span class="n">sample_indices</span> <span class="o">=</span> <span class="n">events</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Triggers:&quot;</span><span class="p">,</span> <span class="n">trigger_vals</span><span class="p">[:</span><span class="mi">10</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Sample indices:&quot;</span><span class="p">,</span> <span class="n">sample_indices</span><span class="p">[:</span><span class="mi">10</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Triggers: [  3   5   9  35  37  41 416   3   5   9]
+Sample indices: [121550 122000 122449 122891 123329 123797 124246 124920 125370 125819]
+</pre></div></div>
+</div>
+<p>To make it easier to understand the data, we will convert the trigger values into a list of event names.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[118]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">event_ids</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="c1"># stimulus leading up to the target stimulus</span>
+    <span class="c1">## all are salient, but the fourth, fifth and sixth can be either regular or irregular</span>
+    <span class="c1">## (i.e. they are either presented at the expected time or jittered)</span>
+    <span class="mi">3</span><span class="p">:</span> <span class="s2">&quot;salient/first&quot;</span><span class="p">,</span>
+    <span class="mi">5</span><span class="p">:</span> <span class="s2">&quot;salient/second&quot;</span><span class="p">,</span>
+    <span class="mi">9</span><span class="p">:</span> <span class="s2">&quot;salient/third&quot;</span><span class="p">,</span>
+    <span class="mi">19</span><span class="p">:</span> <span class="s2">&quot;salient/regular/fourth&quot;</span><span class="p">,</span>
+    <span class="mi">21</span><span class="p">:</span> <span class="s2">&quot;salient/regular/fifth&quot;</span><span class="p">,</span>
+    <span class="mi">25</span><span class="p">:</span> <span class="s2">&quot;salient/regular/sixth&quot;</span><span class="p">,</span>
+    <span class="mi">35</span><span class="p">:</span> <span class="s2">&quot;salient/irregular/fourth&quot;</span><span class="p">,</span>
+    <span class="mi">37</span><span class="p">:</span> <span class="s2">&quot;salient/irregular/fifth&quot;</span><span class="p">,</span>
+    <span class="mi">41</span><span class="p">:</span> <span class="s2">&quot;salient/irregular/sixth&quot;</span><span class="p">,</span>
+
+    <span class="c1"># target stimulus</span>
+    <span class="c1">## can either be weak or omission</span>
+    <span class="c1">## the regular and irregular is used to indicate whether the proceeding stimulus was presented at the expected time or jittered</span>
+    <span class="c1">## the target is always presented at the expected time</span>
+    <span class="mi">337</span><span class="p">:</span> <span class="s2">&quot;weak/target/regular/hit&quot;</span><span class="p">,</span>
+    <span class="mi">593</span><span class="p">:</span> <span class="s2">&quot;weak/target/regular/miss&quot;</span><span class="p">,</span>
+    <span class="mi">353</span><span class="p">:</span> <span class="s2">&quot;weak/target/irregular/hit&quot;</span><span class="p">,</span>
+    <span class="mi">609</span><span class="p">:</span> <span class="s2">&quot;weak/target/irregular/miss&quot;</span><span class="p">,</span>
+    <span class="mi">400</span><span class="p">:</span> <span class="s2">&quot;omission/target/regular/hit&quot;</span><span class="p">,</span>
+    <span class="mi">416</span><span class="p">:</span> <span class="s2">&quot;omission/target/irregular/hit&quot;</span><span class="p">,</span>
+    <span class="mi">656</span><span class="p">:</span> <span class="s2">&quot;omission/target/regular/miss&quot;</span><span class="p">,</span>
+    <span class="mi">672</span><span class="p">:</span> <span class="s2">&quot;omission/target/irregular/miss&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="n">event_labels</span> <span class="o">=</span> <span class="p">[</span><span class="n">event_ids</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">trig</span><span class="p">,</span> <span class="s2">&quot;unknown&quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">trig</span> <span class="ow">in</span> <span class="n">trigger_vals</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Event labels: </span><span class="si">{</span><span class="n">event_labels</span><span class="p">[:</span><span class="mi">10</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Event labels: [&#39;salient/first&#39;, &#39;salient/second&#39;, &#39;salient/third&#39;, &#39;salient/irregular/fourth&#39;, &#39;salient/irregular/fifth&#39;, &#39;salient/irregular/sixth&#39;, &#39;omission/target/irregular/hit&#39;, &#39;salient/first&#39;, &#39;salient/second&#39;, &#39;salient/third&#39;]
+</pre></div></div>
+</div>
+<p>Now that we have our event labels and the phase angles, we can find the phase angles corresponding to the experimental events.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[119]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">phase_events</span> <span class="o">=</span> <span class="n">create_phase_events</span><span class="p">(</span>
+    <span class="n">phase_ts</span><span class="o">=</span><span class="n">phase</span><span class="p">,</span>
+    <span class="n">events</span><span class="o">=</span><span class="n">sample_indices</span><span class="p">,</span>
+    <span class="n">event_labels</span><span class="o">=</span><span class="n">event_labels</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Rejected 0 out of 2100 events (0.0%)
+</pre></div></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">PhaseEvents</span></code> object has a plotting function, so we can visualise the phase angles at the time of the events. This will allow us to see how the phase angles are distributed across the different event types.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[122]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">phase_events</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+    <span class="n">histogram</span><span class="o">=</span><span class="n">phase</span> <span class="c1"># adds a histogram of the phase angles (from the whole timeseries) to the plot</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/tutorials_01_intro_21_0.png" src="../_images/tutorials_01_intro_21_0.png" />
+</div>
+</div>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Load-in-data-and-create-RawSignal-object">Load in data and create <code class="docutils literal notranslate"><span class="pre">RawSignal</span></code> object</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Preprocessing">Preprocessing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Extract-phase-angles">Extract phase angles</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+
+  <div class="tocsection sourcelink">
+    <a href="../_sources/tutorials/01_intro.ipynb.txt">
+      <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+  </div>
+</div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2025, Laura Bock Paulsen.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.15.4.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>
