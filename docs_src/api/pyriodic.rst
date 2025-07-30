@@ -1,9 +1,6 @@
 pyriodic package
 ================
 
-Submodules
-----------
-
 pyriodic.circular module
 ------------------------
 
