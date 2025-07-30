@@ -1,11 +1,16 @@
 .. This file is auto-generated to force Sphinx to include tutorial images.
 
-.. image:: /_static/tutorials/01_intro.png
-   :alt: preload
+.. raw:: html
 
-.. image:: /_static/tutorials/default.png
-   :alt: preload
+   <div style='display:none'>
 
-.. image:: /_static/tutorials/03_why_circular_stats.png
-   :alt: preload
+   .. image:: /_images/01_intro.png
+      :alt: preload
 
+   .. image:: /_images/default.png
+      :alt: preload
+
+   .. image:: /_images/03_why_circular_stats.png
+      :alt: preload
+
+   </div>
