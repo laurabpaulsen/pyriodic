@@ -7,6 +7,7 @@ from pathlib import Path
 TUTORIALS_DIR = Path("docs_src/tutorials")
 STATIC_IMG_DIR = Path("docs_src/_static/tutorials")
 OUTPUT_RST = TUTORIALS_DIR / "index.rst"
+MANIFEST_RST = TUTORIALS_DIR / "_image_manifest.rst"
 
 intro_text = """\
 Tutorials
@@ -51,9 +52,17 @@ def extract_title_and_desc(nb):
             return title, desc
     return "Untitled", ""
 
+def write_image_manifest(image_filenames, path):
+    with open(path, "w") as f:
+        f.write(".. This file is auto-generated to force Sphinx to include tutorial images.\n\n")
+        for image_file in image_filenames:
+            f.write(f".. image:: _static/tutorials/{image_file}\n")
+            f.write("   :alt: preload\n\n")
+
 def main():
     os.makedirs(STATIC_IMG_DIR, exist_ok=True)
     entries = []
+    image_files_used = []
 
     for fname in sorted(TUTORIALS_DIR.glob("*.ipynb")):
         if fname.name.startswith("index"):
@@ -71,9 +80,10 @@ def main():
         if image_data:
             with open(image_path, "wb") as f:
                 f.write(image_data)
-                print(image_path)
+                print(f"✅ Wrote image: {image_path}")
         else:
-            image_file = "default.png"  # fallback if no image found
+            image_file = "default.png"  # fallback
+        image_files_used.append(image_file)
 
         entries.append(
             card_template.format(
@@ -85,10 +95,16 @@ def main():
             )
         )
 
+    # Write tutorials/index.rst
     with open(OUTPUT_RST, "w") as f:
         f.write(intro_text + "\n".join(entries) + "\n    </div>\n")
+        f.write("\n.. include:: _image_manifest.rst\n   :start-after: preload\n")
 
-    print(f"✅ Generated {OUTPUT_RST} with {len(entries)} cards.")
+    # Write _image_manifest.rst to force image inclusion
+    write_image_manifest(image_files_used, MANIFEST_RST)
+
+    print(f"\n✅ Generated {OUTPUT_RST} with {len(entries)} cards.")
+    print(f"✅ Generated image manifest: {MANIFEST_RST}")
 
 if __name__ == "__main__":
     main()
