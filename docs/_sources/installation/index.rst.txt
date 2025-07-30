@@ -1,4 +1,3 @@
-.. _installation:
 
 Installation
 ============
@@ -8,4 +7,6 @@ This section provides a guide on how to install and set up the `pyriodic` packag
    :maxdepth: 2
 
    installation_guide
+
+
 

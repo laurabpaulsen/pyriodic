@@ -71,6 +71,7 @@ def main():
         if image_data:
             with open(image_path, "wb") as f:
                 f.write(image_data)
+                print(image_path)
         else:
             image_file = "default.png"  # fallback if no image found
 

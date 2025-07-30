@@ -2,30 +2,16 @@
  "cells": [
   {
    "cell_type": "markdown",
-   "id": "90332cb1",
+   "id": "7ef9fdbb",
    "metadata": {},
    "source": [
     "# How to use Pyriodic\n",
-    "\n",
-    "\n",
     "Pyriodic can be installed via pip: NOT YET THIS IS JUST A TEST\n",
     "\n",
     "```bash\n",
     "pip install pyriodic\n",
     "```"
    ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": null,
-   "id": "84a42f30",
-   "metadata": {
-    "vscode": {
-     "languageId": "plaintext"
-    }
-   },
-   "outputs": [],
-   "source": []
   }
  ],
  "metadata": {

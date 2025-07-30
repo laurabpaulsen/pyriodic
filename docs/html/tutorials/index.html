@@ -39,12 +39,10 @@
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'tutorials/index';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Overview of respiration data preprocessing and analysis" href="01_intro.html" />
+    <link rel="next" title="API Reference" href="../api/index.html" />
     <link rel="prev" title="How to use Pyriodic" href="../installation/installation_guide.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -334,12 +332,7 @@
 <nav class="bd-docs-nav bd-links"
      aria-label="Section Navigation">
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
-  <div class="bd-toc-item navbar-nav"><ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="01_intro.html">Overview of respiration data preprocessing and analysis</a></li>
-<li class="toctree-l1"><a class="reference internal" href="02_phase_diagnostics.html">Comparisions of methods for phase extraction from time series data</a></li>
-<li class="toctree-l1"><a class="reference internal" href="03_why_circular_stats.html">Why circular statistics matter - the case of respiratory signals</a></li>
-</ul>
-</div>
+  <div class="bd-toc-item navbar-nav"></div>
 </nav></div>
     </div>
   
@@ -395,22 +388,45 @@
   <section id="tutorials">
 <h1>Tutorials<a class="headerlink" href="#tutorials" title="Link to this heading">#</a></h1>
 <p>These tutorials will guide you through the core functionality of Pyriodic.</p>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="01_intro.html">Overview of respiration data preprocessing and analysis</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="01_intro.html#Load-in-data-and-create-RawSignal-object">Load in data and create <code class="docutils literal notranslate"><span class="pre">RawSignal</span></code> object</a></li>
-<li class="toctree-l2"><a class="reference internal" href="01_intro.html#Preprocessing">Preprocessing</a></li>
-<li class="toctree-l2"><a class="reference internal" href="01_intro.html#Extract-phase-angles">Extract phase angles</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="02_phase_diagnostics.html">Comparisions of methods for phase extraction from time series data</a></li>
-<li class="toctree-l1"><a class="reference internal" href="03_why_circular_stats.html">Why circular statistics matter - the case of respiratory signals</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="03_why_circular_stats.html#Caveats-of-the-hilbert-transform-used-in-this-notebook">Caveats of the hilbert transform used in this notebook</a></li>
-</ul>
-</li>
-</ul>
-</div>
 </section>
+<section id="id1">
+<h1>Tutorials<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
+<p>These tutorials walk you through using <strong>Pyriodic</strong> for circular data analysis, from getting started to phase-based diagnostics and statistical reasoning.</p>
+<div class="row">
+
+  <div class="col-md-4">
+    <div class="card shadow-sm mb-4">
+      <a href="01_intro.html" class="stretched-link"></a>
+      <img src="../_static/tutorials/01_intro.png" class="card-img-top" alt="Intro">
+      <div class="card-body">
+        <h5 class="card-title">Getting Started</h5>
+        <p class="card-text">Overview of Pyriodic and basic concepts of circular data.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-4">
+    <div class="card shadow-sm mb-4">
+      <a href="02_phase_diagnostics.html" class="stretched-link"></a>
+      <img src="../_static/tutorials/02_phase_diagnostics.png" class="card-img-top" alt="Phase diagnostics">
+      <div class="card-body">
+        <h5 class="card-title">Phase Diagnostics</h5>
+        <p class="card-text">Learn how to compute and visualise phase-angle distributions.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-4">
+    <div class="card shadow-sm mb-4">
+      <a href="03_why_circular_stats.html" class="stretched-link"></a>
+      <img src="../_static/tutorials/03_why_circular_stats.png" class="card-img-top" alt="Why circular?">
+      <div class="card-body">
+        <h5 class="card-title">Why Circular Stats?</h5>
+        <p class="card-text">Understand the statistical principles behind circular data analysis.</p>
+      </div>
+    </div>
+  </div>
+</div></section>
 
 
                 </article>
@@ -427,13 +443,18 @@
 
 
   <div class="sidebar-secondary-item">
-
-  <div class="tocsection sourcelink">
-    <a href="../_sources/tutorials/index.rst.txt">
-      <i class="fa-solid fa-file-lines"></i> Show Source
-    </a>
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
   </div>
-</div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Tutorials</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Tutorials</a></li>
+</ul>
+
+  </nav></div>
 
 </div></div>
               
