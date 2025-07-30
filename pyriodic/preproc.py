@@ -216,7 +216,7 @@ class RawSignal:
 
         return phase_angles % (2 * np.pi)  # return from 0 to 2pi instead
 
-    def phase_linear(self, peak_finder=None, distance=1, prominence=0.01):
+    def phase_twopoint(self, peak_finder=None, distance=1, prominence=0.01):
         """
         Extract phase using linear interpolation between peaks and troughs.
 
