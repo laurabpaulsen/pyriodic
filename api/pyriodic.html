@@ -761,29 +761,6 @@ Otherwise, returns a PhaseEvents object containing condition-grouped Circular da
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="pyriodic.preproc.RawSignal.phase_linear">
-<span class="sig-name descname"><span class="pre">phase_linear</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">peak_finder</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">distance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prominence</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.01</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyriodic.preproc.RawSignal.phase_linear" title="Link to this definition">#</a></dt>
-<dd><p>Extract phase using linear interpolation between peaks and troughs.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>peak_finder</strong> (<em>callable</em><em>, </em><em>optional</em>) – Optional custom function of the form <code class="docutils literal notranslate"><span class="pre">func(ts,</span> <span class="pre">**kwargs)</span> <span class="pre">-&gt;</span> <span class="pre">np.ndarray</span></code> returning peak indices.</p></li>
-<li><p><strong>distance</strong> (<em>int</em>) – Minimum distance in seconds between peaks, passed to the peak detection algorithm.</p></li>
-<li><p><strong>prominence</strong> (<em>float</em>) – Prominence threshold for peak detection.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><ul class="simple">
-<li><p><strong>phase</strong> (<em>np.ndarray</em>) – The extracted phase values (in radians).</p></li>
-<li><p><strong>peaks</strong> (<em>np.ndarray</em>) – Indices of detected peaks.</p></li>
-<li><p><strong>troughs</strong> (<em>np.ndarray</em>) – Indices of detected troughs.</p></li>
-</ul>
-</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
 <dt class="sig sig-object py" id="pyriodic.preproc.RawSignal.phase_onepoint">
 <span class="sig-name descname"><span class="pre">phase_onepoint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">peak_finder</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">distance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prominence</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.01</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyriodic.preproc.RawSignal.phase_onepoint" title="Link to this definition">#</a></dt>
 <dd><p>Extract phase by linearly interpolating from 0 to 2π between detected peaks.</p>
@@ -825,6 +802,29 @@ Peak → descending slope → flat region → ascending slope → next peak.</p>
 <li><p><strong>phase</strong> (<em>np.ndarray</em>) – Phase array in radians (0 to 2π).</p></li>
 <li><p><strong>peaks</strong> (<em>np.ndarray</em>) – Indices of detected peaks.</p></li>
 <li><p><strong>troughs</strong> (<em>list of tuple</em>) – Each tuple contains the (start_index, end_index) of a flat region between peaks.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyriodic.preproc.RawSignal.phase_twopoint">
+<span class="sig-name descname"><span class="pre">phase_twopoint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">peak_finder</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">distance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prominence</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.01</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyriodic.preproc.RawSignal.phase_twopoint" title="Link to this definition">#</a></dt>
+<dd><p>Extract phase using linear interpolation between peaks and troughs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>peak_finder</strong> (<em>callable</em><em>, </em><em>optional</em>) – Optional custom function of the form <code class="docutils literal notranslate"><span class="pre">func(ts,</span> <span class="pre">**kwargs)</span> <span class="pre">-&gt;</span> <span class="pre">np.ndarray</span></code> returning peak indices.</p></li>
+<li><p><strong>distance</strong> (<em>int</em>) – Minimum distance in seconds between peaks, passed to the peak detection algorithm.</p></li>
+<li><p><strong>prominence</strong> (<em>float</em>) – Prominence threshold for peak detection.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>phase</strong> (<em>np.ndarray</em>) – The extracted phase values (in radians).</p></li>
+<li><p><strong>peaks</strong> (<em>np.ndarray</em>) – Indices of detected peaks.</p></li>
+<li><p><strong>troughs</strong> (<em>np.ndarray</em>) – Indices of detected troughs.</p></li>
 </ul>
 </p>
 </dd>
@@ -1156,9 +1156,9 @@ Each should be 1D array of same length as <cite>data</cite>.</p></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.preproc.RawSignal.history"><code class="docutils literal notranslate"><span class="pre">RawSignal.history</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.preproc.RawSignal.interpolate_missing"><code class="docutils literal notranslate"><span class="pre">RawSignal.interpolate_missing()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.preproc.RawSignal.phase_hilbert"><code class="docutils literal notranslate"><span class="pre">RawSignal.phase_hilbert()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.preproc.RawSignal.phase_linear"><code class="docutils literal notranslate"><span class="pre">RawSignal.phase_linear()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.preproc.RawSignal.phase_onepoint"><code class="docutils literal notranslate"><span class="pre">RawSignal.phase_onepoint()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.preproc.RawSignal.phase_threepoint"><code class="docutils literal notranslate"><span class="pre">RawSignal.phase_threepoint()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.preproc.RawSignal.phase_twopoint"><code class="docutils literal notranslate"><span class="pre">RawSignal.phase_twopoint()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.preproc.RawSignal.plot"><code class="docutils literal notranslate"><span class="pre">RawSignal.plot()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.preproc.RawSignal.remove_outliers"><code class="docutils literal notranslate"><span class="pre">RawSignal.remove_outliers()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.preproc.RawSignal.resample"><code class="docutils literal notranslate"><span class="pre">RawSignal.resample()</span></code></a></li>
