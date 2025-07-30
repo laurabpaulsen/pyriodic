@@ -56,9 +56,15 @@ def extract_title_and_desc(nb):
 def write_image_manifest(image_filenames, path):
     with open(path, "w") as f:
         f.write(".. This file is auto-generated to force Sphinx to include tutorial images.\n\n")
+        f.write(".. raw:: html\n\n")
+        f.write("   <div style='display:none'>\n\n")
+
         for image_file in image_filenames:
-            f.write(f".. image:: /_static/tutorials/{image_file}\n")
-            f.write("   :alt: preload\n\n")
+            f.write(f"   .. image:: /_images/{image_file}\n")
+            f.write("      :alt: preload\n\n")
+
+        f.write("   </div>\n")
+
 
 
 def main():
