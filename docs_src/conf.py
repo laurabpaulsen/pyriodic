@@ -54,7 +54,8 @@ html_theme_options["navbar_links"] = [
     {
         "name": "Installation", 
         "url": "installation/index", 
-        "internal": True},
+        "internal": True,
+    },
     {
         "name": "Tutorials",
         "url": "tutorials/index",
