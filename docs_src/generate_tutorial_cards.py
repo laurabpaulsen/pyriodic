@@ -24,7 +24,7 @@ card_template = """\
       <div class="col-md-4">
         <div class="card shadow-sm mb-4">
           <a href="{notebook_html}" class="stretched-link"></a>
-          <img src="_static/tutorials/{image_file}" class="card-img-top" alt="{alt_text}">
+          <img src="tutorials/{image_file}" class="card-img-top" alt="{alt_text}">
           <div class="card-body">
             <h5 class="card-title">{title}</h5>
             <p class="card-text">{description}</p>
@@ -52,12 +52,14 @@ def extract_title_and_desc(nb):
             return title, desc
     return "Untitled", ""
 
+
 def write_image_manifest(image_filenames, path):
     with open(path, "w") as f:
         f.write(".. This file is auto-generated to force Sphinx to include tutorial images.\n\n")
         for image_file in image_filenames:
-            f.write(f".. image:: _static/tutorials/{image_file}\n")
+            f.write(f".. image:: /_static/tutorials/{image_file}\n")
             f.write("   :alt: preload\n\n")
+
 
 def main():
     os.makedirs(STATIC_IMG_DIR, exist_ok=True)
@@ -96,9 +98,20 @@ def main():
         )
 
     # Write tutorials/index.rst
+    notebook_stems = [f.stem for f in sorted(TUTORIALS_DIR.glob("*.ipynb")) if not f.name.startswith("index")]
+
     with open(OUTPUT_RST, "w") as f:
-        f.write(intro_text + "\n".join(entries) + "\n    </div>\n")
-        f.write("\n.. include:: _image_manifest.rst\n   :start-after: preload\n")
+        f.write(intro_text + "\n".join(entries) + "\n    </div>\n\n")
+
+        # Force Sphinx to copy images
+        f.write(".. include:: _image_manifest.rst\n\n")
+
+        # Hidden toctree for notebook indexing
+        f.write(".. toctree::\n   :hidden:\n\n")
+        for stem in notebook_stems:
+            f.write(f"   {stem}\n")
+
+
 
     # Write _image_manifest.rst to force image inclusion
     write_image_manifest(image_files_used, MANIFEST_RST)
