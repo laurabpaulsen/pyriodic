@@ -1,7 +1,7 @@
 pyriodic package
 ================
 
-pyriodic.circular module
+circular
 ------------------------
 
 .. automodule:: pyriodic.circular
@@ -9,7 +9,7 @@ pyriodic.circular module
    :undoc-members:
    :show-inheritance:
 
-pyriodic.density module
+density
 -----------------------
 
 .. automodule:: pyriodic.density
@@ -17,7 +17,7 @@ pyriodic.density module
    :undoc-members:
    :show-inheritance:
 
-pyriodic.desc module
+desc
 --------------------
 
 .. automodule:: pyriodic.desc
@@ -33,7 +33,7 @@ pyriodic.permutation module
    :undoc-members:
    :show-inheritance:
 
-pyriodic.phase\_events module
+phase\_events
 -----------------------------
 
 .. automodule:: pyriodic.phase_events
@@ -41,7 +41,7 @@ pyriodic.phase\_events module
    :undoc-members:
    :show-inheritance:
 
-pyriodic.preproc module
+preproc
 -----------------------
 
 .. automodule:: pyriodic.preproc
@@ -49,7 +49,7 @@ pyriodic.preproc module
    :undoc-members:
    :show-inheritance:
 
-pyriodic.regression module
+regression
 --------------------------
 
 .. automodule:: pyriodic.regression
@@ -57,7 +57,7 @@ pyriodic.regression module
    :undoc-members:
    :show-inheritance:
 
-pyriodic.utils module
+utils module
 ---------------------
 
 .. automodule:: pyriodic.utils
@@ -65,7 +65,7 @@ pyriodic.utils module
    :undoc-members:
    :show-inheritance:
 
-pyriodic.viz module
+viz
 -------------------
 
 .. automodule:: pyriodic.viz
@@ -73,10 +73,3 @@ pyriodic.viz module
    :undoc-members:
    :show-inheritance:
 
-Module contents
----------------
-
-.. automodule:: pyriodic
-   :members:
-   :undoc-members:
-   :show-inheritance:

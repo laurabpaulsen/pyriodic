@@ -48,7 +48,9 @@ html_theme_options = {
     ],
 }
 
-html_static_path = ['source/_static']
+html_static_path = ['_static']
+
+#html_static_path = ['source/_static']
 
 autosummary_generate = True
 
