@@ -5,25 +5,12 @@ Welcome to Pyriodic's documentation!
 
 Check out the tutorials to get started, or jump to the API reference.
 
+
 .. toctree::
    :maxdepth: 1
-   :caption: 📚 Contents
+   :caption: 📚 Sections
    :hidden:
 
    installation
    tutorials/index
    api/index
-
-.. toctree::
-   :maxdepth: 2
-   :caption: 🚀 Tutorials
-
-   tutorials/01_intro
-   tutorials/02_phase_diagnostics
-   tutorials/03_why_circular_stats
-
-.. toctree::
-   :maxdepth: 2
-   :caption: 🛠️ API Reference
-
-   pyriodic
