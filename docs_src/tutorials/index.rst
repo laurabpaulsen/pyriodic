@@ -9,7 +9,7 @@ These tutorials walk you through using **Pyriodic** for circular data analysis, 
       <div class="col-md-4">
         <div class="card shadow-sm mb-4">
           <a href="01_intro.html" class="stretched-link"></a>
-          <img src="tutorials/01_intro.png" class="card-img-top" alt="Overview of respiration data preprocessing and analysis">
+          <img src="../_static/tutorials/01_intro.png" class="card-img-top" alt="Overview of respiration data preprocessing and analysis">
           <div class="card-body">
             <h5 class="card-title">Overview of respiration data preprocessing and analysis</h5>
             <p class="card-text">This tutorial covers a basic pipeline for preprocessing and analysis of respiration data collected during a experimental task. It introduces core `pyriodic` classes.</p>
@@ -19,10 +19,10 @@ These tutorials walk you through using **Pyriodic** for circular data analysis, 
 
       <div class="col-md-4">
         <div class="card shadow-sm mb-4">
-          <a href="02_phase_diagnostics.html" class="stretched-link"></a>
-          <img src="tutorials/default.png" class="card-img-top" alt="Comparisions of methods for phase extraction from time series data">
+          <a href="02_phase_extraction.html" class="stretched-link"></a>
+          <img src="../_static/tutorials/default.png" class="card-img-top" alt="Methods for phase extraction from respiration data">
           <div class="card-body">
-            <h5 class="card-title">Comparisions of methods for phase extraction from time series data</h5>
+            <h5 class="card-title">Methods for phase extraction from respiration data</h5>
             <p class="card-text">See notebook for details.</p>
           </div>
         </div>
@@ -31,9 +31,31 @@ These tutorials walk you through using **Pyriodic** for circular data analysis, 
       <div class="col-md-4">
         <div class="card shadow-sm mb-4">
           <a href="03_why_circular_stats.html" class="stretched-link"></a>
-          <img src="tutorials/03_why_circular_stats.png" class="card-img-top" alt="Why circular statistics matter - the case of respiratory signals">
+          <img src="../_static/tutorials/03_why_circular_stats.png" class="card-img-top" alt="Why circular statistics matter - the case of respiratory signals">
           <div class="card-body">
             <h5 class="card-title">Why circular statistics matter - the case of respiratory signals</h5>
+            <p class="card-text">See notebook for details.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="card shadow-sm mb-4">
+          <a href="04_permutation_against_null.html" class="stretched-link"></a>
+          <img src="../_static/tutorials/04_permutation_against_null.png" class="card-img-top" alt="Permutation test against null distribution of respiratory phase angles">
+          <div class="card-body">
+            <h5 class="card-title">Permutation test against null distribution of respiratory phase angles</h5>
+            <p class="card-text">This notebook demonstrates how to make a permutation-based test to determine whether events (e.g., target stimuli) tend to occur at a specific phase of the respiratory cycle. As some phase angles are more common than others (exhalation tend to last longer than inspiration), we compare the observed phase angles at stimulus onset to a null distribution derived from the underlying respiratory signal.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="card shadow-sm mb-4">
+          <a href="05_permutation_two_samples.html" class="stretched-link"></a>
+          <img src="../_static/tutorials/default.png" class="card-img-top" alt="Two sample permutation test of respiratory phase angles">
+          <div class="card-body">
+            <h5 class="card-title">Two sample permutation test of respiratory phase angles</h5>
             <p class="card-text">See notebook for details.</p>
           </div>
         </div>
@@ -47,5 +69,7 @@ These tutorials walk you through using **Pyriodic** for circular data analysis, 
    :hidden:
 
    01_intro
-   02_phase_diagnostics
+   02_phase_extraction
    03_why_circular_stats
+   04_permutation_against_null
+   05_permutation_two_samples
