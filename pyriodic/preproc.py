@@ -31,7 +31,7 @@ class RawSignal:
             duration: Duration in seconds to plot.
         """
         if ax is None:
-            fig, ax = plt.subplots(figsize=(10, 4))
+            fig, ax = plt.subplots(figsize=(10, 6))
 
         times = np.arange(len(self.ts)) / self.fs
 
