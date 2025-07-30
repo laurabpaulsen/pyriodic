@@ -18,7 +18,6 @@ release = '0.0.1'
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
-extensions = []
 
 templates_path = ['_templates']
 exclude_patterns = []
@@ -50,23 +49,23 @@ html_theme_options = {
 
 
 
-html_theme_options["navbar_links"] = [
-    {
-        "name": "Installation", 
-        "url": "installation/index", 
-        "internal": True,
-    },
-    {
-        "name": "Tutorials",
-        "url": "tutorials/index",
-        "internal": True,
-    },
-    {
-        "name": "API",
-        "url": "api/index",
-        "internal": True,
-    },
-]
+#html_theme_options["navbar_links"] = [
+#    {
+#        "name": "Installation", 
+#        "url": "installation/index", 
+#        "internal": True,
+#    },
+#    {
+#        "name": "Tutorials",
+#         "url": "tutorials/index",
+#          "internal": True,
+#      },
+#      {
+#          "name": "API",
+#          "url": "api/index",
+#          "internal": True,
+#      },
+#]
 
 html_static_path = ['source/_static']
 
