@@ -42,7 +42,7 @@ html_theme_options = {
     "icon_links": [
         {
             "name": "GitHub",
-            "url": "https://github.com/yourusername/pyriodic",
+            "url": "https://github.com/laurabpaulsen/pyriodic",
             "icon": "fab fa-github",
         },
     ],
