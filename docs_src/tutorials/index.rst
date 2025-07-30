@@ -4,7 +4,7 @@ Tutorials
 These tutorials will guide you through the core functionality of Pyriodic.
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
 
    01_intro
    02_phase_diagnostics
