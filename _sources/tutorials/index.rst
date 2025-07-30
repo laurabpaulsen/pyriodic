@@ -1,10 +1,10 @@
 Tutorials
 =========
 
-These tutorials will guide you through the core functionality of **Pyriodic**, from getting started to understanding its use for circular data analysis.
+These tutorials will guide you through the core functionality of Pyriodic.
 
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 2
 
    01_intro
    02_phase_diagnostics
