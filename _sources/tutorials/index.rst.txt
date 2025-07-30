@@ -40,3 +40,6 @@ These tutorials walk you through using **Pyriodic** for circular data analysis, 
       </div>
 
     </div>
+
+.. include:: _image_manifest.rst
+   :start-after: preload
