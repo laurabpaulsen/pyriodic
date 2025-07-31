@@ -347,11 +347,13 @@ class CircPlot:
         color = self._pop_kwarg(kwargs, "color", None)
         arrow_kwargs.update(kwargs)
 
+        angles = np.array(angles)
 
         if lengths is None:
             lengths = np.ones_like(angles)
 
         if labels is not None:
+            labels = np.array(labels)
             unique_labels = np.unique(labels)
             for idx, label in enumerate(unique_labels):
                 mask = labels == label
