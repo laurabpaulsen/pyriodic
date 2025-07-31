@@ -2,14 +2,22 @@ from typing import Union, Literal
 import numpy as np
 
 
-def dat2rad(data: Union[np.ndarray, float, int], full_range: Union[float, int] = 360):
+def dat2rad(data: Union[np.ndarray, float, int], full_range: tuple[float, float] = (0, 360)):
+    """
+    """
 
-    return 2 * np.pi * data / full_range
+    return 2 * np.pi * data / (full_range[1] - full_range[0]) + full_range[0]
 
 
-def rad2dat(rad: Union[np.ndarray, float, int], full_range: Union[float, int] = 360):
+def rad2dat(rad: Union[np.ndarray, float, int], full_range: tuple[float, float] = (0, 360)):
 
-    return full_range * rad / (2 * np.pi)
+    return full_range[0] + (full_range[1] - full_range[0]) * rad / (2 * np.pi)
+
+def rad2deg(rad: Union[np.ndarray, float, int]) -> Union[np.ndarray, float, int]:
+    """
+    Convert radians to degrees.
+    """
+    return np.degrees(rad)
 
 
 def calculate_p_value(

@@ -23,7 +23,7 @@ class Circular:
         Optional condition labels or identifiers corresponding to each data point.
     unit : str, optional
         The unit of the input data. Must be one of {"radians", "degrees"}. Default is "radians". Assumes radian range to be from 0 to 2pi.
-    full_range: int, optional
+    full_range: tuple, optional
 
 
     Attributes
@@ -42,11 +42,11 @@ class Circular:
         data: np.ndarray,
         labels: Optional[Union[list, np.ndarray]] = None,
         unit: str = "radians",
-        full_range: Optional[Union[int, None]] = None,
+        full_range: Optional[tuple] = None,
     ):
 
         self.VALID_UNITS = {"degrees", "radians"}  # hours, years?
-        self.UNIT_RANGES = {"radians": 2 * np.pi + 0.001, "degrees": 360, "hours": 24}
+        self.UNIT_RANGES = {"radians": (0, 2 * np.pi + 0.001), "degrees": (0, 360), "hours": (0, 24)}
 
         unit = unit.lower()
         if unit not in self.VALID_UNITS:
@@ -58,7 +58,7 @@ class Circular:
 
         if labels is not None and len(labels) != len(data):
             raise ValueError("Length of labels must match length of data.")
-        self.labels = labels
+        self.labels = np.array(labels)
 
         if full_range is None:
             try:
@@ -86,9 +86,9 @@ class Circular:
         expected_range = full_range or self.UNIT_RANGES[unit]
 
         if unit in {"radians", "degrees"}:
-            if np.min(data) < 0 or np.max(data) > expected_range:
+            if np.min(data) < expected_range[0] or np.max(data) > expected_range[1]:
                 raise ValueError(
-                    f"Input data values exceed the valid {unit} range (0 to {expected_range}), "
+                    f"Input data values exceed the valid {unit} range ({expected_range[0]} to {expected_range[1]}), "
                     f"but unit is set to '{unit}'."
                 )
 
@@ -122,9 +122,8 @@ class Circular:
         from .viz import CircPlot
 
         plot = CircPlot(self, ax=ax, group_by_labels=group_by_labels)
-
-        plot.add_density()
         plot.add_points()
+
         if histogram is not None:
             plot.add_histogram(data=histogram)
 
