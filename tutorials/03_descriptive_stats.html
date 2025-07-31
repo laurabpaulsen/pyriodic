@@ -386,7 +386,7 @@
 <p>We will explore how to compute descriptive statistics for circular data using the Pyriodic package, and illustrate why we need special methods for circular data.</p>
 <p>First, we import the necessary Python modules:</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
@@ -397,7 +397,7 @@
 </div>
 <p>First, lets illustrate the need for special methods for descriptive statistics for circular data, first lets compute the arthmetric mean of angles 359 and 1 degree.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">angle_example</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">350</span><span class="p">,</span> <span class="mi">10</span><span class="p">])</span>
@@ -421,7 +421,7 @@
 </div>
 <p>This simple example shows, that as the arithmetic mean does not account for the wrap-around of the circular data, it gives a misleading result. If we however compute the circular mean angle, we get a more intuitive result. The circular mean is computed by averaging the sine and cosine of the angles, which accounts for the circular nature of the data.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot</span> <span class="o">=</span> <span class="n">circ</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">group_by_labels</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -441,7 +441,7 @@
 </div>
 <p>Now, lets generate a larger dataset. To have a sample data set, we will generate a set of angles from a von Mises distribution. The von Mises distribution is the circular analogue of the normal distribution, and is often used to model circular data. We will generate 300 angles with a mean of 0 radians and a concentration parameter of 5. The concentration parameter controls how tightly the angles cluster around the mean; higher values indicate tighter clustering.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">vonmises</span><span class="p">(</span><span class="n">mu</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">kappa</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">300</span><span class="p">)</span>
@@ -451,7 +451,7 @@
 <p>We will now create a <code class="docutils literal notranslate"><span class="pre">Circular</span></code> object from the generated data. The <code class="docutils literal notranslate"><span class="pre">Circular</span></code> class in Pyriodic is designed to handle circular data and provides methods for computing descriptive statistics, plotting, and more.</p>
 <p>As the <code class="docutils literal notranslate"><span class="pre">Circular</span></code> class expects data in the range of 0 to 2pi we can use the full_range parameter to specify the range</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">circ_data</span> <span class="o">=</span> <span class="n">Circular</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">full_range</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">))</span>
