@@ -30,10 +30,10 @@ These tutorials walk you through using **Pyriodic** for circular data analysis, 
 
       <div class="col-md-4">
         <div class="card shadow-sm mb-4">
-          <a href="03_why_circular_stats.html" class="stretched-link"></a>
-          <img src="../_static/tutorials/03_why_circular_stats.png" class="card-img-top" alt="Why circular statistics matter - the case of respiratory signals">
+          <a href="03_descriptive_stats.html" class="stretched-link"></a>
+          <img src="../_static/tutorials/03_descriptive_stats.png" class="card-img-top" alt="Descriptive statistics for circular data">
           <div class="card-body">
-            <h5 class="card-title">Why circular statistics matter - the case of respiratory signals</h5>
+            <h5 class="card-title">Descriptive statistics for circular data</h5>
             <p class="card-text">See notebook for details.</p>
           </div>
         </div>
@@ -61,6 +61,17 @@ These tutorials walk you through using **Pyriodic** for circular data analysis, 
         </div>
       </div>
 
+      <div class="col-md-4">
+        <div class="card shadow-sm mb-4">
+          <a href="06_why_circular_stats.html" class="stretched-link"></a>
+          <img src="../_static/tutorials/06_why_circular_stats.png" class="card-img-top" alt="Why circular statistics matter - the case of respiratory signals">
+          <div class="card-body">
+            <h5 class="card-title">Why circular statistics matter - the case of respiratory signals</h5>
+            <p class="card-text">See notebook for details.</p>
+          </div>
+        </div>
+      </div>
+
     </div>
 
 .. include:: _image_manifest.rst
@@ -70,6 +81,7 @@ These tutorials walk you through using **Pyriodic** for circular data analysis, 
 
    01_intro
    02_phase_extraction
-   03_why_circular_stats
+   03_descriptive_stats
    04_permutation_against_null
    05_permutation_two_samples
+   06_why_circular_stats

@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Methods for phase extraction from respiration data &#8212; pyriodic 0.0.1 documentation</title>
+    <title>Descriptive statistics for circular data &#8212; pyriodic 0.0.1 documentation</title>
   
   
   
@@ -45,11 +45,11 @@
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'tutorials/02_phase_extraction';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'tutorials/03_descriptive_stats';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Descriptive statistics for circular data" href="03_descriptive_stats.html" />
-    <link rel="prev" title="Overview of respiration data preprocessing and analysis" href="01_intro.html" />
+    <link rel="next" title="Permutation test against null distribution of respiratory phase angles" href="04_permutation_against_null.html" />
+    <link rel="prev" title="Methods for phase extraction from respiration data" href="02_phase_extraction.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="" />
@@ -316,8 +316,8 @@
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
   <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="01_intro.html">Overview of respiration data preprocessing and analysis</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Methods for phase extraction from respiration data</a></li>
-<li class="toctree-l1"><a class="reference internal" href="03_descriptive_stats.html">Descriptive statistics for circular data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_phase_extraction.html">Methods for phase extraction from respiration data</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Descriptive statistics for circular data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="04_permutation_against_null.html">Permutation test against null distribution of respiratory phase angles</a></li>
 <li class="toctree-l1"><a class="reference internal" href="05_permutation_two_samples.html">Two sample permutation test of respiratory phase angles</a></li>
 <li class="toctree-l1"><a class="reference internal" href="06_why_circular_stats.html">Why circular statistics matter - the case of respiratory signals</a></li>
@@ -364,7 +364,7 @@
     
     <li class="breadcrumb-item"><a href="index.html" class="nav-link">Tutorials</a></li>
     
-    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Methods for phase extraction from respiration data</span></li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Descriptive statistics for circular data</span></li>
   </ul>
 </nav>
 </div>
@@ -381,25 +381,108 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="Methods-for-phase-extraction-from-respiration-data">
-<h1>Methods for phase extraction from respiration data<a class="headerlink" href="#Methods-for-phase-extraction-from-respiration-data" title="Link to this heading">#</a></h1>
+  <section id="Descriptive-statistics-for-circular-data">
+<h1>Descriptive statistics for circular data<a class="headerlink" href="#Descriptive-statistics-for-circular-data" title="Link to this heading">#</a></h1>
+<p>We will explore how to compute descriptive statistics for circular data using the Pyriodic package, and illustrate why we need special methods for circular data.</p>
+<p>First, we import the necessary Python modules:</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pickle</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pkl</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
 <span class="kn">from</span><span class="w"> </span><span class="nn">pyriodic</span><span class="w"> </span><span class="kn">import</span> <span class="n">Circular</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">pyriodic.viz</span><span class="w"> </span><span class="kn">import</span> <span class="n">plot_phase_diagnostics</span>
 </pre></div>
 </div>
 </div>
+<p>First, lets illustrate the need for special methods for descriptive statistics for circular data, first lets compute the arthmetric mean of angles 359 and 1 degree.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">angle_example</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">350</span><span class="p">,</span> <span class="mi">10</span><span class="p">])</span>
+
+<span class="n">circ</span> <span class="o">=</span> <span class="n">Circular</span><span class="p">(</span><span class="n">angle_example</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="s2">&quot;degrees&quot;</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Angle 1&quot;</span><span class="p">,</span> <span class="s2">&quot;Angle 2&quot;</span><span class="p">])</span>
+
+<span class="n">plot</span> <span class="o">=</span> <span class="n">circ</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">group_by_labels</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plot</span><span class="o">.</span><span class="n">add_arrows</span><span class="p">(</span><span class="n">angles</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">circ</span><span class="o">.</span><span class="n">data</span><span class="p">)],</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Arithmetic Mean&quot;</span><span class="p">)</span>
+<span class="n">plot</span><span class="o">.</span><span class="n">ticks_to_degrees</span><span class="p">()</span>
+<span class="n">plot</span><span class="o">.</span><span class="n">add_legend</span><span class="p">()</span>
+<span class="n">plot</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/tutorials_03_descriptive_stats_3_0.png" src="../_images/tutorials_03_descriptive_stats_3_0.png" />
+</div>
+</div>
+<p>This simple example shows, that as the arithmetic mean does not account for the wrap-around of the circular data, it gives a misleading result. If we however compute the circular mean angle, we get a more intuitive result. The circular mean is computed by averaging the sine and cosine of the angles, which accounts for the circular nature of the data.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot</span> <span class="o">=</span> <span class="n">circ</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">group_by_labels</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plot</span><span class="o">.</span><span class="n">add_arrows</span><span class="p">(</span><span class="n">angles</span> <span class="o">=</span> <span class="p">[</span><span class="n">circ</span><span class="o">.</span><span class="n">mean</span><span class="p">()],</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Circular Mean&quot;</span><span class="p">)</span>
+<span class="n">plot</span><span class="o">.</span><span class="n">ticks_to_degrees</span><span class="p">()</span>
+<span class="n">plot</span><span class="o">.</span><span class="n">add_legend</span><span class="p">()</span>
+<span class="n">plot</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/tutorials_03_descriptive_stats_5_0.png" src="../_images/tutorials_03_descriptive_stats_5_0.png" />
+</div>
+</div>
+<p>Now, lets generate a larger dataset. To have a sample data set, we will generate a set of angles from a von Mises distribution. The von Mises distribution is the circular analogue of the normal distribution, and is often used to model circular data. We will generate 300 angles with a mean of 0 radians and a concentration parameter of 5. The concentration parameter controls how tightly the angles cluster around the mean; higher values indicate tighter clustering.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">vonmises</span><span class="p">(</span><span class="n">mu</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">kappa</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">300</span><span class="p">)</span>
 </pre></div>
 </div>
+</div>
+<p>We will now create a <code class="docutils literal notranslate"><span class="pre">Circular</span></code> object from the generated data. The <code class="docutils literal notranslate"><span class="pre">Circular</span></code> class in Pyriodic is designed to handle circular data and provides methods for computing descriptive statistics, plotting, and more.</p>
+<p>As the <code class="docutils literal notranslate"><span class="pre">Circular</span></code> class expects data in the range of 0 to 2pi we can use the full_range parameter to specify the range</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">circ_data</span> <span class="o">=</span> <span class="n">Circular</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">full_range</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">))</span>
+<span class="n">plot</span> <span class="o">=</span> <span class="n">circ_data</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="n">plot</span><span class="o">.</span><span class="n">add_arrows</span><span class="p">(</span><span class="n">angles</span><span class="o">=</span><span class="p">[</span><span class="n">circ_data</span><span class="o">.</span><span class="n">mean</span><span class="p">()],</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Circular Mean&quot;</span><span class="p">)</span>
+<br/></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/tutorials_03_descriptive_stats_9_0.png" src="../_images/tutorials_03_descriptive_stats_9_0.png" />
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">degrees</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">circ_data</span><span class="o">.</span><span class="n">data</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+np.float64(29.074063536451217)
+</pre></div></div>
 </div>
 </section>
 

@@ -11,7 +11,7 @@
     "In this notebook, we determine whether target stimuli tend to occur at a specific phase of the respiratory cycle.  \n",
     "To do this, we perform a **permutation-based test** that compares the observed phase angles at stimulus onset to a null distribution derived from the underlying respiratory signal.\n",
     "\n",
-    "At first, we import the necessary Python modules:"
+    "First, we import the necessary Python modules:"
    ]
   },
   {
