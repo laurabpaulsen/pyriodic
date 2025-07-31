@@ -1,9 +1,9 @@
 import numpy as np
-from typing import Optional, Union
+from typing import Optional, Union, Callable
 
 from .utils import dat2rad, rad2dat
 
-from .desc import circular_mean, circular_r
+from .desc import circular_mean, circular_r, circular_median
 
 
 class Circular:
@@ -92,30 +92,93 @@ class Circular:
                     f"but unit is set to '{unit}'."
                 )
 
-    def mean(self, group_by_label: bool = False):
+    def _descriptive_stats(self, stat_func: Callable, group_by_label: bool = False):
+        """
+        wrapper for descriptive statistics methods, that deals with grouping by labels and unit conversion.
+        """
         if not group_by_label:
-            mean = circular_mean(self.data)
+            stat_value = stat_func(self.data)
             if self.unit != "radians":
-                mean = rad2dat(mean, full_range=self.full_range)
-            return mean
+                stat_value = rad2dat(stat_value, full_range=self.full_range)
+            return stat_value
 
         if self.labels is None:
             raise ValueError("No labels found for grouping.")
 
-        means = {}
+        stats = {}
         unique_labels = np.unique(self.labels)
         for label in unique_labels:
             mask = self.labels == label
             group_data = self.data[mask]
-            mean = circular_mean(group_data)
+            stat_value = stat_func(group_data)
             if self.unit != "radians":
-                mean = rad2dat(mean, full_range=self.full_range)
-            means[label] = mean
+                stat_value = rad2dat(stat_value, full_range=self.full_range)
+            stats[label] = stat_value
 
-        return means
+        return stats
 
-    def r(self):
-        return circular_r(self.data)
+    def mean(self, group_by_label: bool = False):
+        """
+        Compute the circular mean of the data.
+        
+        Parameters
+        ----------
+        group_by_label : bool, default=False
+            If True, computes the mean for each label group separately.
+        Returns
+        -------
+        mean : float or dict
+            The circular mean angle, either as a single value or a dictionary of means by label.
+        """
+        return self._descriptive_stats(circular_mean, group_by_label)
+
+    def median(self, group_by_label: bool = False):
+        """
+        Compute the circular median of the data.
+
+        Parameters
+        ----------
+        group_by_label : bool, default=False
+            If True, computes the median for each label group separately.
+
+        Returns
+        -------
+        median : float or dict
+            The circular median angle, either as a single value or a dictionary of medians by label.
+        """
+        return self._descriptive_stats(circular_median, group_by_label)
+
+    def r(self, group_by_label: bool = False):
+        """
+        Compute mean resultant length of the data, which is a measure of the data's concentration.
+
+        Parameters
+        ----------
+        group_by_label : bool, default=False
+            If True, computes the median for each label group separately.
+
+        Returns
+        -------
+        median : float or dict
+            The circular median angle, either as a single value or a dictionary of medians by label.
+        """
+        return self._descriptive_stats(circular_median, group_by_label)
+
+    def r(self, group_by_label: bool = False):
+        """
+        Compute mean resultant length of the data, which is a measure of the data's concentration.
+
+        Parameters
+        ----------
+        group_by_label : bool, default=False
+            If True, computes the median for each label group separately.
+
+        Returns
+        -------
+        r : float or dict
+            The mean resultant length, either as a single value or a dictionary of values by label.
+        """
+        return self._descriptive_stats(circular_r, group_by_label)
 
     def plot(self, ax=None, histogram=None, group_by_labels=False):
         """"""

@@ -31,6 +31,33 @@ def circular_mean(rad: np.ndarray, wrap_to_2pi: bool = True):
     return mean
 
 
+
+def circular_median(rad: np.ndarray):
+    """
+    Compute the median angle from a list of angles in radians.
+    
+    Parameters:
+    ------------
+    rad : np.ndarray
+        Array of angles in radians.
+    Returns:
+    --------
+    median : float
+
+        The circular median angle.
+
+    """
+    sorted_rad = np.sort(rad)
+    n = len(sorted_rad)
+    
+    if n % 2 == 1:
+        return sorted_rad[n // 2]
+    else:
+        mid1 = sorted_rad[n // 2 - 1]
+        mid2 = sorted_rad[n // 2]
+        return circular_mean(np.array([mid1, mid2]))
+
+
 def circular_r(rad: np.ndarray):
     r"""
     Compute the length of the mean resultant vector \( r \), a measure of circular concentration.
