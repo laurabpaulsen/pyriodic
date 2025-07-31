@@ -442,7 +442,36 @@ Values should be in the range appropriate to the specified <cite>unit</cite>.</p
 <dl class="py method">
 <dt class="sig sig-object py" id="pyriodic.circular.Circular.mean">
 <span class="sig-name descname"><span class="pre">mean</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">group_by_label</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyriodic.circular.Circular.mean" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
+<dd><p>Compute the circular mean of the data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>group_by_label</strong> (<em>bool</em><em>, </em><em>default=False</em>) – If True, computes the mean for each label group separately.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>mean</strong> – The circular mean angle, either as a single value or a dictionary of means by label.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float or dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyriodic.circular.Circular.median">
+<span class="sig-name descname"><span class="pre">median</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">group_by_label</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyriodic.circular.Circular.median" title="Link to this definition">#</a></dt>
+<dd><p>Compute the circular median of the data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>group_by_label</strong> (<em>bool</em><em>, </em><em>default=False</em>) – If True, computes the median for each label group separately.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>median</strong> – The circular median angle, either as a single value or a dictionary of medians by label.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float or dict</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pyriodic.circular.Circular.plot">
@@ -451,8 +480,20 @@ Values should be in the range appropriate to the specified <cite>unit</cite>.</p
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pyriodic.circular.Circular.r">
-<span class="sig-name descname"><span class="pre">r</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyriodic.circular.Circular.r" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
+<span class="sig-name descname"><span class="pre">r</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">group_by_label</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyriodic.circular.Circular.r" title="Link to this definition">#</a></dt>
+<dd><p>Compute mean resultant length of the data, which is a measure of the data’s concentration.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>group_by_label</strong> (<em>bool</em><em>, </em><em>default=False</em>) – If True, computes the median for each label group separately.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>r</strong> – The mean resultant length, either as a single value or a dictionary of values by label.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float or dict</p>
+</dd>
+</dl>
+</dd></dl>
 
 </dd></dl>
 
@@ -491,6 +532,26 @@ Values should be in the range appropriate to the specified <cite>unit</cite>.</p
 <dt>mean<span class="classifier">float</span></dt><dd><p>The circular mean angle.</p>
 </dd>
 </dl>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyriodic.desc.circular_median">
+<span class="sig-prename descclassname"><span class="pre">pyriodic.desc.</span></span><span class="sig-name descname"><span class="pre">circular_median</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rad</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyriodic.desc.circular_median" title="Link to this definition">#</a></dt>
+<dd><p>Compute the median angle from a list of angles in radians.</p>
+<section id="id1">
+<h3>Parameters:<a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
+<dl class="simple">
+<dt>rad<span class="classifier">np.ndarray</span></dt><dd><p>Array of angles in radians.</p>
+</dd>
+</dl>
+</section>
+<section id="id2">
+<h3>Returns:<a class="headerlink" href="#id2" title="Link to this heading">#</a></h3>
+<p>median : float</p>
+<blockquote>
+<div><p>The circular median angle.</p>
+</div></blockquote>
 </section>
 </dd></dl>
 
@@ -1026,8 +1087,8 @@ If False, plots all data points together, ignoring labels.</p></li>
 <dt class="sig sig-object py" id="pyriodic.viz.CircPlot.prepare_ax">
 <span class="sig-name descname"><span class="pre">prepare_ax</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">radius_lim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">angles</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyriodic.viz.CircPlot.prepare_ax" title="Link to this definition">#</a></dt>
 <dd><p>Prepare and customize a polar plot axis (<cite>self.ax</cite>) with standard aesthetic settings.</p>
-<section id="id1">
-<h3>Parameters:<a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
+<section id="id3">
+<h3>Parameters:<a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
 <dl class="simple">
 <dt>radius_lim<span class="classifier">tuple or None</span></dt><dd><p>Optional tuple (min, max) for setting radial (r-axis) limits.</p>
 </dd>
@@ -1121,6 +1182,7 @@ Each should be 1D array of same length as <cite>data</cite>.</p></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.circular.Circular.unit"><code class="docutils literal notranslate"><span class="pre">Circular.unit</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.circular.Circular.from_multiple"><code class="docutils literal notranslate"><span class="pre">Circular.from_multiple()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.circular.Circular.mean"><code class="docutils literal notranslate"><span class="pre">Circular.mean()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.circular.Circular.median"><code class="docutils literal notranslate"><span class="pre">Circular.median()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.circular.Circular.plot"><code class="docutils literal notranslate"><span class="pre">Circular.plot()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.circular.Circular.r"><code class="docutils literal notranslate"><span class="pre">Circular.r()</span></code></a></li>
 </ul>
@@ -1134,6 +1196,7 @@ Each should be 1D array of same length as <cite>data</cite>.</p></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-pyriodic.desc">desc</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.desc.angular_deviation"><code class="docutils literal notranslate"><span class="pre">angular_deviation()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.desc.circular_mean"><code class="docutils literal notranslate"><span class="pre">circular_mean()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.desc.circular_median"><code class="docutils literal notranslate"><span class="pre">circular_median()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.desc.circular_r"><code class="docutils literal notranslate"><span class="pre">circular_r()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.desc.circular_standard_deviation"><code class="docutils literal notranslate"><span class="pre">circular_standard_deviation()</span></code></a></li>
 </ul>
