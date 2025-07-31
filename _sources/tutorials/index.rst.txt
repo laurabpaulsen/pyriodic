@@ -34,7 +34,7 @@ These tutorials walk you through using **Pyriodic** for circular data analysis, 
           <img src="../_static/tutorials/03_descriptive_stats.png" class="card-img-top" alt="Descriptive statistics for circular data">
           <div class="card-body">
             <h5 class="card-title">Descriptive statistics for circular data</h5>
-            <p class="card-text">See notebook for details.</p>
+            <p class="card-text">We will explore how to compute descriptive statistics for circular data using the Pyriodic package, and illustrate why we need special methods for circular data.</p>
           </div>
         </div>
       </div>
