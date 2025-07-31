@@ -189,7 +189,6 @@ class CircPlot:
 
             unique_labels = np.unique(self.circ.labels)
             for idx, group_label in enumerate(unique_labels):
-                print("group_label", group_label)
                 values = self.circ.data[self.circ.labels == group_label]
                 self.ax.scatter(
                     values,
@@ -438,6 +437,16 @@ class CircPlot:
             Additional arguments passed to `ax.legend()`.
         """
         self.ax.legend(**kwargs)
+
+    def ticks_to_degrees(self, n_ticks=8):
+        """
+        Convert the theta ticks from radians to degrees.
+        """
+        
+        # set ticks to degrees (8 ticks)
+        ticks = np.linspace(0, 360, n_ticks, endpoint=False)
+        self.ax.set_xticks(np.deg2rad(ticks))
+        self.ax.set_xticklabels([f"{int(t)}°" for t in ticks])
 
     def show(self):
         plt.show()
