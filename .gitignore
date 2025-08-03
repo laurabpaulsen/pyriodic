@@ -174,3 +174,7 @@ cython_debug/
 data/*
 sandbox/*
 .DS_Store
+
+
+# anything with DRAFT in the filename
+**DRAFT**
