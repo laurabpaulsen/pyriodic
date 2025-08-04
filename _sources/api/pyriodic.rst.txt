@@ -25,7 +25,7 @@ desc
    :undoc-members:
    :show-inheritance:
 
-pyriodic.permutation module
+permutation
 ---------------------------
 
 .. automodule:: pyriodic.permutation
@@ -57,7 +57,7 @@ regression
    :undoc-members:
    :show-inheritance:
 
-utils module
+utils
 ---------------------
 
 .. automodule:: pyriodic.utils

@@ -395,11 +395,9 @@
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pickle</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">math</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">pyriodic.circular</span><span class="w"> </span><span class="kn">import</span> <span class="n">Circular</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pyriodic.viz</span><span class="w"> </span><span class="kn">import</span> <span class="n">CircPlot</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pyriodic.permutation</span><span class="w"> </span><span class="kn">import</span> <span class="n">permutation_test_between_samples</span>
 </pre></div>
@@ -471,7 +469,7 @@
 <span class="n">obs_stat</span><span class="p">,</span> <span class="n">pval</span> <span class="o">=</span> <span class="n">permutation_test_between_samples</span><span class="p">(</span>
     <span class="n">irregular_targets</span><span class="o">.</span><span class="n">data</span><span class="p">,</span>
     <span class="n">regular_targets</span><span class="o">.</span><span class="n">data</span><span class="p">,</span>
-    <span class="n">n_permutations</span><span class="o">=</span> <span class="mi">10000</span>
+    <span class="n">n_permutations</span><span class="o">=</span><span class="mi">10000</span>
 <span class="p">)</span>
 </pre></div>
 </div>
@@ -481,17 +479,84 @@
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Observed statistic = 0.023, p = 0.7272
+Observed statistic = 0.028, p = 0.6093
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">results</span> <span class="o">=</span> <span class="p">{}</span>
+
+<span class="k">for</span> <span class="n">file_path</span> <span class="ow">in</span> <span class="n">data_path</span><span class="o">.</span><span class="n">iterdir</span><span class="p">():</span>
+    <span class="n">subj_id</span> <span class="o">=</span> <span class="n">file_path</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;_&quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+
+    <span class="n">results</span><span class="p">[</span><span class="n">subj_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;phase_angle_events&quot;</span><span class="p">]</span>
+
+
+<span class="n">n_permutations</span> <span class="o">=</span> <span class="mi">1000</span>
+
+<span class="n">group_observed_stats</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">group_null_stats</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">group_pvals</span> <span class="o">=</span> <span class="p">[]</span>
+
+
+<span class="k">for</span> <span class="n">subj_id</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
+    <span class="n">pa</span> <span class="o">=</span> <span class="n">results</span><span class="p">[</span><span class="n">subj_id</span><span class="p">]</span>
+
+    <span class="n">irregular_targets_tmp</span> <span class="o">=</span> <span class="n">pa</span><span class="o">.</span><span class="n">to_circular</span><span class="p">(</span><span class="n">include</span><span class="o">=</span><span class="s2">&quot;target/irregular&quot;</span><span class="p">)</span>
+    <span class="n">regular_targets_tmp</span> <span class="o">=</span> <span class="n">pa</span><span class="o">.</span><span class="n">to_circular</span><span class="p">(</span><span class="n">include</span><span class="o">=</span><span class="s2">&quot;target/regular&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Run subject-level permutation test</span>
+    <span class="n">obs</span><span class="p">,</span> <span class="n">pval</span><span class="p">,</span> <span class="n">null_distribution</span> <span class="o">=</span> <span class="n">permutation_test_between_samples</span><span class="p">(</span>
+        <span class="n">irregular_targets_tmp</span><span class="o">.</span><span class="n">data</span><span class="p">,</span>
+        <span class="n">regular_targets_tmp</span><span class="o">.</span><span class="n">data</span><span class="p">,</span>
+        <span class="n">n_permutations</span><span class="o">=</span><span class="n">n_permutations</span><span class="p">,</span>
+        <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">return_null_distribution</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">group_observed_stats</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">obs</span><span class="p">)</span>
+    <span class="n">group_null_stats</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">null_distribution</span><span class="p">)</span>
+    <span class="n">group_pvals</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pval</span><span class="p">)</span>
+
+
+<span class="c1"># Group-level observed statistic: average of subject-level observed stats</span>
+<span class="c1"># On average, do subjects show evidence of difference in phase for irregular and regular targets?</span>
+<span class="n">group_obs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">group_observed_stats</span><span class="p">)</span>
+
+<span class="c1"># Group-level null: average of null stats across subjects, per null_stat</span>
+<span class="c1"># Reference distribution of what kind of group-level effect you’d expect if there was no difference between irregular and regular targets</span>
+<span class="n">group_null</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">([</span><span class="n">nulls</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">nulls</span> <span class="ow">in</span> <span class="n">group_null_stats</span><span class="p">])</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_permutations</span><span class="p">)</span>
+<span class="p">]</span>
+
+<span class="c1"># Group-level p-value</span>
+<span class="n">p_val</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">group_null</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">group_obs</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">group_null</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Group-level statistic = </span><span class="si">{</span><span class="n">group_obs</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">, p = </span><span class="si">{</span><span class="n">p_val</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<br/></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Group-level statistic = 0.053, p = 0.7493
 </pre></div></div>
 </div>
 </section>
 <section id="Another-example-where-there-is-a-difference-between-the-two-samples">
 <h2>Another example where there is a difference between the two samples<a class="headerlink" href="#Another-example-where-there-is-a-difference-between-the-two-samples" title="Link to this heading">#</a></h2>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><br/><span></span><span class="n">fourth_salient</span> <span class="o">=</span> <span class="n">PA_events</span><span class="o">.</span><span class="n">to_circular</span><span class="p">(</span><span class="n">include</span><span class="o">=</span><span class="s2">&quot;salient/fourth&quot;</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fourth_salient</span> <span class="o">=</span> <span class="n">PA_events</span><span class="o">.</span><span class="n">to_circular</span><span class="p">(</span><span class="n">include</span><span class="o">=</span><span class="s2">&quot;salient/fourth&quot;</span><span class="p">)</span>
 <span class="n">fifth_salient</span> <span class="o">=</span> <span class="n">PA_events</span><span class="o">.</span><span class="n">to_circular</span><span class="p">(</span><span class="n">include</span><span class="o">=</span><span class="s2">&quot;salient/fifth&quot;</span><span class="p">)</span>
 
 
@@ -533,14 +598,14 @@ Observed statistic = 0.023, p = 0.7272
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Observed statistic = 0.781, p = 0.0001
+Observed statistic = 0.748, p = 0.0001
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/tutorials_05_permutation_two_samples_8_1.png" src="../_images/tutorials_05_permutation_two_samples_8_1.png" />
+<img alt="../_images/tutorials_05_permutation_two_samples_9_1.png" src="../_images/tutorials_05_permutation_two_samples_9_1.png" />
 </div>
 </div>
 </section>

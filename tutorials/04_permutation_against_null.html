@@ -394,7 +394,7 @@
 </div>
 <p>First, we import the necessary Python modules:</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[31]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pickle</span>
@@ -413,7 +413,7 @@
 <section id="Single-level-analysis">
 <h2>Single-level analysis<a class="headerlink" href="#Single-level-analysis" title="Link to this heading">#</a></h2>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[32]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;../../data/respiration/intermediate&quot;</span><span class="p">)</span>
@@ -440,7 +440,7 @@
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[33]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">PA_events</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
@@ -457,7 +457,7 @@
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[34]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># lets generate a circular object with all the target events combined, and do a quick plot just to get an overview</span>
@@ -496,7 +496,7 @@
 with the respiratory cycle, but instead shows a systematic phase dependence.</p>
 <p>This is implemented in the <code class="docutils literal notranslate"><span class="pre">permutation_test_against_null</span></code> function in Pyriodic. It takes a <code class="docutils literal notranslate"><span class="pre">Circular</span></code> object containing the phase angles of interest (e.g., target stimuli) and a <code class="docutils literal notranslate"><span class="pre">Circular</span></code> object containing the full respiratory cycle phase angles.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[35]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Run permutation test</span>
@@ -513,12 +513,12 @@ with the respiratory cycle, but instead shows a systematic phase dependence.</p>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Observed statistic = 0.839, p = 0.0001
+Observed statistic = 0.901, p = 0.0001
 </pre></div></div>
 </div>
 <p>Let’s visually compare the observed phase angles of the target stimuli to a null distribution of phase angles drawn from the full respiratory cycle by plotting the mean resultant vector length and the mean angle for both the observed target phase angles and a sample of null phase angles.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[36]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># make a circular object with the null_samples for plotting</span>
@@ -550,7 +550,7 @@ Observed statistic = 0.839, p = 0.0001
 <section id="Group-level-analysis">
 <h2>Group-level analysis<a class="headerlink" href="#Group-level-analysis" title="Link to this heading">#</a></h2>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[37]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">results</span> <span class="o">=</span> <span class="p">{}</span>
@@ -567,12 +567,10 @@ Observed statistic = 0.839, p = 0.0001
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[38]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># developer note: maybe make a function for this in the future???</span>
-
-
 <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
 <span class="n">n_permutations</span> <span class="o">=</span> <span class="mi">1000</span>
 
@@ -587,29 +585,25 @@ Observed statistic = 0.839, p = 0.0001
     <span class="n">pa</span> <span class="o">=</span> <span class="n">pas</span><span class="p">[</span><span class="n">subj_id</span><span class="p">]</span>
     <span class="n">n_events</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">observed</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
 
-    <span class="c1"># Create subject-specific permutations</span>
-    <span class="n">null_samples</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">pa</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n_events</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_permutations</span><span class="p">)</span>
-    <span class="p">]</span>
-
-    <span class="n">group_null_samples</span><span class="p">[</span><span class="n">subj_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">Circular</span><span class="o">.</span><span class="n">from_multiple</span><span class="p">(</span>
-        <span class="p">[</span><span class="n">Circular</span><span class="p">(</span><span class="n">samp</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">samp</span><span class="p">))</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">samp</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">null_samples</span><span class="p">)]</span>
-    <span class="p">)</span>
 
     <span class="c1"># Run subject-level permutation test</span>
-    <span class="n">obs</span><span class="p">,</span> <span class="n">pval</span><span class="p">,</span> <span class="n">null</span> <span class="o">=</span> <span class="n">permutation_test_against_null</span><span class="p">(</span>
+    <span class="n">obs</span><span class="p">,</span> <span class="n">pval</span><span class="p">,</span> <span class="n">null_distribution</span><span class="p">,</span> <span class="n">null_samples</span> <span class="o">=</span> <span class="n">permutation_test_against_null</span><span class="p">(</span>
         <span class="n">observed</span><span class="o">=</span><span class="n">observed</span><span class="o">.</span><span class="n">data</span><span class="p">,</span>
         <span class="n">phase_pool</span><span class="o">=</span><span class="n">pa</span><span class="p">,</span>
         <span class="n">n_null</span><span class="o">=</span><span class="mi">2000</span><span class="p">,</span>
         <span class="n">rng</span><span class="o">=</span><span class="n">rng</span><span class="p">,</span>
         <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-        <span class="n">return_null_distribution</span><span class="o">=</span><span class="kc">True</span>
+        <span class="n">return_null_distribution</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">return_null_samples</span><span class="o">=</span><span class="kc">True</span>
     <span class="p">)</span>
 
     <span class="n">group_observed_stats</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">obs</span><span class="p">)</span>
-    <span class="n">group_null_stats</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">null</span><span class="p">)</span>
+    <span class="n">group_null_stats</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">null_distribution</span><span class="p">)</span>
     <span class="n">group_pvals</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pval</span><span class="p">)</span>
+
+    <span class="n">group_null_samples</span><span class="p">[</span><span class="n">subj_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">Circular</span><span class="o">.</span><span class="n">from_multiple</span><span class="p">(</span>
+        <span class="p">[</span><span class="n">Circular</span><span class="p">(</span><span class="n">samp</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">samp</span><span class="p">))</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">samp</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">null_samples</span><span class="p">)]</span>
+    <span class="p">)</span>
 
 <span class="c1"># Group-level observed statistic: average of subject-level observed stats</span>
 <span class="c1"># On average, do subjects show evidence of non-random timing with respect to respiratory phase?</span>
@@ -640,7 +634,7 @@ Group-level statistic = 0.023, p = 0.0010
 <section id="Is-this-effect-consistent-across-all-participants?">
 <h3>Is this effect consistent across all participants?<a class="headerlink" href="#Is-this-effect-consistent-across-all-participants?" title="Link to this heading">#</a></h3>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[39]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n_subjects</span> <span class="o">=</span> <span class="mi">12</span>
