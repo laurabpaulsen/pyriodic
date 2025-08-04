@@ -222,6 +222,9 @@ class Circular:
             full_range=circular_objects[0].full_range,
             labels=np.array(all_labels),
         )
+   
+    def __len__(self):
+        return len(self.data)
 
     def __str__(self):
         summary = (
