@@ -202,6 +202,13 @@ def paired_permutation_test(
 
     if sample1.shape != sample2.shape:
         raise ValueError("Samples must have the same shape (paired data).")
+    
+    if n_permutations > sample1.shape[0]**2:
+        print(
+            f"Requested {n_permutations} permutations, but only {sample1.shape[0]**2} unique permutations are possible."
+        )
+
+
 
     observed_diff = np.mean(sample1 - sample2)
     null_distribution = []
