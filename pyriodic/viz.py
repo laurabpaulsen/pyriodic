@@ -545,7 +545,6 @@ def plot_phase_diagnostics(
     marker_objs = []
     row_idx = 0
     start_idx = int(start * fs)
-    print("start_idx", start_idx)
     end_idx = start_idx + window_samples
     if title:
         fig.suptitle(title)
