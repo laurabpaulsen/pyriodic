@@ -60,7 +60,7 @@ def circular_median(rad: np.ndarray):
 
 def circular_r(rad: np.ndarray):
     r"""
-    Compute the length of the mean resultant vector \( r \), a measure of circular concentration.
+    Compute the length of the mean resultant vector $r$, a measure of circular concentration.
 
     .. math::
 
