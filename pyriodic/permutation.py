@@ -2,15 +2,20 @@ import numpy as np
 from typing import Callable, Optional, Literal, Union
 import inspect
 from .utils import calculate_p_value
+from scipy.stats import mannwhitneyu
+
 
 
 def ecdf(data: np.ndarray, points: np.ndarray) -> np.ndarray:
     """
     Compute the Empirical Cumulative Distribution Function (ECDF) of the given data at specified points.
 
-    Parameters:
-    - data (np.ndarray): The input sample data.
-    - points (np.ndarray): The points at which to evaluate the ECDF.
+    Parameters
+    ----------
+    data : np.ndarray
+        The input sample data.
+    points : np.ndarray
+        The points at which to evaluate the ECDF.
 
     Returns:
     - np.ndarray: ECDF values evaluated at each point in `points`.
@@ -40,78 +45,28 @@ def watson_u2(sample1: np.ndarray, sample2: np.ndarray, n_bins: int = 30) -> flo
 
 
 
-
 def permutation_test_against_null(
     observed: np.ndarray,
     phase_pool: Union[np.ndarray, Literal["uniform"]] = "uniform",
     n_null: int = 1000,
+    n_permutations:int = 1000,
     stat_fun: Optional[Callable] = None,
     alternative: Literal["greater", "less", "two-sided"] = "greater",
     rng: Optional[np.random.Generator] = None,
     n_bins: int = 30,
     verbose: bool = True,
-    return_null_distribution=False,
     return_null_samples=False,
+    return_obs_and_null_stats=False
 ) -> tuple:
     """
-
-    Compare an observed circular phase distribution against a null distribution
-    created by random sampling from the underlying phase pool.
-
-    Parameters
-    ----------
-    observed : np.ndarray
-        1D array of observed angular data in radians (values should be in [0, 2π]).
-
-    phase_pool : Union[np.ndarray, Literal["uniform"]]
-        1D array of phase values from which to extract null samples or a string "uniform" to use a uniform distribution.
-
-
-    n_null : int, default=1000
-        Number of null sample-to-null sample comparisons used to generate the null distribution.
-
-    stat_fun : Callable, optional
-        Function used to compute the test statistic. Must accept at least two 1D arrays.
-        If it accepts an additional `n_bins` argument, it will be passed automatically.
-        Defaults to `watson_u2`.
-
-    alternative : str, default="greater"
-        Defines the alternative hypothesis. Must be one of:
-        - "greater": Observed statistic is significantly greater than null.
-        - "less": Observed statistic is significantly less than null.
-        - "two-sided": Observed statistic differs from null in either direction.
-
-
-    rng : np.random.Generator, optional
-        Random number generator for reproducibility. If None, a default generator is created.
-
-    n_bins : int, default=30
-        Number of evaluation points for ECDF-based statistics (used only if `stat_fun` accepts it).
-
-    verbose : bool, default=True
-        If True, prints the observed statistic and corresponding p-value.
-
-    Returns
-    -------
-    obs_stat : float
-        Mean test statistic between observed and permuted samples.
-    p_val : float
-        p-value computed from the null distribution.
-    null : np.ndarray, optional
-        The null distribution of test statistics from permuted-vs-permuted samples.
-    null_samples : list of np.ndarray, optional
-        The raw sampled phase vectors used to compute the null distribution.
-
-    Notes
-    -----
-    This test assumes that the permuted samples represent valid null-distribution surrogates
-    and that the test statistic is sensitive to distributional differences on the circle.
+    Compares an observed circular phase distribution to a null distribution
+    using a Mann–Whitney U-based permutation test on test statistic samples.
     """
     if rng is None:
         rng = np.random.default_rng()
 
     if stat_fun is None:
-        stat_fun = watson_u2
+        stat_fun = watson_u2  # You must define/import this separately
 
     # Determine if stat_fun accepts n_bins
     sig = inspect.signature(stat_fun)
@@ -122,37 +77,54 @@ def permutation_test_against_null(
 
     n_events = len(observed)
 
-    # generate null samples
+    # Generate null samples
     if isinstance(phase_pool, str) and phase_pool == "uniform":
         phase_pool = np.linspace(0, 2 * np.pi, len(observed), endpoint=False)
     elif not isinstance(phase_pool, np.ndarray):
         raise ValueError("phase_pool must be a numpy array or 'uniform'.")
+
     null_samples = [
         rng.choice(phase_pool, size=n_events, replace=False) for _ in range(n_null)
     ]
 
-    # Compute observed-to-null distances
-    obs_vs_null = [compute_stat(observed, perm) for perm in null_samples]
-    obs_stat = np.mean(obs_vs_null)
+    # Compute obs-vs-null test statistics
+    obs_vs_null = np.array([compute_stat(observed, null) for null in null_samples])
 
-    # Build null distribution
-    null = []
-    for _ in range(n_null):
-        p1, p2 = rng.choice(null_samples, size=2, replace=False)
-        null.append(compute_stat(p1, p2))
+    # Compute null-vs-null test statistics
+    null_vs_null = np.array([
+        compute_stat(*rng.choice(null_samples, size=2, replace=False))
+        for _ in range(n_null)
+    ])
 
-    # Compute p-value
-    p_val = calculate_p_value(obs_stat, np.array(null), alternative)
+    # Observed U statistic
+    obs_stat = mannwhitneyu(obs_vs_null, null_vs_null, alternative="two-sided").statistic
+
+    # Permutation test on labels
+    group_labels = np.array([1] * len(obs_vs_null) + [0] * len(null_vs_null))
+    all_stats = np.concatenate([obs_vs_null, null_vs_null])
+    perm_stats = []
+
+    for _ in range(n_permutations):
+        permuted = rng.permutation(group_labels)
+        group1 = all_stats[permuted == 1]
+        group0 = all_stats[permuted == 0]
+        stat = mannwhitneyu(group1, group0, alternative="two-sided").statistic
+        perm_stats.append(stat)
+
+    perm_stats = np.array(perm_stats)
+    p_val = calculate_p_value(obs_stat, perm_stats, alternative)
 
     if verbose:
-        print(f"Observed statistic = {obs_stat:.3f}, p = {p_val:.4f}")
+        print(f"p val: {p_val}, observed stat: {obs_stat}:.1f, mean null stat: {np.mean(perm_stats):.1f}")
 
-    # Decide what to return
+    
     result = [obs_stat, p_val]
-    if return_null_distribution:
-        result.append(np.array(null))
     if return_null_samples:
         result.append(np.array(null_samples))
+
+    if return_obs_and_null_stats:
+        result.append(obs_vs_null)
+        result.append(null_vs_null)
 
     return tuple(result)
 
@@ -210,6 +182,45 @@ def permutation_test_between_samples(
         return observed_stat, p_value
 
 
+def paired_permutation_test(
+    sample1: np.ndarray,
+    sample2: np.ndarray,
+    alternative: Literal["greater", "less", "two-sided"] = "greater",
+    n_permutations: int = 1000,
+    rng: Optional[np.random.Generator] = None,
+    verbose: bool = True,
+    return_null_distribution: bool = False,
+) -> tuple:
+    """
+    Performs a permutation test on paired samples (e.g., group-level stat comparison).
+    """
+    if rng is None:
+        rng = np.random.default_rng()
+
+    sample1 = np.asarray(sample1)
+    sample2 = np.asarray(sample2)
+
+    if sample1.shape != sample2.shape:
+        raise ValueError("Samples must have the same shape (paired data).")
+
+    observed_diff = np.mean(sample1 - sample2)
+    null_distribution = []
+
+    for _ in range(n_permutations):
+        # Randomly flip signs of differences
+        signs = rng.choice([-1, 1], size=sample1.shape)
+        perm_diff = np.mean(signs * (sample1 - sample2))
+        null_distribution.append(perm_diff)
+
+    p_value = calculate_p_value(observed_diff, np.array(null_distribution), alternative)
+
+    if verbose:
+        print(f"Observed mean difference = {observed_diff:.3f}, p = {p_value:.4f}")
+
+    if return_null_distribution:
+        return observed_diff, p_value, null_distribution
+    else:
+        return observed_diff, p_value
 
 
 def peak_to_peak_modulation(
