@@ -186,6 +186,7 @@ class Circular:
 
         plot = CircPlot(self, ax=ax, group_by_labels=group_by_labels)
         plot.add_points()
+        plot.add_density()
 
         if histogram is not None:
             plot.add_histogram(data=histogram)
@@ -250,3 +251,41 @@ class Circular:
 
     def __repr__(self):
         return f"<Circular(n={len(self.data)}, unit='{self.unit}', full range = {self.full_range})>"
+
+    def __getitem__(self, key: Union[str, int, list]) -> "Circular":
+        """
+        Index the Circular object by label substring, exact label, or integer index.
+
+        Parameters
+        ----------
+        key : str, int, or list
+            A substring to match in labels, list of labels, or integer index/indices.
+
+        Returns
+        -------
+        Circular
+            A new Circular object containing only the selected subset.
+        """
+        if self.labels is None:
+            raise ValueError("This Circular object has no labels to index by.")
+
+        if isinstance(key, str):
+            # Substring match
+            mask = np.array([key in label for label in self.labels])
+        elif isinstance(key, int):
+            mask = np.zeros(len(self.labels), dtype=bool)
+            mask[key] = True
+        elif isinstance(key, list):
+            mask = np.isin(self.labels, key)
+        else:
+            raise TypeError(f"Unsupported key type: {type(key)}")
+
+        if not np.any(mask):
+            raise KeyError(f"No data found for label(s): {key}")
+
+        return Circular(
+            self.data[mask],
+            labels=self.labels[mask],
+            unit=self.unit,
+            full_range=self.full_range
+        )
