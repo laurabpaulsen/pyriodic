@@ -245,7 +245,7 @@ class CircPlot:
                 if len(values) == 0:
                     continue
 
-                min_x, max_x = min_x, max_x = 0, self.circ.full_range
+                min_x, max_x = min_x, max_x = self.circ.full_range
                 xs, density_vals = vonmises_kde(values, kappa, min_x, max_x, n_bins)
 
                 self.ax.plot(
