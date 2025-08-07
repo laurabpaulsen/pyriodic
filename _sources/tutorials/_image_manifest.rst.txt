@@ -22,4 +22,7 @@
    .. image:: /_images/06_why_circular_stats.png
       :alt: preload
 
+   .. image:: /_images/07_association_with_behavioural_variable.png
+      :alt: preload
+
    </div>

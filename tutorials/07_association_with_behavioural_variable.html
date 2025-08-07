@@ -1,0 +1,799 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Test association with behavioural variable such as reaction time &#8212; pyriodic 0.0.1 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/nbsphinx-code-cells.css?v=2aa19091" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=f539c95a"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'tutorials/07_association_with_behavioural_variable';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="API Reference" href="../api/index.html" />
+    <link rel="prev" title="Why circular statistics matter - the case of respiratory signals" href="06_why_circular_stats.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">pyriodic 0.0.1 documentation</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../installation/index.html">
+    Installation
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="index.html">
+    Tutorials
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../api/index.html">
+    API Reference
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/laurabpaulsen/pyriodic" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../installation/index.html">
+    Installation
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="index.html">
+    Tutorials
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../api/index.html">
+    API Reference
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/laurabpaulsen/pyriodic" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="01_intro.html">Overview of respiration data preprocessing and analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_phase_extraction.html">Methods for phase extraction from respiration data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_descriptive_stats.html">Descriptive statistics for circular data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_permutation_against_null.html">Permutation test against null distribution of respiratory phase angles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05_permutation_two_samples.html">Two sample permutation test of respiratory phase angles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06_why_circular_stats.html">Why circular statistics matter - the case of respiratory signals</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Test association with behavioural variable such as reaction time</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">Tutorials</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Test association with behavioural variable such as reaction time</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="Test-association-with-behavioural-variable-such-as-reaction-time">
+<h1>Test association with behavioural variable such as reaction time<a class="headerlink" href="#Test-association-with-behavioural-variable-such-as-reaction-time" title="Link to this heading">#</a></h1>
+<p>This notebook runs permutation tests to see whether there is a statistically significant relationship between the phase angle at which a target stimulus was presented and the response was given by the participant. The analysis is done for each participant separately, and the results are visualised in polar plots.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pickle</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pyriodic.permutation</span><span class="w"> </span><span class="kn">import</span> <span class="n">permutation_test_phase_modulation</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pyriodic.viz</span><span class="w"> </span><span class="kn">import</span> <span class="n">CircPlot</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pyriodic</span><span class="w"> </span><span class="kn">import</span> <span class="n">Circular</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<br/></pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># defining some constants</span>
+<span class="n">num_bins</span> <span class="o">=</span> <span class="mi">6</span>
+<span class="n">stat</span> <span class="o">=</span> <span class="s2">&quot;median&quot;</span>
+<span class="n">filter_outliers</span> <span class="o">=</span> <span class="kc">True</span>
+
+<span class="n">subj_ids</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;0001&quot;</span><span class="p">,</span> <span class="s2">&quot;0002&quot;</span><span class="p">,</span> <span class="s2">&quot;0003&quot;</span><span class="p">,</span> <span class="s2">&quot;0012&quot;</span><span class="p">,</span> <span class="s2">&quot;0013&quot;</span><span class="p">,</span> <span class="s2">&quot;0014&quot;</span><span class="p">,</span> <span class="s2">&quot;0016&quot;</span><span class="p">,</span> <span class="s2">&quot;0018&quot;</span><span class="p">,</span> <span class="s2">&quot;0019&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;0020&quot;</span><span class="p">,</span> <span class="s2">&quot;0021&quot;</span><span class="p">,</span> <span class="s2">&quot;0022&quot;</span><span class="p">,</span> <span class="s2">&quot;0023&quot;</span><span class="p">,</span> <span class="s2">&quot;0024&quot;</span><span class="p">,</span> <span class="s2">&quot;0026&quot;</span><span class="p">,</span> <span class="s2">&quot;0027&quot;</span><span class="p">,</span> <span class="s2">&quot;0028&quot;</span><span class="p">,</span> <span class="s2">&quot;0029&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;0030&quot;</span><span class="p">,</span> <span class="s2">&quot;0031&quot;</span><span class="p">]</span>
+<span class="n">data_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;../../data/respiration/intermediate&quot;</span><span class="p">)</span>
+<span class="n">sfreq</span> <span class="o">=</span> <span class="mi">300</span>  <span class="c1"># Hz</span>
+<br/><br/></pre></div>
+</div>
+</div>
+<section id="Single-level-analysis-for-all-participants">
+<h2>Single level analysis for all participants<a class="headerlink" href="#Single-level-analysis-for-all-participants" title="Link to this heading">#</a></h2>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># defining some helper functions</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">binned_stats</span><span class="p">(</span><span class="n">phase_angles</span><span class="p">,</span> <span class="n">var</span><span class="p">,</span> <span class="n">n_bins</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">stat</span><span class="o">=</span><span class="s2">&quot;mean&quot;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculate binned statistics for response times.</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">    rt (array-like): Response times.</span>
+<span class="sd">    n_bins (int): Number of bins to use.</span>
+<span class="sd">    stat (str): Statistic to calculate (&#39;mean&#39; or &#39;median&#39;).</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">    bin_centers (array): Centers of the bins.</span>
+<span class="sd">    avg_response_times (array): Average response times in each bin.</span>
+<span class="sd">    std_response_times (array): Standard deviation of response times in each bin.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">bin_edges</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">n_bins</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">bin_centers</span> <span class="o">=</span> <span class="p">(</span><span class="n">bin_edges</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">bin_edges</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span> <span class="o">/</span> <span class="mi">2</span>
+    <span class="n">avg_response_times</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n_bins</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">std_response_times</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n_bins</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_bins</span><span class="p">):</span>
+        <span class="n">bin_mask</span> <span class="o">=</span> <span class="p">(</span><span class="n">phase_angles</span> <span class="o">&gt;=</span> <span class="n">bin_edges</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">phase_angles</span> <span class="o">&lt;</span> <span class="n">bin_edges</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">stat</span> <span class="o">==</span> <span class="s2">&quot;mean&quot;</span><span class="p">:</span>
+            <span class="n">avg_response_times</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">var</span><span class="p">[</span><span class="n">bin_mask</span><span class="p">])</span> <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">bin_mask</span><span class="p">)</span> <span class="k">else</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+        <span class="k">elif</span> <span class="n">stat</span> <span class="o">==</span> <span class="s2">&quot;median&quot;</span><span class="p">:</span>
+            <span class="n">avg_response_times</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">var</span><span class="p">[</span><span class="n">bin_mask</span><span class="p">])</span> <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">bin_mask</span><span class="p">)</span> <span class="k">else</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;stat must be &#39;mean&#39; or &#39;median&#39;&quot;</span><span class="p">)</span>
+        <span class="c1"># Ensure the last two dots are connected</span>
+        <span class="n">std_response_times</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">var</span><span class="p">[</span><span class="n">bin_mask</span><span class="p">])</span> <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">bin_mask</span><span class="p">)</span> <span class="k">else</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+
+    <span class="c1"># Ensure the last two dots are connected</span>
+    <span class="n">avg_response_times</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">avg_response_times</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">std_response_times</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">std_response_times</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">bin_centers</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">bin_centers</span><span class="p">,</span> <span class="p">[</span><span class="n">bin_centers</span><span class="p">[</span><span class="mi">0</span><span class="p">]]))</span>
+
+    <span class="k">return</span> <span class="n">bin_centers</span><span class="p">,</span> <span class="n">avg_response_times</span><span class="p">,</span> <span class="n">std_response_times</span>
+<br/><br/><br/></pre></div>
+</div>
+</div>
+<section id="Association-between-reaction-time-and-phase-angle-at-the-time-of-target-presentation">
+<h3>Association between reaction time and phase angle at the time of target presentation<a class="headerlink" href="#Association-between-reaction-time-and-phase-angle-at-the-time-of-target-presentation" title="Link to this heading">#</a></h3>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n_rows</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">subj_ids</span><span class="p">)</span> <span class="o">//</span> <span class="mi">4</span>
+<span class="n">n_cols</span> <span class="o">=</span> <span class="mi">4</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">n_rows</span><span class="p">,</span> <span class="n">n_cols</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="n">n_rows</span> <span class="o">*</span> <span class="mi">6</span><span class="p">,</span> <span class="n">n_cols</span> <span class="o">*</span> <span class="mi">6</span><span class="p">),</span> <span class="n">subplot_kw</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;projection&quot;</span><span class="p">:</span> <span class="s2">&quot;polar&quot;</span><span class="p">})</span>
+
+<span class="k">for</span> <span class="n">subj_id</span><span class="p">,</span> <span class="n">ax</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">subj_ids</span><span class="p">,</span> <span class="n">axes</span><span class="o">.</span><span class="n">flatten</span><span class="p">()):</span>
+
+    <span class="n">file_path</span> <span class="o">=</span> <span class="n">data_path</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&quot;participant_</span><span class="si">{</span><span class="n">subj_id</span><span class="si">}</span><span class="s2">_preproc.pkl&quot;</span>
+
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+
+    <span class="n">circ</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;circ&quot;</span><span class="p">]</span>
+    <span class="n">rejected_indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;rejected_indices&quot;</span><span class="p">])</span>
+    <span class="n">event_samples</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;event_samples&quot;</span><span class="p">]</span>
+    <span class="n">event_samples</span> <span class="o">=</span> <span class="n">event_samples</span><span class="p">[</span><span class="o">~</span><span class="n">np</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">event_samples</span><span class="p">,</span> <span class="n">rejected_indices</span><span class="p">)]</span>
+    <span class="n">labels</span> <span class="o">=</span> <span class="n">circ</span><span class="o">.</span><span class="n">labels</span>
+
+    <span class="c1"># FIND ALL THE TARGET EVENTS AND CALCULATE THEIR RESPONSE TIMES BY THE EVENT SAMPLES</span>
+    <span class="n">response_times</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">idx_target</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">label</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">labels</span><span class="p">)</span> <span class="k">if</span> <span class="s2">&quot;target&quot;</span> <span class="ow">in</span> <span class="n">label</span><span class="p">]</span>
+
+    <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="n">idx_target</span><span class="p">:</span>
+        <span class="n">target_sample</span> <span class="o">=</span> <span class="n">event_samples</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+        <span class="c1"># Check that the label of the next event is &quot;response&quot;</span>
+        <span class="k">if</span> <span class="s2">&quot;response&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">labels</span><span class="p">[</span><span class="n">idx</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]:</span>
+            <span class="n">response_times</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span>
+            <span class="k">continue</span>
+        <span class="n">response_sample</span> <span class="o">=</span> <span class="n">event_samples</span><span class="p">[</span><span class="n">idx</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="n">resp_time</span> <span class="o">=</span> <span class="p">(</span><span class="n">response_sample</span> <span class="o">-</span> <span class="n">target_sample</span><span class="p">)</span> <span class="o">/</span> <span class="n">sfreq</span>  <span class="c1"># convert to seconds</span>
+        <span class="n">response_times</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">resp_time</span><span class="p">)</span>
+
+    <span class="n">targets</span> <span class="o">=</span> <span class="n">circ</span><span class="p">[</span><span class="s2">&quot;target&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">data</span>
+    <span class="n">targets</span> <span class="o">=</span> <span class="n">targets</span><span class="p">[</span><span class="o">~</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">response_times</span><span class="p">)]</span>
+    <span class="n">response_times</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">response_times</span><span class="p">)[</span><span class="o">~</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">response_times</span><span class="p">)]</span>
+
+    <span class="k">if</span> <span class="n">filter_outliers</span><span class="p">:</span>
+        <span class="c1"># Filter out outliers by standard deviation</span>
+        <span class="n">upper_bound</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">response_times</span><span class="p">)</span> <span class="o">+</span> <span class="mi">5</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">response_times</span><span class="p">)</span>
+        <span class="n">lower_bound</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">response_times</span><span class="p">)</span> <span class="o">-</span> <span class="mi">5</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">response_times</span><span class="p">)</span>
+
+        <span class="c1"># Filter out outliers</span>
+        <span class="n">filtered_indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">((</span><span class="n">response_times</span> <span class="o">&gt;=</span> <span class="n">lower_bound</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">response_times</span> <span class="o">&lt;=</span> <span class="n">upper_bound</span><span class="p">))</span>
+        <span class="n">targets</span> <span class="o">=</span> <span class="n">targets</span><span class="p">[</span><span class="n">filtered_indices</span><span class="p">]</span>
+        <span class="n">response_times</span> <span class="o">=</span> <span class="n">response_times</span><span class="p">[</span><span class="n">filtered_indices</span><span class="p">]</span>
+
+
+    <span class="c1"># PERFORM PERMUTATION TEST ON THE DATA</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">obs</span><span class="p">,</span> <span class="n">p</span> <span class="o">=</span> <span class="n">permutation_test_phase_modulation</span><span class="p">(</span>
+            <span class="n">targets</span><span class="p">,</span> <span class="n">response_times</span><span class="p">,</span> <span class="n">n_null</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">n_bins</span><span class="o">=</span><span class="n">num_bins</span>
+        <span class="p">)</span>
+    <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+        <span class="n">obs</span><span class="p">,</span> <span class="n">p</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>
+
+    <span class="c1"># PLOTTING</span>
+    <span class="n">circ_tmp</span> <span class="o">=</span> <span class="n">Circular</span><span class="p">(</span><span class="n">targets</span><span class="p">)</span>
+    <span class="n">plot</span> <span class="o">=</span> <span class="n">CircPlot</span><span class="p">(</span><span class="n">circ_tmp</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">group_by_labels</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">plot</span><span class="o">.</span><span class="n">add_points</span><span class="p">(</span>
+        <span class="n">y</span><span class="o">=</span><span class="n">response_times</span><span class="p">,</span>
+        <span class="n">s</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+        <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+        <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span>
+        <span class="n">color</span><span class="o">=</span><span class="s2">&quot;forestgreen&quot;</span><span class="p">,</span>
+        <span class="n">label</span><span class="o">=</span><span class="kc">None</span>
+    <span class="p">)</span>
+
+    <span class="n">plot</span><span class="o">.</span><span class="n">add_hline</span><span class="p">(</span>
+        <span class="n">y</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">response_times</span><span class="p">)</span> <span class="k">if</span> <span class="n">stat</span> <span class="o">==</span> <span class="s2">&quot;mean&quot;</span> <span class="k">else</span> <span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">response_times</span><span class="p">),</span>
+        <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">stat</span><span class="si">}</span><span class="s2"> response time&quot;</span><span class="p">,</span>
+        <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span>
+        <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span>
+        <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span>
+    <span class="p">)</span>
+
+    <span class="c1"># AVERAGE RESPONSE TIME IN BINS + STD</span>
+    <span class="n">bin_centers</span><span class="p">,</span> <span class="n">avg_response_times</span><span class="p">,</span> <span class="n">std_response_times</span> <span class="o">=</span> <span class="n">binned_stats</span><span class="p">(</span><span class="n">circ_tmp</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">response_times</span><span class="p">,</span> <span class="n">n_bins</span><span class="o">=</span><span class="n">num_bins</span><span class="p">,</span> <span class="n">stat</span><span class="o">=</span><span class="n">stat</span><span class="p">)</span>
+
+
+    <span class="n">plot</span><span class="o">.</span><span class="n">add_polar_line</span><span class="p">(</span>
+        <span class="n">angles</span><span class="o">=</span><span class="n">bin_centers</span><span class="p">,</span>
+        <span class="n">values</span><span class="o">=</span><span class="n">avg_response_times</span><span class="p">,</span>
+        <span class="n">errors</span><span class="o">=</span><span class="n">std_response_times</span><span class="p">,</span>
+        <span class="n">color</span><span class="o">=</span><span class="s1">&#39;orange&#39;</span><span class="p">,</span>
+        <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Binned RT&#39;</span><span class="p">,</span>
+        <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span>
+        <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;-&#39;</span>
+    <span class="p">)</span>
+    <span class="c1"># Customize the plot</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">response_times</span><span class="p">)</span> <span class="o">+</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">))</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_yticklabels</span><span class="p">([</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">i</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">response_times</span><span class="p">)</span> <span class="o">+</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)])</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Participant </span><span class="si">{</span><span class="n">subj_id</span><span class="si">}</span><span class="s2">, p=</span><span class="si">{</span><span class="n">p</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Participant </span><span class="si">{</span><span class="n">subj_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+
+
+    <span class="n">ax</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Add a single legend for the entire figure at the top center</span>
+<span class="n">handles</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">get_legend_handles_labels</span><span class="p">()</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">handles</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s1">&#39;lower center&#39;</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s2">&quot;RT by target phase angle&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<br/></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/tutorials_07_association_with_behavioural_variable_6_0.png" src="../_images/tutorials_07_association_with_behavioural_variable_6_0.png" />
+</div>
+</div>
+</section>
+<section id="Association-between-reaction-time-and-phase-angle-at-the-time-of-response">
+<h3>Association between reaction time and phase angle at the time of response<a class="headerlink" href="#Association-between-reaction-time-and-phase-angle-at-the-time-of-response" title="Link to this heading">#</a></h3>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">n_rows</span><span class="p">,</span> <span class="n">n_cols</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="n">n_rows</span> <span class="o">*</span> <span class="mi">6</span><span class="p">,</span> <span class="n">n_cols</span> <span class="o">*</span> <span class="mi">6</span><span class="p">),</span> <span class="n">subplot_kw</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;projection&quot;</span><span class="p">:</span> <span class="s2">&quot;polar&quot;</span><span class="p">})</span>
+
+<span class="k">for</span> <span class="n">subj_id</span><span class="p">,</span> <span class="n">ax</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">subj_ids</span><span class="p">,</span> <span class="n">axes</span><span class="o">.</span><span class="n">flatten</span><span class="p">()):</span>
+
+    <span class="n">file_path</span> <span class="o">=</span> <span class="n">data_path</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&quot;participant_</span><span class="si">{</span><span class="n">subj_id</span><span class="si">}</span><span class="s2">_preproc.pkl&quot;</span>
+
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+
+    <span class="n">circ</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;circ&quot;</span><span class="p">]</span>
+    <span class="n">rejected_indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;rejected_indices&quot;</span><span class="p">])</span>
+    <span class="n">event_samples</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;event_samples&quot;</span><span class="p">]</span>
+    <span class="n">event_samples</span> <span class="o">=</span> <span class="n">event_samples</span><span class="p">[</span><span class="o">~</span><span class="n">np</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">event_samples</span><span class="p">,</span> <span class="n">rejected_indices</span><span class="p">)]</span>
+    <span class="n">labels</span> <span class="o">=</span> <span class="n">circ</span><span class="o">.</span><span class="n">labels</span>
+
+    <span class="c1"># FIND ALL THE TARGET EVENTS AND CALCULATE THEIR RESPONSE TIMES BY THE EVENT SAMPLES</span>
+    <span class="n">idx_target</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">label</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">labels</span><span class="p">)</span> <span class="k">if</span> <span class="s2">&quot;target&quot;</span> <span class="ow">in</span> <span class="n">label</span><span class="p">]</span>
+    <span class="n">response_phase_angles</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">response_times</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="n">idx_target</span><span class="p">:</span>
+        <span class="n">target_sample</span> <span class="o">=</span> <span class="n">event_samples</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+        <span class="c1"># Check that the label of the next event is &quot;response&quot;</span>
+        <span class="k">if</span> <span class="s2">&quot;response&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">labels</span><span class="p">[</span><span class="n">idx</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]:</span>
+            <span class="k">continue</span>
+        <span class="n">response_sample</span> <span class="o">=</span> <span class="n">event_samples</span><span class="p">[</span><span class="n">idx</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="n">resp_time</span> <span class="o">=</span> <span class="p">(</span><span class="n">response_sample</span> <span class="o">-</span> <span class="n">target_sample</span><span class="p">)</span> <span class="o">/</span> <span class="n">sfreq</span>  <span class="c1"># convert to seconds</span>
+        <span class="n">response_times</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">resp_time</span><span class="p">)</span>
+        <span class="n">response_phase_angles</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">circ</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">idx</span> <span class="o">+</span> <span class="mi">1</span><span class="p">])</span>
+
+
+    <span class="n">response_times</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">response_times</span><span class="p">)</span>
+    <span class="n">response_phase_angles</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">response_phase_angles</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">filter_outliers</span><span class="p">:</span>
+        <span class="c1"># Filter out outliers by standard deviation</span>
+        <span class="n">upper_bound</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">response_times</span><span class="p">)</span> <span class="o">+</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">response_times</span><span class="p">)</span>
+        <span class="n">lower_bound</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">response_times</span><span class="p">)</span> <span class="o">-</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">response_times</span><span class="p">)</span>
+
+        <span class="c1"># Filter out outliers</span>
+        <span class="n">filtered_indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">((</span><span class="n">response_times</span> <span class="o">&gt;=</span> <span class="n">lower_bound</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">response_times</span> <span class="o">&lt;=</span> <span class="n">upper_bound</span><span class="p">))</span>
+        <span class="n">response_phase_angles</span> <span class="o">=</span> <span class="n">response_phase_angles</span><span class="p">[</span><span class="n">filtered_indices</span><span class="p">]</span>
+        <span class="n">response_times</span> <span class="o">=</span> <span class="n">response_times</span><span class="p">[</span><span class="n">filtered_indices</span><span class="p">]</span>
+
+
+    <span class="c1"># PLOTTING</span>
+    <span class="n">circ_tmp</span> <span class="o">=</span> <span class="n">Circular</span><span class="p">(</span><span class="n">response_phase_angles</span><span class="p">)</span>
+    <span class="n">plot</span> <span class="o">=</span> <span class="n">CircPlot</span><span class="p">(</span><span class="n">circ_tmp</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">group_by_labels</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="n">plot</span><span class="o">.</span><span class="n">add_points</span><span class="p">(</span>
+        <span class="n">y</span><span class="o">=</span><span class="n">response_times</span><span class="p">,</span>
+        <span class="n">s</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+        <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+        <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span>
+        <span class="n">color</span><span class="o">=</span><span class="s2">&quot;forestgreen&quot;</span><span class="p">,</span>
+        <span class="n">label</span><span class="o">=</span><span class="kc">None</span>
+    <span class="p">)</span>
+
+    <span class="n">plot</span><span class="o">.</span><span class="n">add_hline</span><span class="p">(</span>
+        <span class="n">y</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">response_times</span><span class="p">)</span> <span class="k">if</span> <span class="n">stat</span> <span class="o">==</span> <span class="s2">&quot;mean&quot;</span> <span class="k">else</span> <span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">response_times</span><span class="p">),</span>
+        <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">stat</span><span class="si">}</span><span class="s2"> response time&quot;</span><span class="p">,</span>
+        <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span>
+        <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span>
+        <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span>
+    <span class="p">)</span>
+
+    <span class="c1"># AVERAGE RESPONSE TIME IN BINS + STD</span>
+    <span class="n">bin_centers</span><span class="p">,</span> <span class="n">avg_response_times</span><span class="p">,</span> <span class="n">std_response_times</span> <span class="o">=</span> <span class="n">binned_stats</span><span class="p">(</span><span class="n">circ_tmp</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">response_times</span><span class="p">,</span> <span class="n">n_bins</span><span class="o">=</span><span class="n">num_bins</span><span class="p">,</span> <span class="n">stat</span><span class="o">=</span><span class="n">stat</span><span class="p">)</span>
+
+
+    <span class="n">plot</span><span class="o">.</span><span class="n">add_polar_line</span><span class="p">(</span>
+        <span class="n">angles</span><span class="o">=</span><span class="n">bin_centers</span><span class="p">,</span>
+        <span class="n">values</span><span class="o">=</span><span class="n">avg_response_times</span><span class="p">,</span>
+        <span class="n">errors</span><span class="o">=</span><span class="n">std_response_times</span><span class="p">,</span>
+        <span class="n">color</span><span class="o">=</span><span class="s1">&#39;orange&#39;</span><span class="p">,</span>
+        <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Binned RT&#39;</span><span class="p">,</span>
+        <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span>
+        <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;-&#39;</span>
+    <span class="p">)</span>
+    <span class="c1"># Customize the plot</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">response_times</span><span class="p">)</span> <span class="o">+</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">))</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_yticklabels</span><span class="p">([</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">i</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">response_times</span><span class="p">)</span> <span class="o">+</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)])</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Participant </span><span class="si">{</span><span class="n">subj_id</span><span class="si">}</span><span class="s2">, p=</span><span class="si">{</span><span class="n">p</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Participant </span><span class="si">{</span><span class="n">subj_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+
+
+    <span class="n">ax</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Add a single legend for the entire figure at the top center</span>
+<span class="n">handles</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">get_legend_handles_labels</span><span class="p">()</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">handles</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s1">&#39;lower center&#39;</span><span class="p">)</span>
+
+
+<span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s2">&quot;RT by response phase angle&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<br/></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/tutorials_07_association_with_behavioural_variable_8_0.png" src="../_images/tutorials_07_association_with_behavioural_variable_8_0.png" />
+</div>
+</div>
+</section>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Single-level-analysis-for-all-participants">Single level analysis for all participants</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Association-between-reaction-time-and-phase-angle-at-the-time-of-target-presentation">Association between reaction time and phase angle at the time of target presentation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Association-between-reaction-time-and-phase-angle-at-the-time-of-response">Association between reaction time and phase angle at the time of response</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2025, Laura Bock Paulsen.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

@@ -1038,6 +1038,20 @@ If <cite>data</cite> is None, uses circular data in <cite>self.circs</cite>.</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="pyriodic.viz.CircPlot.add_hline">
+<span class="sig-name descname"><span class="pre">add_hline</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyriodic.viz.CircPlot.add_hline" title="Link to this definition">#</a></dt>
+<dd><p>Add a horizontal line across the polar plot.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>y</strong> (<em>float</em>) – Y-coordinate for the horizontal line (default 0).</p></li>
+<li><p><strong>kwargs</strong> (<em>dict</em>) – Additional keyword arguments passed to <cite>ax.axhline</cite> (e.g., color, linestyle, linewidth).</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="pyriodic.viz.CircPlot.add_legend">
 <span class="sig-name descname"><span class="pre">add_legend</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyriodic.viz.CircPlot.add_legend" title="Link to this definition">#</a></dt>
 <dd><p>Add a legend to the plot.</p>
@@ -1050,7 +1064,7 @@ If <cite>data</cite> is None, uses circular data in <cite>self.circs</cite>.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pyriodic.viz.CircPlot.add_points">
-<span class="sig-name descname"><span class="pre">add_points</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">grouped</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyriodic.viz.CircPlot.add_points" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">add_points</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">grouped</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyriodic.viz.CircPlot.add_points" title="Link to this definition">#</a></dt>
 <dd><p>Plot circular data points on the polar axis.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -1058,7 +1072,27 @@ If <cite>data</cite> is None, uses circular data in <cite>self.circs</cite>.</p>
 <li><p><strong>grouped</strong> (<em>bool</em><em>, </em><em>optional</em>) – If None, uses the <cite>self.group_by_labels</cite> setting.
 If True, plots each label separately.
 If False, plots all data points together, ignoring labels.</p></li>
+<li><p><strong>y</strong> (<em>float</em><em>, </em><em>optional</em>) – Y-coordinate for the points. If None, defaults to 0.5 for all points.</p></li>
 <li><p><strong>kwargs</strong> (<em>dict</em>) – Additional keyword arguments passed to <cite>ax.scatter</cite>, such as <cite>s</cite>, <cite>alpha</cite>, or <cite>marker</cite>.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyriodic.viz.CircPlot.add_polar_line">
+<span class="sig-name descname"><span class="pre">add_polar_line</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">angles</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">values</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">errors</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'orange'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'Values'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.2</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyriodic.viz.CircPlot.add_polar_line" title="Link to this definition">#</a></dt>
+<dd><p>Plot a line with optional shaded error band on the polar axis.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>angles</strong> (<em>np.ndarray</em>) – 1D array of angles (in radians) for the x-axis.</p></li>
+<li><p><strong>values</strong> (<em>np.ndarray</em>) – 1D array of values to plot on the radial axis.</p></li>
+<li><p><strong>errors</strong> (<em>np.ndarray</em><em>, </em><em>optional</em>) – 1D array of error values (e.g., std or SEM) for shading.</p></li>
+<li><p><strong>color</strong> (<em>str</em><em>, </em><em>optional</em>) – Color for line and fill.</p></li>
+<li><p><strong>label</strong> (<em>str</em><em>, </em><em>optional</em>) – Label for the line.</p></li>
+<li><p><strong>alpha</strong> (<em>float</em><em>, </em><em>optional</em>) – Transparency of the error band.</p></li>
+<li><p><strong>kwargs</strong> (<em>dict</em>) – Additional keyword arguments for <cite>ax.plot</cite>.</p></li>
 </ul>
 </dd>
 </dl>
@@ -1234,8 +1268,10 @@ Each should be 1D array of same length as <cite>data</cite>.</p></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.viz.CircPlot.add_circular_mean"><code class="docutils literal notranslate"><span class="pre">CircPlot.add_circular_mean()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.viz.CircPlot.add_density"><code class="docutils literal notranslate"><span class="pre">CircPlot.add_density()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.viz.CircPlot.add_histogram"><code class="docutils literal notranslate"><span class="pre">CircPlot.add_histogram()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.viz.CircPlot.add_hline"><code class="docutils literal notranslate"><span class="pre">CircPlot.add_hline()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.viz.CircPlot.add_legend"><code class="docutils literal notranslate"><span class="pre">CircPlot.add_legend()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.viz.CircPlot.add_points"><code class="docutils literal notranslate"><span class="pre">CircPlot.add_points()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.viz.CircPlot.add_polar_line"><code class="docutils literal notranslate"><span class="pre">CircPlot.add_polar_line()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.viz.CircPlot.prepare_ax"><code class="docutils literal notranslate"><span class="pre">CircPlot.prepare_ax()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.viz.CircPlot.save"><code class="docutils literal notranslate"><span class="pre">CircPlot.save()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.viz.CircPlot.show"><code class="docutils literal notranslate"><span class="pre">CircPlot.show()</span></code></a></li>

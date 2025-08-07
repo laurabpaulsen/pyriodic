@@ -325,6 +325,7 @@
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Permutation test against null distribution of respiratory phase angles</a></li>
 <li class="toctree-l1"><a class="reference internal" href="05_permutation_two_samples.html">Two sample permutation test of respiratory phase angles</a></li>
 <li class="toctree-l1"><a class="reference internal" href="06_why_circular_stats.html">Why circular statistics matter - the case of respiratory signals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="07_association_with_behavioural_variable.html">Test association with behavioural variable such as reaction time</a></li>
 </ul>
 </div>
 </nav></div>
@@ -394,7 +395,7 @@
 </div>
 <p>First, we import the necessary Python modules:</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pickle</span>
@@ -412,7 +413,7 @@
 <section id="Single-level-analysis">
 <h2>Single-level analysis<a class="headerlink" href="#Single-level-analysis" title="Link to this heading">#</a></h2>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;../../data/respiration/intermediate&quot;</span><span class="p">)</span>
@@ -439,7 +440,7 @@
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># lets generate a circular object with all the target events combined, and do a quick plot just to get an overview</span>
@@ -460,7 +461,7 @@
 <img alt="../_images/tutorials_04_permutation_against_null_4_0.png" src="../_images/tutorials_04_permutation_against_null_4_0.png" />
 </div>
 </div>
-<p>To test whether the phase of respiration aligns with the specific events, for example target stimuli, one must account for the fact that respiratory phase is typically not uniformly distributed. For example, expiration may occupy a longer portion of the cycle, making it more likely for events to fall within that phase by chance alone.</p>
+<p>THIS NEEDS TO BE UDPDATEED IT IS INCCORECT To test whether the phase of respiration aligns with the specific events, for example target stimuli, one must account for the fact that respiratory phase is typically not uniformly distributed. For example, expiration may occupy a longer portion of the cycle, making it more likely for events to fall within that phase by chance alone.</p>
 <p>To address this, we employ a permutation-based framework in which the observed phase distribution of events is compared to a null distribution constructed from randomly sampled phase angles drawn from the phase angle time series.</p>
 <p>Internally, the function:</p>
 <ol class="arabic simple">
@@ -485,7 +486,7 @@ with the respiratory cycle, but instead shows a systematic phase dependence.</p>
 <span class="n">obs_stat</span><span class="p">,</span> <span class="n">pval</span><span class="p">,</span> <span class="n">null_samples</span> <span class="o">=</span> <span class="n">permutation_test_against_null</span><span class="p">(</span>
     <span class="n">circ_target</span><span class="o">.</span><span class="n">data</span><span class="p">,</span>
     <span class="n">PA</span><span class="p">,</span>
-    <span class="n">n_null</span> <span class="o">=</span> <span class="mi">5000</span><span class="p">,</span>
+    <span class="n">n_null</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">,</span>
     <span class="n">n_permutations</span> <span class="o">=</span> <span class="mi">10000</span><span class="p">,</span>
     <span class="n">return_null_samples</span><span class="o">=</span><span class="kc">True</span>
 <span class="p">)</span>
@@ -497,7 +498,7 @@ with the respiratory cycle, but instead shows a systematic phase dependence.</p>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-p val: 9.999000099990002e-05, observed stat: 25000000.0, mean null stat: 12500724.729
+p val: 9.999000099990002e-05, observed stat: 1000000.0:.1f, mean null stat: 500079.0
 </pre></div></div>
 </div>
 <p>Let’s visually compare the observed phase angles of the target stimuli to a null distribution of phase angles drawn from the full respiratory cycle by plotting the mean resultant vector length and the mean angle for both the observed target phase angles and a sample of null phase angles.</p>
@@ -551,7 +552,7 @@ p val: 9.999000099990002e-05, observed stat: 25000000.0, mean null stat: 1250072
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
@@ -575,69 +576,212 @@ p val: 9.999000099990002e-05, observed stat: 25000000.0, mean null stat: 1250072
     <span class="p">)</span>
 
     <span class="c1"># per-participant summary stats (means of distributions)</span>
-    <span class="n">mean_obs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">obs_vs_null</span><span class="p">)</span>
-    <span class="n">mean_null</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">null_vs_null</span><span class="p">)</span>
 
     <span class="n">circ_null_samples</span> <span class="o">=</span> <span class="n">Circular</span><span class="o">.</span><span class="n">from_multiple</span><span class="p">(</span>
         <span class="p">[</span><span class="n">Circular</span><span class="p">(</span><span class="n">samp</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">samp</span><span class="p">))</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">samp</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">null_samples</span><span class="p">)]</span>
     <span class="p">)</span>
 
     <span class="n">results</span><span class="p">[</span><span class="n">subj_id</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s2">&quot;mean_obs&quot;</span><span class="p">:</span> <span class="n">mean_obs</span><span class="p">,</span>
-        <span class="s2">&quot;mean_null&quot;</span><span class="p">:</span> <span class="n">mean_null</span><span class="p">,</span>
+        <span class="s2">&quot;obs_vs_null&quot;</span><span class="p">:</span> <span class="n">obs_vs_null</span><span class="p">,</span>
+        <span class="s2">&quot;null_vs_null&quot;</span><span class="p">:</span> <span class="n">null_vs_null</span><span class="p">,</span>
         <span class="s2">&quot;pval&quot;</span><span class="p">:</span> <span class="n">pval</span><span class="p">,</span>
         <span class="s2">&quot;null_samples&quot;</span><span class="p">:</span> <span class="n">circ_null_samples</span>
         <span class="p">}</span>
 
-<span class="n">group_observed_stats</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">results</span><span class="p">[</span><span class="n">subj_id</span><span class="p">][</span><span class="s2">&quot;mean_obs&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">subj_id</span> <span class="ow">in</span> <span class="n">results</span><span class="p">])</span>
-<span class="n">group_null_stats</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">results</span><span class="p">[</span><span class="n">subj_id</span><span class="p">][</span><span class="s2">&quot;mean_null&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">subj_id</span> <span class="ow">in</span> <span class="n">results</span><span class="p">])</span>
 
 
-<span class="c1"># Run paired permutation test across subjects</span>
-<span class="n">group_obs_diff</span><span class="p">,</span> <span class="n">group_pval</span> <span class="o">=</span> <span class="n">paired_permutation_test</span><span class="p">(</span>
-    <span class="n">sample1</span><span class="o">=</span><span class="n">group_observed_stats</span><span class="p">,</span>
-    <span class="n">sample2</span><span class="o">=</span><span class="n">group_null_stats</span><span class="p">,</span>
+<span class="n">group_obs_stat</span><span class="p">,</span> <span class="n">group_pval</span><span class="p">,</span> <span class="n">group_null</span> <span class="o">=</span> <span class="n">permutation_test_within_units</span><span class="p">(</span>
+    <span class="n">data1</span><span class="o">=</span><span class="n">obs</span><span class="p">,</span>
+    <span class="n">data2</span><span class="o">=</span><span class="n">null</span><span class="p">,</span>
     <span class="n">n_permutations</span><span class="o">=</span><span class="mi">10000</span><span class="p">,</span>
-    <span class="n">rng</span><span class="o">=</span><span class="n">rng</span><span class="p">,</span>
     <span class="n">alternative</span><span class="o">=</span><span class="s2">&quot;greater&quot;</span><span class="p">,</span>
     <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="n">return_null_distribution</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">return_null_distribution</span><span class="o">=</span><span class="kc">True</span>
 <span class="p">)</span>
 </pre></div>
 </div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+p val: 0.000999000999000999, observed stat: 249810.0:.1f, mean null stat: 125066.6
+p val: 0.000999000999000999, observed stat: 249920.0:.1f, mean null stat: 125203.2
+p val: 0.000999000999000999, observed stat: 249770.0:.1f, mean null stat: 125136.1
+p val: 0.000999000999000999, observed stat: 250000.0:.1f, mean null stat: 125038.5
+p val: 0.000999000999000999, observed stat: 248606.0:.1f, mean null stat: 124890.6
+p val: 0.000999000999000999, observed stat: 225591.5:.1f, mean null stat: 124602.8
+p val: 0.000999000999000999, observed stat: 226204.0:.1f, mean null stat: 125087.8
+p val: 0.000999000999000999, observed stat: 140420.0:.1f, mean null stat: 124964.3
+p val: 0.000999000999000999, observed stat: 248125.0:.1f, mean null stat: 124955.3
+p val: 0.000999000999000999, observed stat: 216524.5:.1f, mean null stat: 124820.3
+p val: 0.000999000999000999, observed stat: 238950.0:.1f, mean null stat: 125128.8
+p val: 0.000999000999000999, observed stat: 250000.0:.1f, mean null stat: 124999.6
+p val: 0.000999000999000999, observed stat: 237233.0:.1f, mean null stat: 124911.3
+p val: 0.00999000999000999, observed stat: 135171.0:.1f, mean null stat: 124731.5
+p val: 0.000999000999000999, observed stat: 250000.0:.1f, mean null stat: 125243.4
+p val: 0.000999000999000999, observed stat: 247731.5:.1f, mean null stat: 124837.3
+p val: 0.6043956043956044, observed stat: 123545.5:.1f, mean null stat: 124782.6
+p val: 0.000999000999000999, observed stat: 250000.0:.1f, mean null stat: 124988.9
+p val: 0.000999000999000999, observed stat: 247057.5:.1f, mean null stat: 125064.6
+p val: 0.000999000999000999, observed stat: 237802.0:.1f, mean null stat: 125051.5
+[np.float64(0.2722847169046439), np.float64(0.27552870392390016), np.float64(0.2560652556480381), np.float64(0.8626961599630929), np.float64(0.17874625639152664), np.float64(0.049852065498420015), np.float64(0.06901338820301782), np.float64(0.0014888001025055704), np.float64(0.18286749440260536), np.float64(0.04982603878116345), np.float64(0.0734379138180817), np.float64(0.841530894446689), np.float64(0.07427198919032256), np.float64(-0.0019997454764218597), np.float64(1.4931233780276816), np.float64(0.15227483640690065), np.float64(-0.002095555555555559), np.float64(0.7326479731148919), np.float64(0.16736308673469386), np.float64(0.09064723554285843)]
+Observed statistic: 0.2910
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "ad5c06d2632e4ff18d1c2a6768d27867", "version_major": 2, "version_minor": 0}</script></div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-p val: 0.000999000999000999, observed stat: 249810.0, mean null stat: 125066.614
-p val: 0.000999000999000999, observed stat: 249920.0, mean null stat: 125203.204
-p val: 0.000999000999000999, observed stat: 249770.0, mean null stat: 125136.135
-p val: 0.000999000999000999, observed stat: 250000.0, mean null stat: 125038.460
-p val: 0.000999000999000999, observed stat: 248606.0, mean null stat: 124890.634
-p val: 0.000999000999000999, observed stat: 225591.5, mean null stat: 124602.773
-p val: 0.000999000999000999, observed stat: 226204.0, mean null stat: 125087.781
-p val: 0.000999000999000999, observed stat: 140420.0, mean null stat: 124964.304
-p val: 0.000999000999000999, observed stat: 248125.0, mean null stat: 124955.314
-p val: 0.000999000999000999, observed stat: 216524.5, mean null stat: 124820.314
-p val: 0.000999000999000999, observed stat: 238950.0, mean null stat: 125128.810
-p val: 0.000999000999000999, observed stat: 250000.0, mean null stat: 124999.583
-p val: 0.000999000999000999, observed stat: 237233.0, mean null stat: 124911.292
-p val: 0.00999000999000999, observed stat: 135171.0, mean null stat: 124731.466
-p val: 0.000999000999000999, observed stat: 250000.0, mean null stat: 125243.424
-p val: 0.000999000999000999, observed stat: 247731.5, mean null stat: 124837.279
-p val: 0.6043956043956044, observed stat: 123545.5, mean null stat: 124782.621
-p val: 0.000999000999000999, observed stat: 250000.0, mean null stat: 124988.871
-p val: 0.000999000999000999, observed stat: 247057.5, mean null stat: 125064.627
-p val: 0.000999000999000999, observed stat: 237802.0, mean null stat: 125051.495
-Observed mean difference = 0.291, p = 0.0001
+Observed statistic = 0.2910, p = 0.0001
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Literal</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pyriodic.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">calculate_p_value</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">tqdm.auto</span><span class="w"> </span><span class="kn">import</span> <span class="n">tqdm</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">permutation_test_within_units</span><span class="p">(</span>
+    <span class="n">data1</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span>
+    <span class="n">data2</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span>
+    <span class="n">stat_fun</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">y</span><span class="p">),</span>
+    <span class="n">n_permutations</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">5000</span><span class="p">,</span>
+    <span class="n">rng</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">Generator</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">alternative</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;greater&quot;</span><span class="p">,</span> <span class="s2">&quot;less&quot;</span><span class="p">,</span> <span class="s2">&quot;two-sided&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;two-sided&quot;</span><span class="p">,</span>
+    <span class="n">verbose</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="n">return_null_distribution</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Performs a paired permutation test, where data at index 1 in `data1` is assumed to be paired with data at index 1 in `data2`.</span>
+
+
+<span class="sd">    This is useful when each unit (e.g., participant, sensor, session) has paired</span>
+<span class="sd">    data across two conditions, but the number of observations per condition may vary.</span>
+<span class="sd">    Label permutations are performed within each unit to preserve intra-unit structure.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    data1 : list of np.ndarray</span>
+<span class="sd">        List of arrays, where each array contains data for a unit (e.g., participant).</span>
+<span class="sd">    data2 : list of np.ndarray</span>
+<span class="sd">        List of arrays, where each array contains data for a unit (e.g., participant). The indices for participants (or some other pairing) must match `data1`.</span>
+<span class="sd">    stat_fun : Callable, default = lambda x, y: np.mean(x - y)</span>
+<span class="sd">        Function that computes a scalar test statistic for each pair of data arrays.</span>
+<span class="sd">    n_permutations : int, default = 1000</span>
+<span class="sd">        Number of permutations to generate the null distribution.</span>
+<span class="sd">    rng : np.random.Generator, optional</span>
+<span class="sd">        NumPy random number generator for reproducibility.</span>
+<span class="sd">    alternative : {&quot;greater&quot;, &quot;less&quot;, &quot;two-sided&quot;}, default = &quot;two-sided&quot;</span>
+<span class="sd">        The alternative hypothesis to test.</span>
+<span class="sd">    verbose : bool, default = True</span>
+<span class="sd">        If True, print the observed statistic and p-value.</span>
+<span class="sd">    return_null_distribution : bool, default = False</span>
+<span class="sd">        If True, return the full null distribution in the output.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    observed_stat : float</span>
+<span class="sd">        The observed group-level statistic (mean of unit-level stats).</span>
+<span class="sd">    p_value : float</span>
+<span class="sd">        P-value under the null distribution.</span>
+<span class="sd">    null_distribution : np.ndarray, optional</span>
+<span class="sd">        Returned if `return_null_distribution` is True.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">rng</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">()</span>
+
+    <span class="n">data1</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">d</span><span class="p">)</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">data1</span><span class="p">]</span>
+    <span class="n">data2</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">d</span><span class="p">)</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">data2</span><span class="p">]</span>
+
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">data1</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">data2</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;data1 and data2 must have the same length.&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Compute observed unit-level stats and average</span>
+    <span class="n">unit_stats</span> <span class="o">=</span> <span class="p">[</span><span class="n">stat_fun</span><span class="p">(</span><span class="n">d1</span><span class="p">,</span> <span class="n">d2</span><span class="p">)</span> <span class="k">for</span> <span class="n">d1</span><span class="p">,</span> <span class="n">d2</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">data1</span><span class="p">,</span> <span class="n">data2</span><span class="p">)]</span>
+    <span class="n">observed_stat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">unit_stats</span><span class="p">)</span>
+
+
+    <span class="n">null_distribution</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">n_permutations</span><span class="p">),</span> <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;Generating null distribution&quot;</span><span class="p">):</span>
+
+        <span class="n">permuted_stats</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">d1</span><span class="p">,</span> <span class="n">d2</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">data1</span><span class="p">,</span> <span class="n">data2</span><span class="p">):</span>
+            <span class="n">n1</span><span class="p">,</span> <span class="n">n2</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">d1</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">d2</span><span class="p">)</span>
+            <span class="n">combined</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">d1</span><span class="p">,</span> <span class="n">d2</span><span class="p">])</span>
+            <span class="n">permuted</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">permutation</span><span class="p">(</span><span class="n">combined</span><span class="p">)</span>
+            <span class="n">perm_d1</span> <span class="o">=</span> <span class="n">permuted</span><span class="p">[:</span><span class="n">n1</span><span class="p">]</span>
+            <span class="n">perm_d2</span> <span class="o">=</span> <span class="n">permuted</span><span class="p">[</span><span class="n">n1</span><span class="p">:]</span>
+            <span class="n">permuted_stats</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">stat_fun</span><span class="p">(</span><span class="n">perm_d1</span><span class="p">,</span> <span class="n">perm_d2</span><span class="p">))</span>
+
+
+        <span class="n">null_distribution</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">permuted_stats</span><span class="p">))</span>
+
+    <span class="n">null_distribution</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">null_distribution</span><span class="p">)</span>
+
+
+    <span class="n">p_value</span> <span class="o">=</span> <span class="n">calculate_p_value</span><span class="p">(</span><span class="n">observed_stat</span><span class="p">,</span> <span class="n">null_distribution</span><span class="p">,</span> <span class="n">alternative</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Observed statistic = </span><span class="si">{</span><span class="n">observed_stat</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">, p = </span><span class="si">{</span><span class="n">p_value</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">return_null_distribution</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">observed_stat</span><span class="p">,</span> <span class="n">p_value</span><span class="p">,</span> <span class="n">null_distribution</span>
+    <span class="k">return</span> <span class="n">observed_stat</span><span class="p">,</span> <span class="n">p_value</span>
+
+
+<span class="n">null</span> <span class="o">=</span> <span class="p">[</span><span class="n">results</span><span class="p">[</span><span class="n">subj_id</span><span class="p">][</span><span class="s2">&quot;null_vs_null&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">subj_id</span> <span class="ow">in</span> <span class="n">results</span><span class="p">]</span>
+<span class="n">obs</span> <span class="o">=</span> <span class="p">[</span><span class="n">results</span><span class="p">[</span><span class="n">subj_id</span><span class="p">][</span><span class="s2">&quot;obs_vs_null&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">subj_id</span> <span class="ow">in</span> <span class="n">results</span><span class="p">]</span>
+
+<span class="n">group_obs_stat</span><span class="p">,</span> <span class="n">group_pval</span><span class="p">,</span> <span class="n">group_null</span> <span class="o">=</span> <span class="n">permutation_test_within_units</span><span class="p">(</span>
+    <span class="n">data1</span><span class="o">=</span><span class="n">obs</span><span class="p">,</span>
+    <span class="n">data2</span><span class="o">=</span><span class="n">null</span><span class="p">,</span>
+    <span class="n">n_permutations</span><span class="o">=</span><span class="mi">10000</span><span class="p">,</span>
+    <span class="n">alternative</span><span class="o">=</span><span class="s2">&quot;greater&quot;</span><span class="p">,</span>
+    <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">return_null_distribution</span><span class="o">=</span><span class="kc">True</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[np.float64(0.2722847169046439), np.float64(0.27552870392390016), np.float64(0.2560652556480381), np.float64(0.8626961599630929), np.float64(0.17874625639152664), np.float64(0.049852065498420015), np.float64(0.06901338820301782), np.float64(0.0014888001025055704), np.float64(0.18286749440260536), np.float64(0.04982603878116345), np.float64(0.0734379138180817), np.float64(0.841530894446689), np.float64(0.07427198919032256), np.float64(-0.0019997454764218597), np.float64(1.4931233780276816), np.float64(0.15227483640690065), np.float64(-0.002095555555555559), np.float64(0.7326479731148919), np.float64(0.16736308673469386), np.float64(0.09064723554285843)]
+Observed statistic: 0.2910
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "d88901ec8cab42c898008e300cfbfb2d", "version_major": 2, "version_minor": 0}</script></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Observed statistic = 0.2910, p = 0.0001
 </pre></div></div>
 </div>
 <section id="Is-this-effect-consistent-across-all-participants?">
 <h3>Is this effect consistent across all participants?<a class="headerlink" href="#Is-this-effect-consistent-across-all-participants?" title="Link to this heading">#</a></h3>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n_subjects</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
@@ -677,13 +821,6 @@ Observed mean difference = 0.291, p = 0.0001
 
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 <br/></pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<img alt="../_images/tutorials_04_permutation_against_null_14_0.png" src="../_images/tutorials_04_permutation_against_null_14_0.png" />
 </div>
 </div>
 </section>
