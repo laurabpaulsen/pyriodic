@@ -161,7 +161,7 @@ class CircPlot:
         updated_kwargs = {**defaults, **kwargs}
         return updated_kwargs, overwrite_color
 
-    def add_points(self, grouped: Optional[bool] = None, **kwargs):
+    def add_points(self, grouped: Optional[bool] = None, y=None, **kwargs):
         """
         Plot circular data points on the polar axis.
 
@@ -171,6 +171,8 @@ class CircPlot:
             If None, uses the `self.group_by_labels` setting.
             If True, plots each label separately.
             If False, plots all data points together, ignoring labels.
+        y : float, optional
+            Y-coordinate for the points. If None, defaults to 0.5 for all points.
         kwargs : dict
             Additional keyword arguments passed to `ax.scatter`, such as `s`, `alpha`, or `marker`.
 
@@ -178,8 +180,13 @@ class CircPlot:
         if grouped is None:
             grouped = self.group_by_labels
 
+        if y is None:
+            y = len(self.circ.data) * [0.5]  # Default y-coordinate for all points
+
         label = self._pop_kwarg(kwargs, "label", "Events")
         color = self._pop_kwarg(kwargs, "color", None)
+
+
 
         if grouped:
             if self.circ.labels is None:
@@ -192,7 +199,7 @@ class CircPlot:
                 values = self.circ.data[self.circ.labels == group_label]
                 self.ax.scatter(
                     values,
-                    [0.5] * len(values),
+                    y[self.circ.labels == group_label],
                     color=self._resolve_color(
                         idx=idx, label=group_label, override_color=color
                     ),
@@ -202,7 +209,7 @@ class CircPlot:
         else:
             self.ax.scatter(
                 self.circ.data,
-                [0.5] * len(self.circ.data),
+                y,
                 color=self._resolve_color(override_color=color),
                 label=label,
                 **kwargs,
@@ -270,6 +277,70 @@ class CircPlot:
                 label=label,
                 **kwargs,
             )
+    
+    def add_hline(self, y=0, **kwargs):
+        """
+        Add a horizontal line across the polar plot.
+        
+        Parameters
+        ----------
+        y : float
+            Y-coordinate for the horizontal line (default 0).
+        kwargs : dict
+            Additional keyword arguments passed to `ax.axhline` (e.g., color, linestyle, linewidth).
+        """
+        self.ax.axhline(y=y, **kwargs)
+
+    def add_polar_line(
+        self,
+        angles: np.ndarray,
+        values: np.ndarray,
+        errors: Optional[np.ndarray] = None,
+        color: Optional[str] = "orange",
+        label: Optional[str] = "Values",
+        alpha: float = 0.2,
+        **kwargs,
+        ):
+        """
+        Plot a line with optional shaded error band on the polar axis.
+
+        Parameters
+        ----------
+        angles : np.ndarray
+            1D array of angles (in radians) for the x-axis.
+        values : np.ndarray
+            1D array of values to plot on the radial axis.
+        errors : np.ndarray, optional
+            1D array of error values (e.g., std or SEM) for shading.
+        color : str, optional
+            Color for line and fill.
+        label : str, optional
+            Label for the line.
+        alpha : float, optional
+            Transparency of the error band.
+        kwargs : dict
+            Additional keyword arguments for `ax.plot`.
+        """
+        self.ax.plot(
+            angles,
+            values,
+            color=color,
+            label=label,
+            **kwargs,
+        )
+
+        if errors is not None:
+            lower = values - errors
+            upper = values + errors
+            self.ax.fill_between(
+                angles,
+                lower,
+                upper,
+                color=color,
+                alpha=alpha,
+                label=f"{label} error" if label else None,
+            )
+
 
     def add_histogram(
         self,
