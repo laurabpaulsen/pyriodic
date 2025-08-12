@@ -60,7 +60,7 @@ class CircPlot:
             if ax.name != "polar":
                 raise ValueError("Provided axis must be a polar projection. " \
                 "If you have created the ax using plt.subplot, try adding project = 'polar'. " \
-                "If you have created the ax using plt.subplots try adding subplot_kw={'projection': 'polar}")
+                "If you have created the ax using plt.subplots try adding subplot_kw={'projection': 'polar'}.")
             self.ax = ax
             self.fig = ax.figure
 
@@ -181,7 +181,7 @@ class CircPlot:
             grouped = self.group_by_labels
 
         if y is None:
-            y = len(self.circ.data) * [0.5]  # Default y-coordinate for all points
+            y = np.array([0.5] * len(self.circ.data))
 
         label = self._pop_kwarg(kwargs, "label", "Events")
         color = self._pop_kwarg(kwargs, "color", None)
@@ -583,7 +583,8 @@ def plot_phase_diagnostics(
 
     n_phase_axes = len(phase_angles)
     n_rows = n_phase_axes + (1 if data is not None else 0)
-    time = np.arange(len(next(iter(phase_angles.values())))) / fs
+
+    time = np.arange(len(list(phase_angles.values())[0])) / fs
 
     start = min(start, time[-1] - window_duration)
 
