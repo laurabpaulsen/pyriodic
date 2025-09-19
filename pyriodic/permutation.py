@@ -3,6 +3,7 @@ from typing import Callable, Optional, Literal, Union
 import inspect
 from .utils import calculate_p_value
 from scipy.stats import mannwhitneyu
+from tqdm.auto import tqdm
 
 
 
@@ -48,19 +49,38 @@ def watson_u2(sample1: np.ndarray, sample2: np.ndarray, n_bins: int = 30) -> flo
 def permutation_test_against_null(
     observed: np.ndarray,
     phase_pool: Union[np.ndarray, Literal["uniform"]] = "uniform",
+    time_shift: bool = False,
+    events = None,
     n_null: int = 1000,
     n_permutations:int = 1000,
-    stat_fun: Optional[Callable] = None,
+    stat_fun: Callable = watson_u2,
+    perm_stat_fun: Callable = mannwhitneyu,
     alternative: Literal["greater", "less", "two-sided"] = "greater",
     rng: Optional[np.random.Generator] = None,
     n_bins: int = 30,
     verbose: bool = True,
     return_null_samples=False,
-    return_obs_and_null_stats=False
+    return_obs_and_null_stats=False,
+    return_perm_stats=False
 ) -> tuple:
     """
     Compares an observed circular phase distribution to a null distribution
     using a Mann–Whitney U-based permutation test on test statistic samples.
+
+
+    Parameters
+    ----------
+    observed : np.ndarray
+        The observed circular phase angles (in radians).
+    phase_pool : np.ndarray or "uniform", default="uniform"
+        If "uniform", uses a uniform distribution of phases. Otherwise, uses the provided array.
+    time_shift : bool, default=False
+        If True, shifts the observed phases by a random amount for each null sample. If false, if samples randomly from the phase pool.
+    events : np.ndarray, optional
+        If provided, the observed phases are assumed to be paired with these events.
+        This is used to generate null samples with a time shift. Only used if time_shift is True.
+
+    n_null : int, default=1000
     """
     if rng is None:
         rng = np.random.default_rng()
@@ -83,9 +103,25 @@ def permutation_test_against_null(
     elif not isinstance(phase_pool, np.ndarray):
         raise ValueError("phase_pool must be a numpy array or 'uniform'.")
 
-    null_samples = [
-        rng.choice(phase_pool, size=n_events, replace=False) for _ in range(n_null)
-    ]
+
+    if not time_shift:
+        null_samples = [
+            rng.choice(phase_pool, size=n_events, replace=False) for _ in range(n_null)
+        ]
+    else:
+        if events is None:
+            raise ValueError("events must be provided when time_shift is True.")
+        null_samples = []
+
+        # get an integer shift for each null sample )(between 0 and the number of samples in PA)
+        shifts = rng.integers(0, len(phase_pool), size=n_null)
+        for shift in shifts:
+            # shift PA by the random amount
+            shifted = np.roll(phase_pool, shift)
+            # sample the same number of phases as in the observed data
+            null_sample = shifted[events]
+            null_samples.append(null_sample)
+
 
     # Compute obs-vs-null test statistics
     obs_vs_null = np.array([compute_stat(observed, null) for null in null_samples])
@@ -97,7 +133,7 @@ def permutation_test_against_null(
     ])
 
     # Observed U statistic
-    obs_stat = mannwhitneyu(obs_vs_null, null_vs_null, alternative="two-sided").statistic
+    obs_stat = perm_stat_fun(obs_vs_null, null_vs_null, alternative="greater").statistic
 
     # Permutation test on labels
     group_labels = np.array([1] * len(obs_vs_null) + [0] * len(null_vs_null))
@@ -108,16 +144,16 @@ def permutation_test_against_null(
         permuted = rng.permutation(group_labels)
         group1 = all_stats[permuted == 1]
         group0 = all_stats[permuted == 0]
-        stat = mannwhitneyu(group1, group0, alternative="two-sided").statistic
+        stat = perm_stat_fun(group1, group0, alternative="greater").statistic
         perm_stats.append(stat)
+
 
     perm_stats = np.array(perm_stats)
     p_val = calculate_p_value(obs_stat, perm_stats, alternative)
 
     if verbose:
-        print(f"p val: {p_val}, observed stat: {obs_stat}:.1f, mean null stat: {np.mean(perm_stats):.1f}")
+        print(f"p val: {p_val}, observed stat: {obs_stat:.3f}, mean null stat: {np.mean(perm_stats):.3f}")
 
-    
     result = [obs_stat, p_val]
     if return_null_samples:
         result.append(np.array(null_samples))
@@ -125,6 +161,9 @@ def permutation_test_against_null(
     if return_obs_and_null_stats:
         result.append(obs_vs_null)
         result.append(null_vs_null)
+
+    if return_perm_stats:
+        result.append(perm_stats)
 
     return tuple(result)
 
@@ -278,7 +317,6 @@ def peak_to_peak_modulation(
 
 
 
-from typing import Optional, Callable, Literal
 
 def permutation_test_phase_modulation(
     phases: np.ndarray,
@@ -334,7 +372,7 @@ def permutation_test_phase_modulation(
 
     # default stat function
     if stat_fun is None:
-        stat_fun = peak_to_peak_modulation  # <-- the one we just wrote
+        stat_fun = peak_to_peak_modulation 
 
     # compute observed statistic
     obs_stat = stat_fun(phases, values, n_bins=n_bins, min_bin_count=min_bin_count)
@@ -357,3 +395,92 @@ def permutation_test_phase_modulation(
         return obs_stat, p_val, null
 
     return obs_stat, p_val
+
+
+
+def permutation_test_within_units(
+    data1: list[np.ndarray],
+    data2: list[np.ndarray],
+    stat_fun: Callable[[np.ndarray, np.ndarray], float] = lambda x, y: np.mean(x - y),
+    n_permutations: int = 5000,
+    rng: Optional[np.random.Generator] = None,
+    alternative: Literal["greater", "less", "two-sided"] = "two-sided",
+    verbose: bool = True,
+    return_null_distribution: bool = False
+) -> tuple:
+    """
+    Performs a paired permutation test, where data at index 1 in `data1` is assumed to be paired with data at index 1 in `data2`.
+
+
+    This is useful when each unit (e.g., participant, sensor, session) has paired 
+    data across two conditions, but the number of observations per condition may vary.
+    Label permutations are performed within each unit to preserve intra-unit structure.
+
+    Parameters
+    ----------
+    data1 : list of np.ndarray
+        List of arrays, where each array contains data for a unit (e.g., participant).
+    data2 : list of np.ndarray
+        List of arrays, where each array contains data for a unit (e.g., participant). The indices for participants (or some other pairing) must match `data1`.
+    stat_fun : Callable, default = lambda x, y: np.mean(x - y)
+        Function that computes a scalar test statistic for each pair of data arrays.
+    n_permutations : int, default = 1000
+        Number of permutations to generate the null distribution.
+    rng : np.random.Generator, optional
+        NumPy random number generator for reproducibility.
+    alternative : {"greater", "less", "two-sided"}, default = "two-sided"
+        The alternative hypothesis to test.
+    verbose : bool, default = True
+        If True, print the observed statistic and p-value.
+    return_null_distribution : bool, default = False
+        If True, return the full null distribution in the output.
+
+    Returns
+    -------
+    observed_stat : float
+        The observed group-level statistic (mean of unit-level stats).
+    p_value : float
+        P-value under the null distribution.
+    null_distribution : np.ndarray, optional
+        Returned if `return_null_distribution` is True.
+    """
+    if rng is None:
+        rng = np.random.default_rng()
+
+    data1 = [np.asarray(d) for d in data1]
+    data2 = [np.asarray(d) for d in data2]
+
+    if len(data1) != len(data2):
+        raise ValueError("data1 and data2 must have the same length.")
+
+    # Compute observed unit-level stats and average
+    unit_stats = [stat_fun(d1, d2) for d1, d2 in zip(data1, data2)]
+    observed_stat = np.mean(unit_stats)
+
+
+    null_distribution = []
+    for i in tqdm(range(n_permutations), desc="Generating null distribution"):
+        
+        permuted_stats = []
+        for d1, d2 in zip(data1, data2):
+            n1, n2 = len(d1), len(d2)
+            combined = np.concatenate([d1, d2])
+            permuted = rng.permutation(combined)
+            perm_d1 = permuted[:n1]
+            perm_d2 = permuted[n1:]
+            permuted_stats.append(stat_fun(perm_d1, perm_d2))
+
+        
+        null_distribution.append(np.mean(permuted_stats))
+
+    null_distribution = np.array(null_distribution)
+
+
+    p_value = calculate_p_value(observed_stat, null_distribution, alternative)
+
+    if verbose:
+        print(f"Observed statistic = {observed_stat:.4f}, p = {p_value:.4f}")
+
+    if return_null_distribution:
+        return observed_stat, p_value, null_distribution
+    return observed_stat, p_value
