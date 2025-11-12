@@ -12,7 +12,13 @@ logger = logging.getLogger(__name__)
 
 class RawSignal:
     def __init__(self, data, fs, info=None, bad_segments:Union[None, np.ndarray]=None):
-        self.ts = np.asarray(data).copy()
+
+        # validate that data is 1D
+        data = np.asarray(data)
+        if data.ndim != 1:
+            raise ValueError("Data must be a 1D array-like structure.")
+        
+        self.ts = data
         self.fs = fs
         self.info = info or {}
         self.bad_segments = bad_segments
@@ -43,7 +49,6 @@ class RawSignal:
 
         ax.plot(times[start_sample:end_sample], tmp_ts)
         ax.set_xlim([start, start + duration])
-        #ax.set_ylim([np.min(tmp_ts), np.max(tmp_ts)])
         ax.set_xlabel("Time (s)")
         ax.set_ylabel("Amplitude")
         
@@ -90,7 +95,8 @@ class RawSignal:
     def filter_bandpass(self, low = 0.1, high = 1.0):
         """ """
         sos = signal.butter(N=4, Wn=[low, high], btype="band", fs=self.fs, output="sos")
-        self.ts = signal.sosfiltfilt(sos, self.ts)
+        new_ts = signal.sosfiltfilt(sos, self.ts)
+        self.ts = new_ts
         self._history.append(f"bandpass({low} Hz - {high} Hz)")
 
     def resample(self, sfreq=Union[int, float]):
