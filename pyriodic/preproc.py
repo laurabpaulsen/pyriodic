@@ -281,7 +281,7 @@ class RawSignal:
         peak_finder : callable, optional
             Optional custom function of the form ``func(ts, **kwargs) -> np.ndarray`` returning peak indices.
         distance : int
-            Minimum distance between peaks, passed to the peak detection algorithm.
+            Minimum distance between peaks, passed to the peak detection algorithm in seconds.
         prominence : float
             Prominence threshold for peak detection.
 
@@ -292,8 +292,9 @@ class RawSignal:
         peaks : np.ndarray
             Indices of the detected peaks used for phase interpolation.
         """
-
+        distance = int(distance * self.fs)  # convert seconds to samples
         if peak_finder is None:
+            
             peaks = self._peak_finder(self.ts, distance=distance, prominence=prominence)
         else:
             peaks = peak_finder(self.ts)  # assume user handles their own params
