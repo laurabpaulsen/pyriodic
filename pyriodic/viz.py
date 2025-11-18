@@ -215,6 +215,41 @@ class CircPlot:
                 **kwargs,
             )
 
+    def add_connected_points(
+            self,
+            y=None,
+            label=None,
+            connect_last_to_first=True,
+            **kwargs
+
+    ):
+        """
+        Plot connected data points on the polar axis.
+
+        Parameters
+        ----------
+        y : float, optional
+            Y-coordinate for the points. If None, defaults to 0.5 for all points.
+        """
+        if y is None:
+            y = np.array([0.5] * len(self.circ.data))
+
+        label = self._pop_kwarg(kwargs, "label", "Events")
+        color = self._pop_kwarg(kwargs, "color", None)
+
+
+        plot_data = self.circ.data.copy()
+        if connect_last_to_first:
+            plot_data = np.concatenate([plot_data, [plot_data[0]]])
+            y = np.concatenate([y, [y[0]]])
+
+        self.ax.plot(
+            plot_data, y,
+            color=self._resolve_color(override_color=color),
+            label=label,
+            **kwargs
+        )
+
     def add_density(
         self, kappa=20, n_bins=500, grouped: Optional[bool] = None, **kwargs
     ):
@@ -359,10 +394,11 @@ class CircPlot:
         - bins: Number of angular bins (default 36).
         - alpha: Transparency of bars.
         """
-        if data is None:
-            raise NotImplementedError(
-                "Not yet implemented plotting the data in circ. Please supply data. "
-            )
+        #if data is None:
+        #    raise NotImplementedError(
+        #        "Not yet implemented plotting the data in circ. Please supply data. "
+        #    )
+        data = data if data is not None else self.circ.data
         
         counts, bin_edges = np.histogram(data, bins=bins, range=(0, 2 * np.pi))
 
@@ -586,6 +622,10 @@ def plot_phase_diagnostics(
 
     time = np.arange(len(list(phase_angles.values())[0])) / fs
 
+    # event samples to time
+    if events is not None:
+        events = np.array(events)
+        
     start = min(start, time[-1] - window_duration)
 
     window_samples = int(window_duration * fs)
@@ -727,7 +767,7 @@ def plot_phase_diagnostics(
         for ev_objs in event_lines:
             for line, ev_sample in ev_objs:
                 visible = start_idx <= ev_sample < end_idx
-                line.set_xdata(ev_sample / fs)
+                line.set_xdata([ev_sample / fs]*2)
                 line.set_visible(visible)
 
         fig.canvas.draw_idle()
