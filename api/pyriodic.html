@@ -906,6 +906,17 @@ If False, plots a single mean vector for all data.</p></li>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="pyriodic.viz.CircPlot.add_connected_points">
+<span class="sig-name descname"><span class="pre">add_connected_points</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">connect_last_to_first</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyriodic.viz.CircPlot.add_connected_points" title="Link to this definition">#</a></dt>
+<dd><p>Plot connected data points on the polar axis.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>y</strong> (<em>float</em><em>, </em><em>optional</em>) – Y-coordinate for the points. If None, defaults to 0.5 for all points.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="pyriodic.viz.CircPlot.add_density">
 <span class="sig-name descname"><span class="pre">add_density</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">kappa</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_bins</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">500</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grouped</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyriodic.viz.CircPlot.add_density" title="Link to this definition">#</a></dt>
 <dd><p>Add a circular density estimate using Von Mises KDE.</p>
@@ -1154,6 +1165,7 @@ Each should be 1D array of same length as <cite>data</cite>.</p></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.viz.CircPlot"><code class="docutils literal notranslate"><span class="pre">CircPlot</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.viz.CircPlot.add_arrows"><code class="docutils literal notranslate"><span class="pre">CircPlot.add_arrows()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.viz.CircPlot.add_circular_mean"><code class="docutils literal notranslate"><span class="pre">CircPlot.add_circular_mean()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.viz.CircPlot.add_connected_points"><code class="docutils literal notranslate"><span class="pre">CircPlot.add_connected_points()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.viz.CircPlot.add_density"><code class="docutils literal notranslate"><span class="pre">CircPlot.add_density()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.viz.CircPlot.add_histogram"><code class="docutils literal notranslate"><span class="pre">CircPlot.add_histogram()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.viz.CircPlot.add_hline"><code class="docutils literal notranslate"><span class="pre">CircPlot.add_hline()</span></code></a></li>
