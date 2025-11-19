@@ -1,11 +1,9 @@
 import numpy as np
-from typing import Callable, Optional, Literal, Union
+from typing import Callable, Optional, Literal
 import inspect
 from .utils import calculate_p_value
 from scipy.stats import mannwhitneyu
 from tqdm.auto import tqdm
-
-
 
 def ecdf(data: np.ndarray, points: np.ndarray) -> np.ndarray:
     """
@@ -46,12 +44,12 @@ def watson_u2(sample1: np.ndarray, sample2: np.ndarray, n_bins: int = 30) -> flo
 
 
 
-def permutation_test_against_null(
+
+
+
+def permutation_test_against_surrogate(
     observed: np.ndarray,
-    phase_pool: Union[np.ndarray, Literal["uniform"]] = "uniform",
-    time_shift: bool = False,
-    events = None,
-    n_null: int = 1000,
+    surrogate_samples: np.ndarray,
     n_permutations:int = 1000,
     stat_fun: Callable = watson_u2,
     perm_stat_fun: Callable = mannwhitneyu,
@@ -59,26 +57,16 @@ def permutation_test_against_null(
     rng: Optional[np.random.Generator] = None,
     n_bins: int = 30,
     verbose: bool = True,
-    return_null_samples=False,
-    return_obs_and_null_stats=False,
+    return_obs_and_surr_stats=False,
     return_perm_stats=False
 ) -> tuple:
     """
-    Compares an observed circular phase distribution to a null distribution
-    using a Mann–Whitney U-based permutation test on test statistic samples.
 
 
     Parameters
     ----------
     observed : np.ndarray
         The observed circular phase angles (in radians).
-    phase_pool : np.ndarray or "uniform", default="uniform"
-        If "uniform", uses a uniform distribution of phases. Otherwise, uses the provided array.
-    time_shift : bool, default=False
-        If True, shifts the observed phases by a random amount for each null sample. If false, if samples randomly from the phase pool.
-    events : np.ndarray, optional
-        If provided, the observed phases are assumed to be paired with these events.
-        This is used to generate null samples with a time shift. Only used if time_shift is True.
 
     n_null : int, default=1000
     """
@@ -88,6 +76,8 @@ def permutation_test_against_null(
     if stat_fun is None:
         stat_fun = watson_u2  # You must define/import this separately
 
+    n_surr = surrogate_samples.shape[0]
+
     # Determine if stat_fun accepts n_bins
     sig = inspect.signature(stat_fun)
     accepts_n_bins = "n_bins" in sig.parameters
@@ -95,56 +85,29 @@ def permutation_test_against_null(
     def compute_stat(x, y):
         return stat_fun(x, y, n_bins=n_bins) if accepts_n_bins else stat_fun(x, y)
 
-    n_events = len(observed)
-
-    # Generate null samples
-    if isinstance(phase_pool, str) and phase_pool == "uniform":
-        phase_pool = np.linspace(0, 2 * np.pi, len(observed), endpoint=False)
-    elif not isinstance(phase_pool, np.ndarray):
-        raise ValueError("phase_pool must be a numpy array or 'uniform'.")
-
-
-    if not time_shift:
-        null_samples = [
-            rng.choice(phase_pool, size=n_events, replace=False) for _ in range(n_null)
-        ]
-    else:
-        if events is None:
-            raise ValueError("events must be provided when time_shift is True.")
-        null_samples = []
-
-        # get an integer shift for each null sample )(between 0 and the number of samples in PA)
-        shifts = rng.integers(0, len(phase_pool), size=n_null)
-        for shift in shifts:
-            # shift PA by the random amount
-            shifted = np.roll(phase_pool, shift)
-            # sample the same number of phases as in the observed data
-            null_sample = shifted[events]
-            null_samples.append(null_sample)
-
-
+    
     # Compute obs-vs-null test statistics
-    obs_vs_null = np.array([compute_stat(observed, null) for null in null_samples])
+    obs_vs_surr = np.array([compute_stat(observed, surr) for surr in surrogate_samples])
 
     # Compute null-vs-null test statistics
-    null_vs_null = np.array([
-        compute_stat(*rng.choice(null_samples, size=2, replace=False))
-        for _ in range(n_null)
+    surr_vs_surr = np.array([
+        compute_stat(*rng.choice(surrogate_samples, size=2, replace=False))
+        for _ in range(n_surr)
     ])
 
-    # Observed U statistic
-    obs_stat = perm_stat_fun(obs_vs_null, null_vs_null, alternative="greater").statistic
+    # Observed statistic
+    obs_stat = perm_stat_fun(obs_vs_surr, surr_vs_surr).statistic
 
     # Permutation test on labels
-    group_labels = np.array([1] * len(obs_vs_null) + [0] * len(null_vs_null))
-    all_stats = np.concatenate([obs_vs_null, null_vs_null])
+    group_labels = np.array([1] * len(obs_vs_surr) + [0] * len(surr_vs_surr))
+    all_stats = np.concatenate([obs_vs_surr, surr_vs_surr])
+    
     perm_stats = []
-
     for _ in range(n_permutations):
         permuted = rng.permutation(group_labels)
         group1 = all_stats[permuted == 1]
         group0 = all_stats[permuted == 0]
-        stat = perm_stat_fun(group1, group0, alternative="greater").statistic
+        stat = perm_stat_fun(group1, group0).statistic
         perm_stats.append(stat)
 
 
@@ -155,13 +118,12 @@ def permutation_test_against_null(
         print(f"p val: {p_val}, observed stat: {obs_stat:.3f}, mean null stat: {np.mean(perm_stats):.3f}")
 
     result = [obs_stat, p_val]
-    if return_null_samples:
-        result.append(np.array(null_samples))
 
-    if return_obs_and_null_stats:
-        result.append(obs_vs_null)
-        result.append(null_vs_null)
-
+    if return_obs_and_surr_stats:
+        result.append(obs_vs_surr)
+        result.append(surr_vs_surr)
+        
+        
     if return_perm_stats:
         result.append(perm_stats)
 

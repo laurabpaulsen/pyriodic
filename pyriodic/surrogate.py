@@ -7,7 +7,7 @@ from typing import Literal
 
 
 
-def surrogate_scramble_breath_cycles(phase_pool, events, n_surrogate, rng = None):
+def surrogate_shuffle_breath_cycles(phase_pool, events, n_surrogate, rng = None):
     
     def _get_breathing_cycles(phase_ts): 
         """Identify breathing cycles based on phase transitions."""
@@ -66,10 +66,9 @@ def surrogate_scramble_breath_cycles(phase_pool, events, n_surrogate, rng = None
 
     return np.array(surr_samples)
 
-def generate_time_shifted_samples(phase_pool, events, n_surrogate, rng=None):
+def surrogate_time_shifted(phase_pool, events, n_surrogate, rng=None):
     if rng is None:
         rng = np.random.default_rng()
-
 
     print("Generating null samples with time shifts...")
     surr_samples = []
@@ -86,7 +85,7 @@ def generate_time_shifted_samples(phase_pool, events, n_surrogate, rng=None):
 
     return np.array(surr_samples)
 
-def generate_random_samples(phase_pool, n_events, n_surrogate, rng=None):
+def surrogate_random(phase_pool, n_events, n_surrogate, rng=None):
     if rng is None:
         rng = np.random.default_rng()
 
@@ -116,11 +115,11 @@ def surrogate_samples(
         random_state = np.random.default_rng()
 
     if surrogate_method == "time_shift":
-        return generate_time_shifted_samples(phase_pool, events, n_surrogate, random_state)
+        return surrogate_time_shifted(phase_pool, events, n_surrogate, random_state)
     elif surrogate_method == "scramble_breath_cycles":
         return surrogate_scramble_breath_cycles(phase_pool, events, n_surrogate, random_state)
     elif surrogate_method == "random_sampling":
-        return generate_random_samples(phase_pool, len(events), n_surrogate, random_state)
+        return surrogate_random(phase_pool, len(events), n_surrogate, random_state)
     elif surrogate_method == "IAAFT":
         return generate_iaaft_samples(phase_pool, events, n_surrogate, random_state)
     else:
