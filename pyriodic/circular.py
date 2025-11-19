@@ -191,6 +191,9 @@ class Circular:
         if histogram is not None:
             plot.add_histogram(data=histogram)
 
+        if group_by_labels:
+            plot.add_legend()
+
         return plot
 
     @classmethod
