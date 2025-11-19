@@ -49,7 +49,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Why circular statistics matter - the case of respiratory signals" href="06_why_circular_stats.html" />
-    <link rel="prev" title="Permutation test against null distribution of respiratory phase angles" href="04_permutation_against_null.html" />
+    <link rel="prev" title="Single-level analysis" href="04a_permutation_against_surrogate_shuffled.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="" />
@@ -323,6 +323,8 @@
 <li class="toctree-l1"><a class="reference internal" href="02_phase_extraction.html">Methods for phase extraction from respiration data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="03_descriptive_stats.html">Descriptive statistics for circular data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="04_permutation_against_null.html">Permutation test against null distribution of respiratory phase angles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04a_permutation_against_surrogate_shuffled.html">Single-level analysis</a></li>
+
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Two sample permutation test of respiratory phase angles</a></li>
 <li class="toctree-l1"><a class="reference internal" href="06_why_circular_stats.html">Why circular statistics matter - the case of respiratory signals</a></li>
 <li class="toctree-l1"><a class="reference internal" href="07_association_with_behavioural_variable.html">Test association with behavioural variable such as reaction time</a></li>
@@ -390,7 +392,7 @@
 <h1>Two sample permutation test of respiratory phase angles<a class="headerlink" href="#Two-sample-permutation-test-of-respiratory-phase-angles" title="Link to this heading">#</a></h1>
 <p>This notebook runs permutation tests to compare two samples of respiratory phase angles. This is useful when you want to compare the phase angles of two different conditions or groups.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[48]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pickle</span>
@@ -407,7 +409,7 @@
 <section id="Single-level-analysis">
 <h2>Single-level analysis<a class="headerlink" href="#Single-level-analysis" title="Link to this heading">#</a></h2>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[49]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;../../data/respiration/intermediate&quot;</span><span class="p">)</span>
@@ -426,7 +428,7 @@
 <section id="Choosing-events-of-interest-and-plotting-the-two-samples">
 <h2>Choosing events of interest and plotting the two samples<a class="headerlink" href="#Choosing-events-of-interest-and-plotting-the-two-samples" title="Link to this heading">#</a></h2>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[50]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">targets_weak</span> <span class="o">=</span> <span class="n">circ</span><span class="p">[</span><span class="s2">&quot;weak/target&quot;</span><span class="p">]</span>
@@ -434,7 +436,7 @@
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[51]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">correct_targets</span> <span class="o">=</span> <span class="n">targets_weak</span><span class="p">[</span><span class="s2">&quot;correct&quot;</span><span class="p">]</span>
@@ -473,7 +475,7 @@
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[52]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Run permutation test</span>
@@ -490,11 +492,11 @@
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Observed statistic = 0.040, p = 0.8418
+Observed statistic = 0.040, p = 0.8397
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[53]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">circs</span> <span class="o">=</span> <span class="p">{}</span>
@@ -564,7 +566,7 @@ Group-level statistic = 0.024, p = 1.0000
 <section id="Another-example-where-there-is-a-difference-between-the-two-samples">
 <h2>Another example where there is a difference between the two samples<a class="headerlink" href="#Another-example-where-there-is-a-difference-between-the-two-samples" title="Link to this heading">#</a></h2>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[54]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fourth_salient</span> <span class="o">=</span> <span class="n">circ</span><span class="p">[</span><span class="s2">&quot;salient/regular/fourth&quot;</span><span class="p">]</span>
@@ -599,7 +601,7 @@ Group-level statistic = 0.024, p = 1.0000
 <span class="n">obs_stat</span><span class="p">,</span> <span class="n">pval</span> <span class="o">=</span> <span class="n">permutation_test_between_samples</span><span class="p">(</span>
     <span class="n">fourth_salient</span><span class="o">.</span><span class="n">data</span><span class="p">,</span>
     <span class="n">fifth_salient</span><span class="o">.</span><span class="n">data</span><span class="p">,</span>
-    <span class="n">n_permutations</span><span class="o">=</span> <span class="mi">10000</span><span class="p">,</span>
+    <span class="n">n_permutations</span><span class="o">=</span><span class="mi">10000</span><span class="p">,</span>
 <span class="p">)</span>
 </pre></div>
 </div>

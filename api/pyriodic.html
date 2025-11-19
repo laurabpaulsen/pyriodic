@@ -503,7 +503,26 @@ Values should be in the range appropriate to the specified <cite>unit</cite>.</p
 <dl class="py function">
 <dt class="sig sig-object py" id="pyriodic.density.vonmises_kde">
 <span class="sig-prename descclassname"><span class="pre">pyriodic.density.</span></span><span class="sig-name descname"><span class="pre">vonmises_kde</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kappa</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_x</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_x</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">6.283185307179586</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_bins</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyriodic.density.vonmises_kde" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
+<dd><p>Vectorized von Mises kernel density estimate for circular data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>np.ndarray</em>) – Circular data in radians.</p></li>
+<li><p><strong>kappa</strong> (<em>float</em>) – Concentration parameter (higher = narrower peaks).</p></li>
+<li><p><strong>min_x</strong> (<em>float</em>) – Minimum value of the evaluation grid (default 0).</p></li>
+<li><p><strong>max_x</strong> (<em>float</em>) – Maximum value of the evaluation grid (default 2*pi).</p></li>
+<li><p><strong>n_bins</strong> (<em>int</em>) – Number of points in the evaluation grid.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>x</strong> (<em>np.ndarray</em>) – Evaluation points.</p></li>
+<li><p><strong>kde</strong> (<em>np.ndarray</em>) – Estimated density at each point.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
 
 </section>
 <section id="module-pyriodic.desc">

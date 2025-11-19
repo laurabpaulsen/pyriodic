@@ -16,6 +16,9 @@
    .. image:: /_images/04_permutation_against_null.png
       :alt: preload
 
+   .. image:: /_images/04a_permutation_against_surrogate_shuffled.png
+      :alt: preload
+
    .. image:: /_images/05_permutation_two_samples.png
       :alt: preload
 

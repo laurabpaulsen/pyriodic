@@ -52,6 +52,17 @@ These tutorials walk you through using **Pyriodic** for circular data analysis, 
 
       <div class="col-md-4">
         <div class="card shadow-sm mb-4">
+          <a href="04a_permutation_against_surrogate_shuffled.html" class="stretched-link"></a>
+          <img src="../_static/tutorials/04a_permutation_against_surrogate_shuffled.png" class="card-img-top" alt="Single-level analysis">
+          <div class="card-body">
+            <h5 class="card-title">Single-level analysis</h5>
+            <p class="card-text">See notebook for details.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="card shadow-sm mb-4">
           <a href="05_permutation_two_samples.html" class="stretched-link"></a>
           <img src="../_static/tutorials/05_permutation_two_samples.png" class="card-img-top" alt="Two sample permutation test of respiratory phase angles">
           <div class="card-body">
@@ -94,6 +105,7 @@ These tutorials walk you through using **Pyriodic** for circular data analysis, 
    02_phase_extraction
    03_descriptive_stats
    04_permutation_against_null
+   04a_permutation_against_surrogate_shuffled
    05_permutation_two_samples
    06_why_circular_stats
    07_association_with_behavioural_variable
