@@ -236,6 +236,7 @@ class CircPlot:
 
         label = self._pop_kwarg(kwargs, "label", "Events")
         color = self._pop_kwarg(kwargs, "color", None)
+        marker = self._pop_kwarg(kwargs, "marker", None)
 
 
         plot_data = self.circ.data.copy()
@@ -249,6 +250,17 @@ class CircPlot:
             label=label,
             **kwargs
         )
+
+        if marker is not None:
+            # remove the last dot (plotted twice so it is not less transparent if alpha < 1)
+            self.ax.scatter(
+                plot_data[:-1],
+                y[:-1],
+                color=self._resolve_color(override_color=color),
+                marker=marker,
+                **kwargs
+            )
+
 
     def add_density(
         self, kappa=20, n_bins=500, grouped: Optional[bool] = None, **kwargs
@@ -293,7 +305,9 @@ class CircPlot:
                 self.ax.plot(
                     xs,
                     density_vals,
-                    color=self.colours[idx % len(self.colours)],
+                    color=self._resolve_color(
+                        idx=idx, label=group_label, override_color=color
+                    ),
                     label=group_label,
                     **kwargs,
                 )
@@ -394,11 +408,7 @@ class CircPlot:
         - bins: Number of angular bins (default 36).
         - alpha: Transparency of bars.
         """
-        #if data is None:
-        #    raise NotImplementedError(
-        #        "Not yet implemented plotting the data in circ. Please supply data. "
-        #    )
-        data = data if data is not None else self.circ.data
+        data = data if data is not None else self.circ.data.copy()
         
         counts, bin_edges = np.histogram(data, bins=bins, range=(0, 2 * np.pi))
 
