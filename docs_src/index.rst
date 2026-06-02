@@ -14,3 +14,4 @@ Check out the tutorials to get started, or jump to the API reference.
    installation/index
    tutorials/index
    api/index
+   contributing/index
