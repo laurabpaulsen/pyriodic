@@ -42,4 +42,3 @@ jobs:
           name: dist
           path: dist
       - uses: pypa/gh-action-pypi-publish@release/v1
-        if: github.event_name == 'release'
