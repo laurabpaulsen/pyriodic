@@ -4,7 +4,7 @@ from typing import Optional, Union, Callable
 from .utils import dat2rad, rad2dat
 
 from .desc import circular_mean, circular_r, circular_median
-
+import pandas as pd
 
 class Circular:
     """
@@ -43,10 +43,11 @@ class Circular:
         labels: Optional[Union[list, np.ndarray]] = None,
         unit: str = "radians",
         full_range: Optional[tuple] = None,
+        metadata: Optional[pd.DataFrame] = None,
     ):
 
         self.VALID_UNITS = {"degrees", "radians"}  # hours, years?
-        self.UNIT_RANGES = {"radians": (0, 2 * np.pi + 0.001), "degrees": (0, 360), "hours": (0, 24)}
+        self.UNIT_RANGES = {"radians": (0, 2 * np.pi + 0.001), "degrees": (0, 360)} #, "hours": (0, 24)}
 
         unit = unit.lower()
         if unit not in self.VALID_UNITS:
@@ -58,7 +59,8 @@ class Circular:
 
         if labels is not None and len(labels) != len(data):
             raise ValueError("Length of labels must match length of data.")
-        self.labels = np.array(labels)
+        self.labels = np.asarray(labels)
+        
 
         if full_range is None:
             try:
@@ -81,6 +83,15 @@ class Circular:
             self.full_range = self.UNIT_RANGES["radians"]  # always set to radians range
         else:
             self.data = data
+
+
+        if metadata is not None:
+            # validate that metadata length matches data length
+            if len(metadata) != len(data):
+                raise ValueError("Length of metadata must match length of data.")
+            self.metadata = metadata
+        else:
+            self.metadata = None
 
     def _validate_data_matches_range(self, data, unit, full_range):
         expected_range = full_range or self.UNIT_RANGES[unit]
@@ -255,9 +266,43 @@ class Circular:
     def __repr__(self):
         return f"<Circular(n={len(self.data)}, unit='{self.unit}', full range = {self.full_range})>"
 
+
+
+    def __add__(self, other):
+        if not isinstance(other, Circular):
+            raise TypeError(f"Unsupported type for addition: {type(other)}")
+
+        if self.unit != other.unit:
+            raise ValueError(f"Cannot add Circular objects with different units: {self.unit} vs {other.unit}")
+
+        if self.full_range != other.full_range:
+            raise ValueError(f"Cannot add Circular objects with different full ranges: {self.full_range} vs {other.full_range}")
+
+        combined_data = np.concatenate([self.data, other.data])
+        combined_labels = None
+        if self.labels is not None and other.labels is not None:
+            combined_labels = np.concatenate([self.labels, other.labels])
+        elif self.labels is not None or other.labels is not None:
+            raise ValueError("Cannot combine Circular objects when only one has labels.")
+
+        combined_metadata = None
+        if self.metadata is not None and other.metadata is not None:
+            combined_metadata = pd.concat([self.metadata, other.metadata], ignore_index=True)
+        elif self.metadata is not None or other.metadata is not None:
+            raise ValueError("Cannot combine Circular objects when only one has metadata.")
+
+        return Circular(
+            combined_data,
+            labels=combined_labels,
+            unit=self.unit,
+            full_range=self.full_range,
+            metadata=combined_metadata
+        )
+
+
     def __getitem__(self, key: Union[str, int, list]) -> "Circular":
         """
-        Index the Circular object by label substring, exact label, or integer index.
+        Index the Circular object by label substring, exact label, integer index, or list of indices.
 
         Parameters
         ----------
@@ -280,6 +325,9 @@ class Circular:
             mask[key] = True
         elif isinstance(key, list):
             mask = np.isin(self.labels, key)
+        elif isinstance(key, np.ndarray) and key.dtype == bool:
+            mask = key
+            
         else:
             raise TypeError(f"Unsupported key type: {type(key)}")
 
@@ -290,5 +338,6 @@ class Circular:
             self.data[mask],
             labels=self.labels[mask],
             unit=self.unit,
-            full_range=self.full_range
+            full_range=self.full_range,
+            metadata=self.metadata[mask] if self.metadata is not None else None
         )
