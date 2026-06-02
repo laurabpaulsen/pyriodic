@@ -7,7 +7,7 @@ from typing import Literal
 
 
 
-def surrogate_shuffle_breath_cycles(phase_pool, events, n_surrogate, rng = None):
+def surrogate_shuffle_breath_cycles(phase_pool, events, n_surrogate, rng = None, verbose=False):
     
     def _get_breathing_cycles(phase_ts): 
         """Identify breathing cycles based on phase transitions."""
@@ -19,7 +19,8 @@ def surrogate_shuffle_breath_cycles(phase_pool, events, n_surrogate, rng = None)
             # print(f"Cycle starts at index: {start}, phase value: {phase_ts[start]}")
             # check if there are any nan values in the cycle
             if np.any(np.isnan(phase_ts[start:end])):
-                print(f"Cycle from {start} to {end} contains NaN values, ignoring.")
+                if verbose:
+                    print(f"Cycle from {start} to {end} contains NaN values, ignoring.")
             else:
                 breath_cycles.append(phase_ts[start:end])
         return breath_cycles
@@ -117,7 +118,7 @@ def surrogate_samples(
     if surrogate_method == "time_shift":
         return surrogate_time_shifted(phase_pool, events, n_surrogate, random_state)
     elif surrogate_method == "scramble_breath_cycles":
-        return surrogate_scramble_breath_cycles(phase_pool, events, n_surrogate, random_state)
+        return surrogate_shuffle_breath_cycles(phase_pool, events, n_surrogate, random_state)
     elif surrogate_method == "random_sampling":
         return surrogate_random(phase_pool, len(events), n_surrogate, random_state)
     elif surrogate_method == "IAAFT":
