@@ -397,6 +397,7 @@ class CircPlot:
         label: Optional[str] = None,
         bins=36,
         alpha=0.2,
+        scale_to_max=False,
         color: str = "grey",
     ):
         """
@@ -411,14 +412,14 @@ class CircPlot:
         data = data if data is not None else self.circ.data.copy()
         
         counts, bin_edges = np.histogram(data, bins=bins, range=(0, 2 * np.pi))
-
-        r_min, r_max = (
-            self.ax.get_ylim()
-        )  # Set max radius of bars (so they fit on same scale as points)
-        
-        max_height = r_max * 0.7  # Keep some space for clarity
-        if counts.max() > 0:
-            counts = (counts / counts.max()) * max_height
+        if scale_to_max:
+            r_min, r_max = (
+                self.ax.get_ylim()
+            )  # Set max radius of bars (so they fit on same scale as points)
+            
+            max_height = r_max * 0.7  # Keep some space for clarity
+            if counts.max() > 0:
+                counts = (counts / counts.max()) * max_height
 
         bin_centers = (bin_edges[:-1] + bin_edges[1:]) / 2
         width = (2 * np.pi) / bins
