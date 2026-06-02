@@ -50,7 +50,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Two sample permutation test of respiratory phase angles" href="05_permutation_two_samples.html" />
-    <link rel="prev" title="Permutation test against null distribution of respiratory phase angles" href="04_permutation_against_null.html" />
+    <link rel="prev" title="Descriptive statistics for circular data" href="03_descriptive_stats.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="" />
@@ -334,7 +334,6 @@
 <li class="toctree-l1"><a class="reference internal" href="01_intro.html">Overview of respiration data preprocessing and analysis</a></li>
 <li class="toctree-l1"><a class="reference internal" href="02_phase_extraction.html">Methods for phase extraction from respiration data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="03_descriptive_stats.html">Descriptive statistics for circular data</a></li>
-<li class="toctree-l1"><a class="reference internal" href="04_permutation_against_null.html">Permutation test against null distribution of respiratory phase angles</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Single-level analysis</a></li>
 
 <li class="toctree-l1"><a class="reference internal" href="05_permutation_two_samples.html">Two sample permutation test of respiratory phase angles</a></li>
@@ -400,8 +399,8 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+  <div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pickle</span>
@@ -410,18 +409,25 @@
 <span class="kn">import</span><span class="w"> </span><span class="nn">math</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">pyriodic.circular</span><span class="w"> </span><span class="kn">import</span> <span class="n">Circular</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">pyriodic.viz</span><span class="w"> </span><span class="kn">import</span> <span class="n">CircPlot</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pyriodic</span><span class="w"> </span><span class="kn">import</span> <span class="n">Circular</span><span class="p">,</span> <span class="n">CircPlot</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pyriodic.permutation</span><span class="w"> </span><span class="kn">import</span> <span class="n">permutation_test_against_surrogate</span>
-
 <span class="kn">from</span><span class="w"> </span><span class="nn">pyriodic.surrogate</span><span class="w"> </span><span class="kn">import</span> <span class="n">surrogate_shuffle_breath_cycles</span>
 </pre></div>
 </div>
 </div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+/Users/au661930/Library/CloudStorage/OneDrive-Aarhusuniversitet/Dokumenter/projects/_BehaviouralBreathing/pyriodic/.venv/lib/python3.12/site-packages/tqdm/auto.py:21: TqdmWarning: IProgress not found. Please update jupyter and ipywidgets. See https://ipywidgets.readthedocs.io/en/stable/user_install.html
+  from .autonotebook import tqdm as notebook_tqdm
+</pre></div></div>
+</div>
 <section id="Single-level-analysis">
 <h1>Single-level analysis<a class="headerlink" href="#Single-level-analysis" title="Link to this heading">#</a></h1>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;../../data/respiration/intermediate&quot;</span><span class="p">)</span>
@@ -429,7 +435,9 @@
 <span class="n">file_path</span> <span class="o">=</span> <span class="n">data_path</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&quot;participant_</span><span class="si">{</span><span class="n">subj_id</span><span class="si">}</span><span class="s2">_preproc.pkl&quot;</span>
 
 <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-            <span class="n">data</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+
+
 
 <span class="n">circ</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;circ&quot;</span><span class="p">]</span>
 <span class="n">PA</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;phase_angles&quot;</span><span class="p">]</span>
@@ -441,12 +449,14 @@
 <span class="c1"># remove rejected indices from the the event samples</span>
 <span class="n">events_samples</span> <span class="o">=</span> <span class="p">[</span><span class="n">event</span> <span class="k">for</span> <span class="n">event</span> <span class="ow">in</span> <span class="n">events_samples</span> <span class="k">if</span> <span class="n">event</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">rejected_indices</span><span class="p">]</span>
 <span class="n">labels</span> <span class="o">=</span> <span class="n">circ</span><span class="o">.</span><span class="n">labels</span>
-<span class="n">target_event_samples</span> <span class="o">=</span> <span class="p">[</span><span class="n">samp</span> <span class="k">for</span> <span class="n">samp</span><span class="p">,</span> <span class="n">label</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">events_samples</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span> <span class="k">if</span> <span class="s2">&quot;target&quot;</span> <span class="ow">in</span> <span class="n">label</span><span class="p">]</span>
+<span class="n">target_event_samples</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">samp</span> <span class="k">for</span> <span class="n">samp</span><span class="p">,</span> <span class="n">label</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">events_samples</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span> <span class="k">if</span> <span class="s2">&quot;target&quot;</span> <span class="ow">in</span> <span class="n">label</span>
+<span class="p">]</span>
 </pre></div>
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">surr_samples</span> <span class="o">=</span> <span class="n">surrogate_shuffle_breath_cycles</span><span class="p">(</span><span class="n">PA</span><span class="p">,</span> <span class="n">target_event_samples</span><span class="p">,</span> <span class="n">n_surrogate</span><span class="o">=</span><span class="mi">2000</span><span class="p">)</span>
@@ -454,7 +464,7 @@
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Run permutation test</span>
@@ -472,12 +482,12 @@
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-p val: 9.999000099990002e-05, observed stat: 3999998.000, mean null stat: 1999895.148
+p val: 9.999000099990002e-05, observed stat: 4000000.000, mean null stat: 1999847.492
 </pre></div></div>
 </div>
 <p>Let’s visually compare the observed phase angles of the target stimuli to a null distribution of phase angles drawn from the full respiratory cycle by plotting the mean resultant vector length and the mean angle for both the observed target phase angles and a sample of null phase angles.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># make a circular object with the null_samples for plotting</span>
@@ -509,7 +519,7 @@ p val: 9.999000099990002e-05, observed stat: 3999998.000, mean null stat: 199989
 <section id="Group-level-analysis">
 <h1>Group-level analysis<a class="headerlink" href="#Group-level-analysis" title="Link to this heading">#</a></h1>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">circulars</span> <span class="o">=</span> <span class="p">{}</span>
@@ -527,11 +537,11 @@ p val: 9.999000099990002e-05, observed stat: 3999998.000, mean null stat: 199989
     <span class="n">pas</span><span class="p">[</span><span class="n">subj_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;phase_angles&quot;</span><span class="p">]</span>
     <span class="n">rejected_indices</span><span class="p">[</span><span class="n">subj_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;rejected_indices&quot;</span><span class="p">]</span>
     <span class="n">events_samples</span><span class="p">[</span><span class="n">subj_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;event_samples&quot;</span><span class="p">]</span>
-<br/><br/></pre></div>
+<br/></pre></div>
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
@@ -581,21 +591,26 @@ p val: 9.999000099990002e-05, observed stat: 3999998.000, mean null stat: 199989
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-p val: 9.999000099990002e-05, observed stat: 3993263.000, mean null stat: 2000181.432
-p val: 9.999000099990002e-05, observed stat: 3989769.000, mean null stat: 2000106.301
-p val: 9.999000099990002e-05, observed stat: 3997329.000, mean null stat: 2000246.982
-p val: 9.999000099990002e-05, observed stat: 4000000.000, mean null stat: 1999452.340
-p val: 9.999000099990002e-05, observed stat: 3974340.000, mean null stat: 1999741.353
-p val: 9.999000099990002e-05, observed stat: 3660550.000, mean null stat: 1999974.135
-p val: 9.999000099990002e-05, observed stat: 3602984.000, mean null stat: 2000139.672
-p val: 9.999000099990002e-05, observed stat: 2415494.000, mean null stat: 1999989.829
-p val: 9.999000099990002e-05, observed stat: 3965711.000, mean null stat: 2000090.347
-p val: 9.999000099990002e-05, observed stat: 3457135.000, mean null stat: 2000137.747
-p val: 9.999000099990002e-05, observed stat: 3797769.000, mean null stat: 1999979.950
-p val: 9.999000099990002e-05, observed stat: 3999999.000, mean null stat: 1999997.276
-p val: 9.999000099990002e-05, observed stat: 3795027.000, mean null stat: 1999955.997
-p val: 9.999000099990002e-05, observed stat: 2363329.000, mean null stat: 2000544.181
-p val: 9.999000099990002e-05, observed stat: 4000000.000, mean null stat: 2000364.694
+p val: 9.999000099990002e-05, observed stat: 3989415.000, mean null stat: 2000186.106
+p val: 9.999000099990002e-05, observed stat: 3986387.000, mean null stat: 1999902.316
+p val: 9.999000099990002e-05, observed stat: 3998394.000, mean null stat: 2000598.789
+p val: 9.999000099990002e-05, observed stat: 4000000.000, mean null stat: 1999982.255
+p val: 9.999000099990002e-05, observed stat: 3973773.000, mean null stat: 1999581.358
+p val: 9.999000099990002e-05, observed stat: 3594297.000, mean null stat: 1999613.248
+p val: 9.999000099990002e-05, observed stat: 3658215.000, mean null stat: 2000030.912
+p val: 9.999000099990002e-05, observed stat: 2482649.000, mean null stat: 2000071.236
+p val: 9.999000099990002e-05, observed stat: 3959554.000, mean null stat: 1999684.880
+p val: 9.999000099990002e-05, observed stat: 3449387.000, mean null stat: 2000400.544
+p val: 9.999000099990002e-05, observed stat: 3806397.000, mean null stat: 1999949.792
+p val: 9.999000099990002e-05, observed stat: 4000000.000, mean null stat: 1999944.112
+p val: 9.999000099990002e-05, observed stat: 3769790.000, mean null stat: 1999578.884
+p val: 9.999000099990002e-05, observed stat: 2362774.000, mean null stat: 2000640.800
+p val: 9.999000099990002e-05, observed stat: 4000000.000, mean null stat: 1999461.168
+p val: 9.999000099990002e-05, observed stat: 3956286.000, mean null stat: 1999700.478
+p val: 0.0800919908009199, observed stat: 2051040.000, mean null stat: 2000100.831
+p val: 9.999000099990002e-05, observed stat: 4000000.000, mean null stat: 2000446.101
+p val: 9.999000099990002e-05, observed stat: 3953365.000, mean null stat: 1999934.364
+p val: 9.999000099990002e-05, observed stat: 3805656.000, mean null stat: 1999978.203
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
@@ -633,7 +648,7 @@ Observed statistic = 0.2914, p = 0.0001
 </div>
 <section id="Is-this-effect-consistent-across-all-participants?">
 <h2>Is this effect consistent across all participants?<a class="headerlink" href="#Is-this-effect-consistent-across-all-participants?" title="Link to this heading">#</a></h2>
-<div class="nbinput nblast docutils container">
+<div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
@@ -664,7 +679,7 @@ Observed statistic = 0.2914, p = 0.0001
     <span class="n">tmp_plot</span><span class="o">.</span><span class="n">add_circular_mean</span><span class="p">(</span><span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s2">&quot;lightblue&quot;</span><span class="p">)</span>
     <span class="n">tmp_plot</span><span class="o">.</span><span class="n">add_arrows</span><span class="p">([</span><span class="n">circ_obs_target</span><span class="o">.</span><span class="n">mean</span><span class="p">()],</span> <span class="p">[</span><span class="n">circ_obs_target</span><span class="o">.</span><span class="n">r</span><span class="p">()],</span> <span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;Observed&quot;</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s2">&quot;darkblue&quot;</span><span class="p">)</span>
 
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">subj_id</span><span class="si">}</span><span class="s2">, pval = </span><span class="si">{</span><span class="n">tmp_result</span><span class="p">[</span><span class="s1">&#39;pval&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">subj_id</span><span class="si">}</span><span class="s2">, pval = </span><span class="si">{</span><span class="n">tmp_result</span><span class="p">[</span><span class="s1">&#39;pval&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">8</span>
 
 <span class="c1"># Hide unused axes</span>
 <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">axes</span><span class="p">)):</span>
@@ -673,6 +688,13 @@ Observed statistic = 0.2914, p = 0.0001
 
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 <br/></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/tutorials_04a_permutation_against_surrogate_shuffled_13_0.png" src="../_images/tutorials_04a_permutation_against_surrogate_shuffled_13_0.png" />
 </div>
 </div>
 </section>

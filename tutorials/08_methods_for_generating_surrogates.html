@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Tutorials &#8212; pyriodic 0.0.1 documentation</title>
+    <title>&lt;no title&gt; &#8212; pyriodic 0.0.1 documentation</title>
   
   
   
@@ -31,6 +31,7 @@
 <link href="../_static/styles/pydata-sphinx-theme.css?digest=0790524f97105ba85085" rel="stylesheet" />
 
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/nbsphinx-code-cells.css?v=2aa19091" />
   
   <!-- So that users can add custom icons -->
   <script defer src="../_static/scripts/fontawesome.js?digest=0790524f97105ba85085"></script>
@@ -42,12 +43,14 @@
     <script src="../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'tutorials/index';</script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'tutorials/08_methods_for_generating_surrogates';</script>
     <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Overview of respiration data preprocessing and analysis" href="01_intro.html" />
-    <link rel="prev" title="How to use Pyriodic" href="../installation/installation_guide.html" />
+    <link rel="next" title="API Reference" href="../api/index.html" />
+    <link rel="prev" title="Test association with behavioural variable such as reaction time" href="07_association_with_behavioural_variable.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="" />
@@ -140,7 +143,7 @@
 
 
 <li class="nav-item current active">
-  <a class="nav-link nav-internal" href="#">
+  <a class="nav-link nav-internal" href="index.html">
     Tutorials
   </a>
 </li>
@@ -219,6 +222,10 @@
   
 
   
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
 </div>
 
     </header>
@@ -253,7 +260,7 @@
 
 
 <li class="nav-item current active">
-  <a class="nav-link nav-internal" href="#">
+  <a class="nav-link nav-internal" href="index.html">
     Tutorials
   </a>
 </li>
@@ -372,7 +379,10 @@
         <i class="fa-solid fa-home"></i>
       </a>
     </li>
-    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Tutorials</span></li>
+    
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">Tutorials</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">&lt;no title&gt;</span></li>
   </ul>
 </nav>
 </div>
@@ -389,127 +399,40 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="tutorials">
-<h1>Tutorials<a class="headerlink" href="#tutorials" title="Link to this heading">#</a></h1>
-<p>These tutorials walk you through using <strong>Pyriodic</strong> for circular data analysis, from getting started to phase diagnostics and circular statistics.</p>
-<div class="row">
-  <div class="col-md-4">
-    <div class="card shadow-sm mb-4">
-      <a href="01_intro.html" class="stretched-link"></a>
-      <img src="../_static/tutorials/01_intro.png" class="card-img-top" alt="Overview of respiration data preprocessing and analysis">
-      <div class="card-body">
-        <h5 class="card-title">Overview of respiration data preprocessing and analysis</h5>
-        <p class="card-text">This tutorial covers a basic pipeline for preprocessing and analysis of respiration data collected during a experimental task. It introduces core `pyriodic` classes.</p>
-      </div>
-    </div>
-  </div>
-
-  <div class="col-md-4">
-    <div class="card shadow-sm mb-4">
-      <a href="02_phase_extraction.html" class="stretched-link"></a>
-      <img src="../_static/tutorials/default.png" class="card-img-top" alt="Methods for phase extraction from respiration data">
-      <div class="card-body">
-        <h5 class="card-title">Methods for phase extraction from respiration data</h5>
-        <p class="card-text">See notebook for details.</p>
-      </div>
-    </div>
-  </div>
-
-  <div class="col-md-4">
-    <div class="card shadow-sm mb-4">
-      <a href="03_descriptive_stats.html" class="stretched-link"></a>
-      <img src="../_static/tutorials/03_descriptive_stats.png" class="card-img-top" alt="Descriptive statistics for circular data">
-      <div class="card-body">
-        <h5 class="card-title">Descriptive statistics for circular data</h5>
-        <p class="card-text">We will explore how to compute descriptive statistics for circular data using the Pyriodic package, and illustrate why we need special methods for circular data.</p>
-      </div>
-    </div>
-  </div>
-
-  <div class="col-md-4">
-    <div class="card shadow-sm mb-4">
-      <a href="04a_permutation_against_surrogate_shuffled.html" class="stretched-link"></a>
-      <img src="../_static/tutorials/04a_permutation_against_surrogate_shuffled.png" class="card-img-top" alt="Single-level analysis">
-      <div class="card-body">
-        <h5 class="card-title">Single-level analysis</h5>
-        <p class="card-text">See notebook for details.</p>
-      </div>
-    </div>
-  </div>
-
-  <div class="col-md-4">
-    <div class="card shadow-sm mb-4">
-      <a href="05_permutation_two_samples.html" class="stretched-link"></a>
-      <img src="../_static/tutorials/05_permutation_two_samples.png" class="card-img-top" alt="Two sample permutation test of respiratory phase angles">
-      <div class="card-body">
-        <h5 class="card-title">Two sample permutation test of respiratory phase angles</h5>
-        <p class="card-text">This notebook runs permutation tests to compare two samples of respiratory phase angles. This is useful when you want to compare the phase angles of two different conditions or groups.</p>
-      </div>
-    </div>
-  </div>
-
-  <div class="col-md-4">
-    <div class="card shadow-sm mb-4">
-      <a href="06_why_circular_stats.html" class="stretched-link"></a>
-      <img src="../_static/tutorials/06_why_circular_stats.png" class="card-img-top" alt="Why circular statistics matter - the case of respiratory signals">
-      <div class="card-body">
-        <h5 class="card-title">Why circular statistics matter - the case of respiratory signals</h5>
-        <p class="card-text">See notebook for details.</p>
-      </div>
-    </div>
-  </div>
-
-  <div class="col-md-4">
-    <div class="card shadow-sm mb-4">
-      <a href="07_association_with_behavioural_variable.html" class="stretched-link"></a>
-      <img src="../_static/tutorials/07_association_with_behavioural_variable.png" class="card-img-top" alt="Test association with behavioural variable such as reaction time">
-      <div class="card-body">
-        <h5 class="card-title">Test association with behavioural variable such as reaction time</h5>
-        <p class="card-text">This notebook runs permutation tests to see whether there is a statistically significant relationship between the phase angle at which a target stimulus was presented and the response was given by the participant. The analysis is done for each participant separately, and the results are visualised in polar plots.</p>
-      </div>
-    </div>
-  </div>
-
-  <div class="col-md-4">
-    <div class="card shadow-sm mb-4">
-      <a href="08_methods_for_generating_surrogates.html" class="stretched-link"></a>
-      <img src="../_static/tutorials/default.png" class="card-img-top" alt="Untitled">
-      <div class="card-body">
-        <h5 class="card-title">Untitled</h5>
-        <p class="card-text">See notebook for details.</p>
-      </div>
-    </div>
-  </div>
-
-</div><div style='display:none'>
-
-.. image:: /_images/01_intro.png
-   :alt: preload
-
-.. image:: /_images/default.png
-   :alt: preload
-
-.. image:: /_images/03_descriptive_stats.png
-   :alt: preload
-
-.. image:: /_images/04a_permutation_against_surrogate_shuffled.png
-   :alt: preload
-
-.. image:: /_images/05_permutation_two_samples.png
-   :alt: preload
-
-.. image:: /_images/06_why_circular_stats.png
-   :alt: preload
-
-.. image:: /_images/07_association_with_behavioural_variable.png
-   :alt: preload
-
-.. image:: /_images/default.png
-   :alt: preload
-
-</div><div class="toctree-wrapper compound">
+  <div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
 </div>
-</section>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pickle</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">math</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">pyriodic.circular</span><span class="w"> </span><span class="kn">import</span> <span class="n">Circular</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pyriodic.viz</span><span class="w"> </span><span class="kn">import</span> <span class="n">CircPlot</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pyriodic.permutation</span><span class="w"> </span><span class="kn">import</span> <span class="n">permutation_test_against_surrogate</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">pyriodic.surrogate</span><span class="w"> </span><span class="kn">import</span> <span class="n">surrogate_shuffle_breath_cycles</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;../../data/respiration/intermediate&quot;</span><span class="p">)</span>
+<span class="n">subj_id</span> <span class="o">=</span> <span class="s2">&quot;0019&quot;</span>
+<span class="n">file_path</span> <span class="o">=</span> <span class="n">data_path</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&quot;participant_</span><span class="si">{</span><span class="n">subj_id</span><span class="si">}</span><span class="s2">_preproc.pkl&quot;</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+
+<span class="n">circ</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;circ&quot;</span><span class="p">]</span>
+<span class="n">PA</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;phase_angles&quot;</span><span class="p">]</span>
+<br/></pre></div>
+</div>
+</div>
 
 
                 </article>
@@ -521,6 +444,24 @@
             </div>
             
             
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="simple pst-show_toc_level nav section-nav flex-column">
+</ul>
+
+  </nav></div>
+
+</div></div>
               
             
           </div>
