@@ -1,10 +1,8 @@
-from collections import defaultdict
+
 import numpy as np
 from typing import Union, Optional
-import matplotlib.pyplot as plt
-from pathlib import Path
 from .circular import Circular
-
+import pandas as pd
 
 def get_outlier_sample_indices(segments, outlier_indices):
     """Convert outlier segments to a flat set of sample indices for fast lookup."""
@@ -84,7 +82,7 @@ def create_phase_events(
     rejection_method: Optional[str] = None,
     rejection_criterion: Optional[float] = None,
     bad_segments: Optional[np.ndarray] = None,
-    return_rejected: bool = False,
+    metadata: Optional[pd.DataFrame] = None,
 ) -> Union["Circular", tuple["Circular", list[int]]]:
     """
     Create Circular object from a phase angle time series and event markers,
@@ -147,6 +145,15 @@ def create_phase_events(
     rising_outlier_samples = set()
     falling_outlier_samples = set()
 
+    if metadata is not None:
+        # events length must match metadata length
+        if len(metadata) != len(events):
+            raise ValueError("Length of metadata must match length of events.")
+        
+        metadata_rows = []
+        
+        
+
     if rejection_method == "segment_duration_sd":
         if rejection_criterion is None:
             rejection_criterion = 3  # default to 3 SD
@@ -160,7 +167,13 @@ def create_phase_events(
 
     accepted_phase_val = []
     accepted_labels = []
-    for event, label in zip(events, labels):
+    for i, (event, label) in enumerate(zip(events, labels)): 
+        
+        if metadata is not None:
+            meta = metadata.iloc[i]
+        else:
+            meta = None
+
         idx = event - first_samp
         if not (0 <= idx < len(phase_ts)):
             continue  # skip out-of-bounds events
@@ -182,106 +195,23 @@ def create_phase_events(
 
         accepted_phase_val.append(phase_val)
         accepted_labels.append(label)
+        if meta is not None:
+            metadata_rows.append(meta)
 
     print(f"Rejected {n_rejected} out of {len(events)} events "
           f"({n_rejected / len(events) * 100:.1f}%)")
+    
+    updated_metadata = pd.DataFrame(metadata_rows) if metadata is not None else None
+
 
     circ_obj = Circular(
         np.rad2deg(accepted_phase_val) if unit == "degrees" else accepted_phase_val,
         unit=unit,
-        labels=accepted_labels
+        labels=accepted_labels,
+        metadata=updated_metadata,
     )
 
-    return (circ_obj, rejected_indices) if return_rejected else circ_obj
+        
 
+    return circ_obj
 
-
-'''
-class PhaseEvents:
-    def __init__(self, phase_dict: dict):
-        """
-        Container for condition-sorted Circular phase data.
-
-        Parameters
-        ----------
-        phase_dict
-            Dictionary mapping condition labels or codes to Circular objects.
-        """
-        self.phase_dict = phase_dict
-
-    def mean(self):
-        return {label: circ.mean() for label, circ in self.phase_dict.items()}
-
-    def r(self):
-        return {label: circ.r() for label, circ in self.phase_dict.items()}
-
-    def plot(
-        self,
-        histogram: Optional[np.ndarray] = None,
-        savepath: Optional[Union[Path, str]] = None,
-    ):
-        n = len(self.phase_dict)
-        cols = int(np.ceil(np.sqrt(n)))
-        rows = int(np.ceil(n / cols))
-
-        fig, axes = plt.subplots(
-            rows,
-            cols,
-            subplot_kw={"projection": "polar"},
-            figsize=(4 * cols, 4 * rows),
-            dpi=300,
-        )
-        axes = np.array(axes).reshape(-1)  # flatten in case of 2D array
-
-        for ax, (label, circ) in zip(axes, self.phase_dict.items()):
-            circ.plot(ax=ax, histogram=histogram)
-            ax.set_title(f"{label}")
-
-        # Hide unused axes
-        for ax in axes[len(self.phase_dict) :]:
-            ax.set_visible(False)
-
-        plt.tight_layout()
-
-        if savepath:
-            plt.savefig(savepath)
-            plt.close()
-        else:
-            plt.show()
-
-    def to_circular(self, include: Optional[Union[str, list[str]]] = None):
-        """
-        Convert selected events from the phase dictionary to a Circular object.
-
-        Parameters
-        ----------
-        include : str, list of str, or None
-            - If a string, includes all keys in the phase_dict that contain this substring.
-            - If a list of strings, includes matching keys directly.
-            - If None, includes all keys in phase_dict.
-
-        Returns
-        -------
-        Circular
-            A Circular object constructed from the selected phase values.
-        """
-        if include is None:
-            include = list(self.phase_dict.keys())
-        elif isinstance(include, str):
-            include = [k for k in self.phase_dict if include in k]
-            if not include:
-                raise KeyError(f"No matching labels containing '{include}'")
-
-        matched = [(label, self.phase_dict[label]) for label in include]
-        labels, circulars = zip(*matched)
-        return Circular.from_multiple(circulars, labels=labels)
-
-    def __getitem__(self, key):
-        return self.phase_dict[key]
-
-    def __repr__(self):
-        conds = sorted(str(k) for k in self.phase_dict.keys())
-        conds_str = ",\n    ".join(conds)
-        return f"<PhaseEvents:\n  conditions=[\n    {conds_str}\n  ]>"
-
-'''
