@@ -12,10 +12,13 @@ authors = [
 readme = "README.md"
 requires-python = ">=3.8"
 dependencies = [
-    "ipykernel",     # for notebooks
-    "matplotlib",    # assuming you're plotting
-    "numpy",         # your project uses this
-    "scipy"          # for kde and signal tools
+    "ipykernel",     
+    "matplotlib",    
+    "numpy",         
+    "scipy",
+    "lazy-loader",
+    "pandas",
+    "tqdm"       
 ]
 
 [project.optional-dependencies]
@@ -45,4 +48,3 @@ select = ["E", "F"]  # Errors and Flake8-type issues
 [tool.mypy]
 ignore_missing_imports = true
 strict = false
-
