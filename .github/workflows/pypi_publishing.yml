@@ -35,7 +35,7 @@ jobs:
       id-token: write  # for trusted publishing
     environment:
       name: pypi
-      url: https://pypi.org/p/pyriodic-python
+      url: https://pypi.org/p/python-pyriodic
     steps:
       - uses: actions/download-artifact@v8
         with:
