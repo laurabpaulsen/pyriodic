@@ -178,3 +178,4 @@ sandbox/*
 
 # anything with DRAFT in the filename
 **DRAFT**
+.vscode/settings.json
