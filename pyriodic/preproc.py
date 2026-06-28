@@ -423,3 +423,20 @@ class RawSignal:
             f"<RawSignal | fs={self.fs} Hz, len={len(self.ts)}, "
             f"steps={len(self._history)}>"
         )
+
+
+class Pipeline:
+    def __init__(self):
+        self.steps = []
+
+    def add(self, func, *args, **kwargs):
+        self.steps.append((func, args, kwargs))
+        return self
+
+    def apply(self, raw):
+        raw = raw.copy()
+
+        for func, args, kwargs in self.steps:
+            func(raw, *args, **kwargs)
+
+        return raw
