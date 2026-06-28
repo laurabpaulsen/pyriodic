@@ -1,5 +1,6 @@
 import numpy as np
 from scipy.special import i0
+from scipy.integrate import trapezoid
 
 def vonmises_kde(data, kappa, min_x=0, max_x=2*np.pi, n_bins=100):
     """
@@ -29,5 +30,5 @@ def vonmises_kde(data, kappa, min_x=0, max_x=2*np.pi, n_bins=100):
     # Compute vectorized von Mises kernels
     kde = np.exp(kappa * np.cos(x[:, None] - data[None, :])).sum(axis=1) / (2 * np.pi * i0(kappa))
     # Normalize
-    kde /= np.trapz(kde, x=x)
+    kde /= trapezoid(kde, x=x)
     return x, kde
