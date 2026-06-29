@@ -397,17 +397,25 @@ class CircPlot:
         label: Optional[str] = None,
         bins=36,
         alpha=0.2,
-        scale_to_max=False,
+        scale_to_max=True,
         color: str = "grey",
     ):
         """
         Plot histogram as radial bars on the polar axis.
         If `data` is None, uses circular data in `self.circs`.
 
-        Parameters:
-        - data: np.array
-        - bins: Number of angular bins (default 36).
-        - alpha: Transparency of bars.
+        Parameters
+        ----------
+        data : np.ndarray, optional
+            1D array of angles (in radians) to compute histogram. If None, uses `self.circ.data`.
+        label : str, optional
+            Label for the histogram bars.
+        bins : int
+            Number of bins for the histogram (default 36).
+        alpha : float
+            Transparency of the bars (default 0.2).
+        scale_to_max : bool
+            If True, scales the bar heights to fit within the current radial limits. This ensures that the histogram bars do not exceed the maximum radius of the plot and makes it difficult to see other plotted elements. If False, the bar heights are raw counts.
         """
         data = data if data is not None else self.circ.data.copy()
         
