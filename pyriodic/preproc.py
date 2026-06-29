@@ -272,7 +272,7 @@ class RawSignal:
 
         return (phase, peaks, troughs)
 
-    def phase_onepoint(self, peak_finder=None, distance=100, prominence=0.01):
+    def phase_onepoint(self, peak_finder=None, distance=1, prominence=0.01):
         """
         Extract phase by linearly interpolating from 0 to 2π between detected peaks.
 
@@ -311,7 +311,7 @@ class RawSignal:
     def phase_threepoint(
         self,
         peak_finder: Optional[Callable[..., np.ndarray]] = None,
-        distance: int = 100,
+        distance: int = 1,
         prominence: Union[float, int] = 0.01,
         percentile: Union[float, int] = 50,
         descent_window: int = 5,
