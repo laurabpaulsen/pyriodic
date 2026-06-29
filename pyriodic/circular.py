@@ -191,13 +191,14 @@ class Circular:
         """
         return self._descriptive_stats(circular_r, group_by_label)
 
-    def plot(self, ax=None, histogram=None, group_by_labels=False):
+    def plot(self, ax=None, histogram=None, group_by_labels=False, density=False, ):
         """"""
         from .viz import CircPlot
 
         plot = CircPlot(self, ax=ax, group_by_labels=group_by_labels)
         plot.add_points()
-        plot.add_density()
+        if density:
+            plot.add_density()
 
         if histogram is not None:
             plot.add_histogram(data=histogram)
