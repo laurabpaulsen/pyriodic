@@ -10,6 +10,7 @@ __all__ = [
     "surrogate",
     "utils",
     "viz",
+    "datasets",
 ]
 
 from . import (
@@ -21,6 +22,7 @@ from . import (
     surrogate,
     utils,
     viz,
+    datasets
 )
 
 from .circular import Circular
