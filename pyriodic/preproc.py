@@ -115,49 +115,71 @@ class RawSignal:
 
     def smoothing(self, window_size: float = 50.0):
         """
-        Smooths the timeseries by calculating the moving average
+        Smooth the timeseries using a moving average.
+
+        The smoothing window is centered on each sample. At the edges,
+        the window is padded with NaNs so that only the available samples
+        contribute to the average.
 
         Args:
-            window_size (float): Size of the moving window in milliseconds. Default is 50 milliseconds.
+            window_size (float):
+                Size of the moving window in milliseconds.
         """
-        
-        # convert window size from milliseconds to samples
+
+        # Convert window size from milliseconds to samples
         sample_window_size_tmp = window_size * self.fs / 1000
-        sample_window_size = int(window_size * self.fs / 1000)
+        sample_window_size = int(round(sample_window_size_tmp))
 
         if sample_window_size_tmp % 1 != 0:
-            # print the warning
             raise Warning(
                 f"As the window size is not divisible by the sampling frequency, "
-                f"the window size will be rounded to the nearest even number: {int(sample_window_size_tmp)} samples, corresponding to {sample_window_size * 1000/self.fs} ms."
+                f"the window size will be rounded to {sample_window_size} samples "
+                f"({sample_window_size * 1000 / self.fs:.2f} ms)."
             )
 
         if sample_window_size < 1:
             raise ValueError(
-                f"Window size must be at least 1 sample. Increase the window size to a least 1 sample, corresponding to {1000/self.fs} ms. given the sampling frequency of {self.fs} Hz."
-                )
-                # enforce odd window size so we can center it
-        
+                f"Window size must be at least 1 sample. "
+                f"Increase the window size to at least {1000 / self.fs:.2f} ms "
+                f"given the sampling frequency of {self.fs} Hz."
+            )
+
+        # Enforce an odd window size so the smoothing is centered
         if sample_window_size % 2 == 0:
-            sample_window_size += 1  # make it odd to preserve centering
+            sample_window_size += 1
 
         half_window = sample_window_size // 2
 
-        padded_ts = np.pad(self.ts, (half_window, half_window), constant_values=(np.nan,))
-
-        # moving average
-        tmp = np.vstack(
-            [padded_ts[i : i + sample_window_size] for i in range(len(padded_ts) - sample_window_size + 1)]
+        # Pad with NaNs so edge windows shrink naturally
+        padded = np.pad(
+            self.ts,
+            (half_window, half_window),
+            mode="constant",
+            constant_values=np.nan,
         )
 
-        new_ts = np.nanmean(tmp, axis=1)
+        kernel = np.ones(sample_window_size, dtype=float)
+
+        # Replace NaNs with zero for the sum
+        values = np.nan_to_num(padded, nan=0.0)
+
+        # Count valid samples
+        valid = (~np.isnan(padded)).astype(float)
+
+        # Sliding sums and counts
+        sums = np.convolve(values, kernel, mode="valid")
+        counts = np.convolve(valid, kernel, mode="valid")
+
+        # Compute mean
+        new_ts = sums / counts
+        new_ts[counts == 0] = np.nan
 
         self.ts = new_ts
 
         self._history.append(
-            f"Smoothing has been applied with a window size of {window_size}"
+            f"Smoothing has been applied with a window size of {window_size} ms"
         )
-
+        
     def convert_seconds_to_samples(self, array):
         # this could probably be done in a more simple way?
         array_shape = array.shape
