@@ -9,6 +9,14 @@ circular
    :undoc-members:
    :show-inheritance:
 
+datasets
+------------------------
+
+.. automodule:: pyriodic.datasets
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 density
 -----------------------
 
