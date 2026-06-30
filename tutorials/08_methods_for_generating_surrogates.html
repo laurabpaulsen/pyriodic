@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Choosing a method for generating surrogate data for inference &#8212; pyriodic 0.0.1 documentation</title>
+    <title>Generating surrogate data for inference &#8212; pyriodic 0.0.1 documentation</title>
   
   
   
@@ -352,7 +352,7 @@
 <li class="toctree-l1"><a class="reference internal" href="05_permutation_two_samples.html">Two sample permutation test of respiratory phase angles</a></li>
 <li class="toctree-l1"><a class="reference internal" href="05_permutation_two_samples_grouplevel.html">Two sample permutation test of respiratory phase angles at the group level</a></li>
 <li class="toctree-l1"><a class="reference internal" href="07_association_with_behavioural_variable.html">Test association with behavioural variable such as reaction time</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Choosing a method for generating surrogate data for inference</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Generating surrogate data for inference</a></li>
 
 </ul>
 </div>
@@ -397,7 +397,7 @@
     
     <li class="breadcrumb-item"><a href="index.html" class="nav-link">Tutorials</a></li>
     
-    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Choosing a method for generating surrogate data for inference</span></li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Generating surrogate data for inference</span></li>
   </ul>
 </nav>
 </div>
@@ -414,9 +414,10 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="Choosing-a-method-for-generating-surrogate-data-for-inference">
-<h1>Choosing a method for generating surrogate data for inference<a class="headerlink" href="#Choosing-a-method-for-generating-surrogate-data-for-inference" title="Link to this heading">#</a></h1>
-<div class="nbinput nblast docutils container">
+  <section id="Generating-surrogate-data-for-inference">
+<h1>Generating surrogate data for inference<a class="headerlink" href="#Generating-surrogate-data-for-inference" title="Link to this heading">#</a></h1>
+<p>There are many ways to generate surrogate data for inference. Here we introduce and compare several methods.</p>
+<div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
@@ -424,6 +425,8 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">scipy.stats</span><span class="w"> </span><span class="kn">import</span> <span class="n">sem</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.gridspec</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">gridspec</span>
+
 <span class="kn">from</span><span class="w"> </span><span class="nn">tqdm</span><span class="w"> </span><span class="kn">import</span> <span class="n">tqdm</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">pyriodic.preproc</span><span class="w"> </span><span class="kn">import</span> <span class="n">RawSignal</span><span class="p">,</span> <span class="n">Pipeline</span>
@@ -434,8 +437,17 @@
 <br/></pre></div>
 </div>
 </div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+/Users/au661930/Library/CloudStorage/OneDrive-Aarhusuniversitet/Dokumenter/projects/_BehaviouralBreathing/code/AnalysisBreathingBehaviour/BreathingBehaviourVenv/lib/python3.13/site-packages/tqdm/auto.py:21: TqdmWarning: IProgress not found. Please update jupyter and ipywidgets. See https://ipywidgets.readthedocs.io/en/stable/user_install.html
+  from .autonotebook import tqdm as notebook_tqdm
+</pre></div></div>
+</div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">preproc_pipeline</span> <span class="o">=</span> <span class="p">(</span>
@@ -448,7 +460,7 @@
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">path</span> <span class="o">=</span> <span class="n">sample</span><span class="o">.</span><span class="n">data_path</span><span class="p">()</span>
@@ -462,7 +474,7 @@
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># # only keep 4 minutes of data</span>
@@ -481,8 +493,8 @@
 <br/></pre></div>
 </div>
 </div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">raw</span> <span class="o">=</span> <span class="n">RawSignal</span><span class="p">(</span><span class="n">resp_ts</span><span class="p">,</span> <span class="n">sfreq</span><span class="p">)</span>
@@ -504,11 +516,28 @@
 </pre></div>
 </div>
 </div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/tutorials_08_methods_for_generating_surrogates_5_0.png" src="../_images/tutorials_08_methods_for_generating_surrogates_5_0.png" />
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+(&lt;Figure size 1200x500 with 4 Axes&gt;,
+ array([&lt;Axes: &gt;, &lt;Axes: ylabel=&#39;PA&#39;&gt;], dtype=object))
+</pre></div></div>
+</div>
 </section>
 <section id="Comparing-different-methods">
 <h1>Comparing different methods<a class="headerlink" href="#Comparing-different-methods" title="Link to this heading">#</a></h1>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">load_results</span> <span class="o">=</span> <span class="kc">False</span>
@@ -518,7 +547,7 @@
 
 <span class="k">else</span><span class="p">:</span>
     <span class="n">surrogate_methods</span> <span class="o">=</span> <span class="p">[</span><span class="n">surrogate_iaaft</span><span class="p">,</span> <span class="n">surrogate_shuffle_breath_cycles</span><span class="p">,</span> <span class="n">surrogate_time_shifted</span><span class="p">,</span> <span class="n">surrogate_random</span><span class="p">]</span>
-    <span class="n">n_surrogates</span> <span class="o">=</span> <span class="mi">3</span>
+    <span class="n">n_surrogates</span> <span class="o">=</span> <span class="mi">100</span>
 
     <span class="n">surrogates</span> <span class="o">=</span> <span class="p">{}</span>
 
@@ -547,8 +576,59 @@
 </pre></div>
 </div>
 </div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Extracting phase angles from surrogate data using method: surrogate_iaaft()
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+Estim100%|██████████████████████████████| 100/100 [18:45&lt;00:00, 11.26s/it]
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Extracting phase angles from surrogate data using method: surrogate_shuffle_breath_cycles()
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+100%|██████████| 100/100 [00:00&lt;00:00, 1077.11it/s]
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Generated 100 surrogate time series by shuffling breathing cycles.
+Extracting phase angles from surrogate data using method: surrogate_time_shifted()
+Generating null samples with time shifts...
+Extracting phase angles from surrogate data using method: surrogate_random()
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+
+</pre></div></div>
+</div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">circular_autocorr</span><span class="p">(</span><span class="n">phases</span><span class="p">,</span> <span class="n">lag</span><span class="p">):</span>
@@ -558,14 +638,14 @@
 </pre></div>
 </div>
 </div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dat_for_plot</span> <span class="o">=</span> <span class="p">{}</span>
 
 <span class="n">lags_sec</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">)</span>
-<span class="n">lags</span> <span class="o">=</span> <span class="p">(</span><span class="n">lags_sec</span> <span class="o">*</span> <span class="n">fs</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+<span class="n">lags</span> <span class="o">=</span> <span class="p">(</span><span class="n">lags_sec</span> <span class="o">*</span> <span class="n">raw</span><span class="o">.</span><span class="n">fs</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
 
 <span class="c1"># -------- ORIGINAL --------</span>
 <span class="n">autocorrs</span> <span class="o">=</span> <span class="p">[]</span>
@@ -614,8 +694,72 @@
 <br/></pre></div>
 </div>
 </div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Computing autocorrelation for surrogate method: surrogate_iaaft()
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+100%|██████████| 100/100 [01:02&lt;00:00,  1.60it/s]
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Computing autocorrelation for surrogate method: surrogate_shuffle_breath_cycles()
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+100%|██████████| 100/100 [00:59&lt;00:00,  1.67it/s]
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Computing autocorrelation for surrogate method: surrogate_time_shifted()
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+100%|██████████| 100/100 [00:51&lt;00:00,  1.96it/s]
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Computing autocorrelation for surrogate method: surrogate_random()
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+100%|██████████| 100/100 [01:15&lt;00:00,  1.33it/s]
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plv_for_plot</span> <span class="o">=</span> <span class="p">{}</span>
@@ -634,8 +778,19 @@
 </pre></div>
 </div>
 </div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Computing PLV for surrogate method: surrogate_iaaft()
+Computing PLV for surrogate method: surrogate_shuffle_breath_cycles()
+Computing PLV for surrogate method: surrogate_time_shifted()
+Computing PLV for surrogate method: surrogate_random()
+</pre></div></div>
+</div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">colormap</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">get_cmap</span><span class="p">(</span><span class="s2">&quot;tab10&quot;</span><span class="p">)</span>
@@ -649,148 +804,11 @@
 </pre></div>
 </div>
 </div>
-<div class="nbinput nblast docutils container">
+<div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">width_ratios</span><span class="o">=</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
-
-<span class="k">for</span> <span class="n">method_name</span><span class="p">,</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">dat_for_plot</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-
-    <span class="n">lags_sec</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-    <span class="n">mean_ac</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-    <span class="n">sem_ac</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
-    <span class="n">std_ac</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Plotting autocorrelation for method: </span><span class="si">{</span><span class="n">method_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-
-    <span class="k">if</span> <span class="n">method_name</span> <span class="o">==</span> <span class="s2">&quot;original&quot;</span><span class="p">:</span>
-        <span class="n">z_order</span> <span class="o">=</span> <span class="mi">1</span>
-        <span class="n">color</span> <span class="o">=</span> <span class="s2">&quot;black&quot;</span>
-        <span class="n">linewidth</span> <span class="o">=</span> <span class="mi">1</span>
-        <span class="n">alpha</span> <span class="o">=</span> <span class="mi">1</span>
-        <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">lags_sec</span><span class="p">,</span> <span class="n">mean_ac</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Original data&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="n">linewidth</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="n">z_order</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="n">alpha</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="c1"># for sem and ac change the first value to the same as the second value to avoid plotting issues</span>
-        <span class="n">sem_ac</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">sem_ac</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-        <span class="n">std_ac</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">std_ac</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-        <span class="n">z_order</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="n">color</span> <span class="o">=</span> <span class="n">colors</span><span class="p">[</span><span class="n">method_name</span><span class="p">]</span>
-        <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.5</span>
-
-    <span class="k">if</span> <span class="n">method_name</span> <span class="o">!=</span> <span class="s2">&quot;original&quot;</span><span class="p">:</span>
-        <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span>
-                <span class="n">lags_sec</span><span class="p">,</span>
-                <span class="n">mean_ac</span> <span class="o">-</span> <span class="n">std_ac</span><span class="p">,</span>
-                <span class="n">mean_ac</span> <span class="o">+</span> <span class="n">std_ac</span><span class="p">,</span>
-                <span class="n">alpha</span><span class="o">=</span><span class="n">alpha</span><span class="p">,</span>
-                <span class="n">label</span><span class="o">=</span><span class="n">method_name</span><span class="p">,</span>
-                <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span>
-    <span class="p">)</span>
-
-<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Lag (s)&quot;</span><span class="p">)</span>
-<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Autocorrelation&quot;</span><span class="p">)</span>
-<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">])</span>
-
-
-<span class="k">for</span> <span class="n">method_name</span><span class="p">,</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">plv_for_plot</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-    <span class="n">tmp_plvs</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-
-    <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.5</span>
-    <span class="k">if</span> <span class="n">method_name</span> <span class="o">==</span> <span class="s2">&quot;original&quot;</span><span class="p">:</span>
-       <span class="k">continue</span>
-
-
-    <span class="c1"># three ways to plot the PLV values: scatter, boxplot, and violin plot.</span>
-    <span class="k">for</span> <span class="n">method_name</span><span class="p">,</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">plv_for_plot</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-
-        <span class="n">color</span> <span class="o">=</span> <span class="n">colors</span><span class="p">[</span><span class="n">method_name</span><span class="p">]</span>
-        <span class="n">box_plot_pos</span> <span class="o">=</span> <span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="n">plv_for_plot</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">method_name</span><span class="p">)]</span>
-        <span class="n">scatter_pos_x</span> <span class="o">=</span> <span class="n">box_plot_pos</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span><span class="mf">0.3</span>
-        <span class="n">violin_pos</span> <span class="o">=</span> <span class="n">box_plot_pos</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="mf">0.3</span>
-
-        <span class="c1"># scatter</span>
-        <span class="c1">#</span>
-        <span class="n">x_offset</span> <span class="o">=</span> <span class="mf">0.02</span>
-        <span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="n">scatter_pos_x</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-        <span class="c1"># add some jitter to the x values for the scatter plot</span>
-        <span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="n">xi</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="n">x_offset</span><span class="p">,</span> <span class="n">x_offset</span><span class="p">)</span> <span class="k">for</span> <span class="n">xi</span> <span class="ow">in</span> <span class="n">x</span><span class="p">]</span>
-        <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span>
-            <span class="n">x</span><span class="p">,</span>
-            <span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
-            <span class="n">alpha</span><span class="o">=</span><span class="n">alpha</span><span class="p">,</span>
-            <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span>
-        <span class="p">)</span>
-
-        <span class="c1"># boxplot</span>
-        <span class="n">bplot</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span>
-            <span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
-            <span class="n">positions</span><span class="o">=</span><span class="n">box_plot_pos</span><span class="p">,</span>
-            <span class="n">widths</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span>
-            <span class="n">patch_artist</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-            <span class="n">showmeans</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-            <span class="n">meanline</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-            <span class="n">showcaps</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-            <span class="n">showfliers</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-            <span class="n">medianprops</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">),</span>
-            <span class="n">boxprops</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">facecolor</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="n">alpha</span><span class="p">),</span>
-            <span class="n">whiskerprops</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">)</span>
-        <span class="p">)</span>
-
-        <span class="n">vplot</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">violinplot</span><span class="p">(</span>
-            <span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
-            <span class="n">positions</span><span class="o">=</span><span class="p">[</span><span class="n">violin_pos</span><span class="p">],</span>
-            <span class="n">widths</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span>
-            <span class="n">showmeans</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-            <span class="n">showextrema</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-            <span class="n">showmedians</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-            <span class="c1"># only half violin</span>
-            <span class="n">side</span><span class="o">=</span><span class="s2">&quot;high&quot;</span><span class="p">,</span>
-        <span class="p">)</span>
-        <span class="n">vplot</span><span class="p">[</span><span class="s2">&quot;bodies&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_facecolor</span><span class="p">(</span><span class="n">color</span><span class="p">)</span>
-
-<span class="c1"># change the x-ticks to the method names</span>
-<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">plv_for_plot</span><span class="o">.</span><span class="n">keys</span><span class="p">())))</span>
-<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;PLV&quot;</span><span class="p">)</span>
-<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
-<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">([])</span>  <span class="c1"># Hide x-axis ticks</span>
-
-
-
-
-<span class="k">for</span> <span class="n">ax</span> <span class="ow">in</span> <span class="n">axes</span><span class="p">:</span>
-    <span class="c1">#ax.tick_params(axis=&#39;both&#39;, which=&#39;major&#39;, labelsize=12)</span>
-    <span class="c1"># rm top and left spines</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">spines</span><span class="p">[</span><span class="s1">&#39;top&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">spines</span><span class="p">[</span><span class="s1">&#39;right&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
-
-    <span class="c1"># ylabel fontsize</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">label</span><span class="o">.</span><span class="n">set_size</span><span class="p">(</span><span class="mi">14</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">label</span><span class="o">.</span><span class="n">set_size</span><span class="p">(</span><span class="mi">14</span><span class="p">)</span>
-
-
-<span class="c1"># Get legend entries from axes[0]</span>
-<span class="n">handles</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get_legend_handles_labels</span><span class="p">()</span>
-
-<span class="c1"># Create one shared legend for the entire figure</span>
-<span class="n">fig</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span>
-    <span class="n">handles</span><span class="p">,</span>
-    <span class="n">labels</span><span class="p">,</span>
-    <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;upper center&quot;</span><span class="p">,</span>
-    <span class="n">ncol</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">labels</span><span class="p">),</span>  <span class="c1"># or choose a fixed number</span>
-    <span class="n">frameon</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-<span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.gridspec</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">gridspec</span>
-
-<span class="c1"># =============================================================================</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># =============================================================================</span>
 <span class="c1"># Figure layout</span>
 <span class="c1"># =============================================================================</span>
 
@@ -1041,6 +1059,25 @@
 </pre></div>
 </div>
 </div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Plotting autocorrelation for method: original
+Plotting autocorrelation for method: surrogate_iaaft()
+Plotting autocorrelation for method: surrogate_shuffle_breath_cycles()
+Plotting autocorrelation for method: surrogate_time_shifted()
+Plotting autocorrelation for method: surrogate_random()
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/tutorials_08_methods_for_generating_surrogates_12_1.png" src="../_images/tutorials_08_methods_for_generating_surrogates_12_1.png" />
+</div>
+</div>
 </section>
 
 
@@ -1066,7 +1103,7 @@
   </div>
   <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="pst-show_toc_level nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Choosing a method for generating surrogate data for inference</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Generating surrogate data for inference</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#Comparing-different-methods">Comparing different methods</a></li>
 </ul>
 

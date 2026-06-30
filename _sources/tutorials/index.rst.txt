@@ -86,10 +86,10 @@ These tutorials walk you through using **Pyriodic** for circular data analysis, 
       <div class="col-md-4">
         <div class="card shadow-sm mb-4">
           <a href="08_methods_for_generating_surrogates.html" class="stretched-link"></a>
-          <img src="../_static/tutorials/default.png" class="card-img-top" alt="Choosing a method for generating surrogate data for inference">
+          <img src="../_static/tutorials/08_methods_for_generating_surrogates.png" class="card-img-top" alt="Generating surrogate data for inference">
           <div class="card-body">
-            <h5 class="card-title">Choosing a method for generating surrogate data for inference</h5>
-            <p class="card-text">See notebook for details.</p>
+            <h5 class="card-title">Generating surrogate data for inference</h5>
+            <p class="card-text">There are many ways to generate surrogate data for inference. Here we introduce and compare several methods.</p>
           </div>
         </div>
       </div>

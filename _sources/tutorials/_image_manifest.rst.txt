@@ -25,7 +25,7 @@
    .. image:: /_images/07_association_with_behavioural_variable.png
       :alt: preload
 
-   .. image:: /_images/default.png
+   .. image:: /_images/08_methods_for_generating_surrogates.png
       :alt: preload
 
    </div>
