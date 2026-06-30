@@ -421,36 +421,22 @@
                   
   <section id="Example-datasets">
 <h1>Example datasets<a class="headerlink" href="#Example-datasets" title="Link to this heading">#</a></h1>
-<p>All example datasets are available in the <code class="docutils literal notranslate"><span class="pre">pyriodic.datasets</span></code> module. To download a dataset, simply call the corresponding data_path function. All fetchers will check the default download location first to see if the dataset is already on your computer, and only download it if necessary. The default download location is also configurable; see the documentation of any of the data_path functions for more information.</p>
+<p>All example datasets are available in the <code class="docutils literal notranslate"><span class="pre">pyriodic.datasets</span></code> module. To download a dataset, simply call the corresponding data_path function. The default download location is checked first to see if the dataset is already on the computer, and only download it if necessary.</p>
 <section id="Sample">
 <h2>Sample<a class="headerlink" href="#Sample" title="Link to this heading">#</a></h2>
-<p>Currently, only one dataset is available.</p>
-<ul class="simple">
-<li><p>Describe task briefly</p></li>
-<li><p>Give infomation about the dataset, e.g. number of samples, which biopack system, which respiration belt…</p></li>
-</ul>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+<p>Currently, only one dataset is available. It contains the data from a single participant performing a continuous two-choice tactile discrimination task.</p>
+<p>Each trial consisted of a sequence of four electrical pulses. The first three pulses were delivered simultaneously to both the index and middle fingers of the non-dominant hand at a salient intensity, for which the intensity is calibrated in collaboration with the participant to ensure that it is clearly perceptible but not painful. The fourth pulse, a near-threshold stimulus, is delivered to either the index or the middle finger. An adaptive QUEST staircase procedure runs throughout the
+experiment to adjust the intensity of the near-threshold pulses, targeting ~75% detection accuracy. The staircase was reset multiple times during the experiment to introduce additional variability in target intensity. The participant was instructed to indicate which finger received this target stimulus before the onset of the next sequence.</p>
+<p>Trials were grouped into blocks in which the interstimulus interval (ISI) is fixed. Within a block, each trial begins immediately after the ISI following the fourth pulse of the previous trial, creating a continuous stimulation stream.</p>
+<p>Respiration was recorded using a BIOPAC MP150 system and AcqKnowledge software with a respiratory transducer placed on the chest.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span> <span class="c1"># Returns the default download location for the sample dataset</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">pyriodic.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">sample</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pyriodic.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">sample</span>
 <span class="n">path</span> <span class="o">=</span> <span class="n">sample</span><span class="o">.</span><span class="n">data_path</span><span class="p">()</span>  <span class="c1"># Returns the default download location for the sample dataset</span>
 </pre></div>
 </div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area stderr docutils container">
-<div class="highlight"><pre>
-/Users/au661930/Library/CloudStorage/OneDrive-Aarhusuniversitet/Dokumenter/projects/_BehaviouralBreathing/code/AnalysisBreathingBehaviour/BreathingBehaviourVenv/lib/python3.13/site-packages/tqdm/auto.py:21: TqdmWarning: IProgress not found. Please update jupyter and ipywidgets. See https://ipywidgets.readthedocs.io/en/stable/user_install.html
-  from .autonotebook import tqdm as notebook_tqdm
-Downloading data from &#39;https://osf.io/download/pby59/&#39; to file &#39;/Users/au661930/.pyriodic/datasets/sample/sample_data.pkl&#39;.
-100%|█████████████████████████████████████| 23.2M/23.2M [00:00&lt;00:00, 56.5GB/s]
-SHA256 hash of downloaded file: 8c27441c7a0369df200aa12e45ff5d768b0922ce5e672d12340b13be45e241ee
-Use this value as the &#39;known_hash&#39; argument of &#39;pooch.retrieve&#39; to ensure that the file hasn&#39;t changed if it is downloaded again in the future.
-</pre></div></div>
 </div>
 </section>
 </section>

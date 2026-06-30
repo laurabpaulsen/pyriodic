@@ -7,7 +7,7 @@
    "source": [
     "# Example datasets\n",
     "\n",
-    "All example datasets are available in the `pyriodic.datasets` module. To download a dataset, simply call the corresponding data_path function. All fetchers will check the default download location first to see if the dataset is already on your computer, and only download it if necessary. The default download location is also configurable; see the documentation of any of the data_path functions for more information."
+    "All example datasets are available in the `pyriodic.datasets` module. To download a dataset, simply call the corresponding data_path function. The default download location is checked first to see if the dataset is already on the computer, and only download it if necessary. "
    ]
   },
   {
@@ -17,33 +17,23 @@
    "source": [
     "## Sample\n",
     "\n",
-    "Currently, only one dataset is available.\n",
+    "Currently, only one dataset is available. It contains the data from a single participant performing a continuous two-choice tactile discrimination task.\n",
     "\n",
-    "* Describe task briefly\n",
-    "* Give infomation about the dataset, e.g. number of samples, which biopack system, which respiration belt...\n"
+    "Each trial consisted of a sequence of four electrical pulses. The first three pulses were delivered simultaneously to both the index and middle fingers of the non-dominant hand at a salient intensity, for which the intensity is calibrated in collaboration with the participant to ensure that it is clearly perceptible but not painful. The fourth pulse, a near-threshold stimulus, is delivered to either the index or the middle finger. An adaptive QUEST staircase procedure runs throughout the experiment to adjust the intensity of the near-threshold pulses, targeting ~75% detection accuracy. \n",
+    "The staircase was reset multiple times during the experiment to introduce additional variability in target intensity. The participant was instructed to indicate which finger received this target stimulus before the onset of the next sequence. \n",
+    "\n",
+    "Trials were grouped into blocks in which the interstimulus interval (ISI) is fixed. Within a block, each trial begins immediately after the ISI following the fourth pulse of the previous trial, creating a continuous stimulation stream. \n",
+    "\n",
+    "Respiration was recorded using a BIOPAC MP150 system and AcqKnowledge software with a respiratory transducer placed on the chest."
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": 1,
+   "execution_count": 2,
    "id": "62ca3269",
    "metadata": {},
-   "outputs": [
-    {
-     "name": "stderr",
-     "output_type": "stream",
-     "text": [
-      "/Users/au661930/Library/CloudStorage/OneDrive-Aarhusuniversitet/Dokumenter/projects/_BehaviouralBreathing/code/AnalysisBreathingBehaviour/BreathingBehaviourVenv/lib/python3.13/site-packages/tqdm/auto.py:21: TqdmWarning: IProgress not found. Please update jupyter and ipywidgets. See https://ipywidgets.readthedocs.io/en/stable/user_install.html\n",
-      "  from .autonotebook import tqdm as notebook_tqdm\n",
-      "Downloading data from 'https://osf.io/download/pby59/' to file '/Users/au661930/.pyriodic/datasets/sample/sample_data.pkl'.\n",
-      "100%|█████████████████████████████████████| 23.2M/23.2M [00:00<00:00, 56.5GB/s]\n",
-      "SHA256 hash of downloaded file: 8c27441c7a0369df200aa12e45ff5d768b0922ce5e672d12340b13be45e241ee\n",
-      "Use this value as the 'known_hash' argument of 'pooch.retrieve' to ensure that the file hasn't changed if it is downloaded again in the future.\n"
-     ]
-    }
-   ],
+   "outputs": [],
    "source": [
-    " # Returns the default download location for the sample dataset\n",
     "from pyriodic.datasets import sample\n",
     "path = sample.data_path()  # Returns the default download location for the sample dataset"
    ]
