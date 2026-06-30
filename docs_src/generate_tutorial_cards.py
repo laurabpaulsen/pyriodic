@@ -43,6 +43,16 @@ def extract_first_image(nb):
                 return base64.b64decode(image_data)
     return None
 
+def extract_last_image(nb):
+    for cell in reversed(nb.cells):
+        if cell.cell_type != "code":
+            continue
+        for output in reversed(cell.get("outputs", [])):
+            if "data" in output and "image/png" in output["data"]:
+                image_data = output["data"]["image/png"]
+                return base64.b64decode(image_data)
+    return None
+
 def extract_title_and_desc(nb):
     for cell in nb.cells:
         if cell.cell_type == "markdown":
@@ -73,6 +83,7 @@ def main():
     image_files_used = []
 
     for fname in sorted(TUTORIALS_DIR.glob("*.ipynb")):
+        print(f"Processing notebook: {fname}")
         if fname.name.startswith("index"):
             continue
         if "DRAFT" in fname.name:
@@ -85,7 +96,11 @@ def main():
 
         # Image extraction
         image_file = f"{base}.png"
-        image_data = extract_first_image(nb)
+        if fname.name == "08_methods_for_generating_surrogates.ipynb":
+            print(f"Extracting last image for {fname}")
+            image_data = extract_last_image(nb)
+        else:
+            image_data = extract_first_image(nb)
         image_path = STATIC_IMG_DIR / image_file
 
         if image_data:
