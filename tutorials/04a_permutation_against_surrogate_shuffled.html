@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Single-level analysis &#8212; pyriodic 0.0.1 documentation</title>
+    <title>Permutation test between observed samples and surrogate samples (peak-to-peak shuffled) &#8212; pyriodic 0.0.1 documentation</title>
   
   
   
@@ -229,6 +229,10 @@
   
 
   
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
 </div>
 
     </header>
@@ -344,7 +348,7 @@
 <li class="toctree-l1"><a class="reference internal" href="01_intro.html">Overview of respiration data preprocessing and analysis</a></li>
 <li class="toctree-l1"><a class="reference internal" href="02_phase_extraction.html">Methods for phase extraction from respiration data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="03_descriptive_stats.html">Descriptive statistics for circular data</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Single-level analysis</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Permutation test between observed samples and surrogate samples (peak-to-peak shuffled)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="05_permutation_two_samples.html">Two sample permutation test of respiratory phase angles</a></li>
 <li class="toctree-l1"><a class="reference internal" href="05_permutation_two_samples_grouplevel.html">Two sample permutation test of respiratory phase angles at the group level</a></li>
 <li class="toctree-l1"><a class="reference internal" href="07_association_with_behavioural_variable.html">Test association with behavioural variable such as reaction time</a></li>
@@ -393,7 +397,7 @@
     
     <li class="breadcrumb-item"><a href="index.html" class="nav-link">Tutorials</a></li>
     
-    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Single-level analysis</span></li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Permutation test between observed samples and surrogate samples (peak-to-peak shuffled)</span></li>
   </ul>
 </nav>
 </div>
@@ -410,8 +414,11 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+  <section id="Permutation-test-between-observed-samples-and-surrogate-samples-(peak-to-peak-shuffled)">
+<h1>Permutation test between observed samples and surrogate samples (peak-to-peak shuffled)<a class="headerlink" href="#Permutation-test-between-observed-samples-and-surrogate-samples-(peak-to-peak-shuffled)" title="Link to this heading">#</a></h1>
+<p>In this tutorial, we will perform a permutation test between observed samples and surrogate samples (peak-to-peak shuffled) to assess whether the observed samples are significantly different from what would be expected by chance.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pickle</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pkl</span>
@@ -419,17 +426,18 @@
 <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">pyriodic</span><span class="w"> </span><span class="kn">import</span> <span class="n">Circular</span><span class="p">,</span> <span class="n">CircPlot</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pyriodic.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">sample</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pyriodic.preproc</span><span class="w"> </span><span class="kn">import</span> <span class="n">RawSignal</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pyriodic.phase_events</span><span class="w"> </span><span class="kn">import</span> <span class="n">create_phase_events</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">pyriodic.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">sample</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pyriodic.surrogate</span><span class="w"> </span><span class="kn">import</span> <span class="n">surrogate_shuffle_breath_cycles</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pyriodic.permutation</span><span class="w"> </span><span class="kn">import</span> <span class="n">permutation_test_against_surrogate</span>
 </pre></div>
 </div>
 </div>
-<section id="Single-level-analysis">
-<h1>Single-level analysis<a class="headerlink" href="#Single-level-analysis" title="Link to this heading">#</a></h1>
+<section id="Load-the-sample-dataset">
+<h2>Load the sample dataset<a class="headerlink" href="#Load-the-sample-dataset" title="Link to this heading">#</a></h2>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[38]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">path</span> <span class="o">=</span> <span class="n">sample</span><span class="o">.</span><span class="n">data_path</span><span class="p">()</span>
@@ -439,11 +447,12 @@
 
 <span class="n">behav_data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;behav_data&quot;</span><span class="p">]</span>
 <span class="n">resp_ts</span><span class="p">,</span> <span class="n">sfreq</span><span class="p">,</span> <span class="n">event_samples</span><span class="p">,</span> <span class="n">event_ids</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;resp_ts&quot;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;sfreq&quot;</span><span class="p">],</span> <span class="n">behav_data</span><span class="p">[</span><span class="s2">&quot;event_samples&quot;</span><span class="p">],</span> <span class="n">behav_data</span><span class="p">[</span><span class="s2">&quot;event_ids&quot;</span><span class="p">],</span> <span class="n">behav_data</span><span class="p">[</span><span class="s2">&quot;event_type&quot;</span><span class="p">]</span>
-<br/></pre></div>
+</pre></div>
 </div>
 </div>
+<p>We crop the data to the beginning of the experiment to make the processing time shorter.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[39]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">start_sample</span> <span class="o">=</span> <span class="n">event_samples</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1000</span>  <span class="c1"># start 1000 samples before the first event</span>
@@ -451,33 +460,35 @@
 <span class="c1"># subtract start sample from events (the first column)</span>
 <span class="n">event_samples</span> <span class="o">-=</span> <span class="n">start_sample</span>
 <span class="n">resp_ts</span> <span class="o">=</span> <span class="n">resp_ts</span><span class="p">[</span><span class="n">start_sample</span><span class="p">:]</span>
+</pre></div>
+</div>
+</div>
+<p>Next, the data is filtered, smoothed, and z-scored to prepare it for analysis.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># initialise RawSignal object</span>
+<span class="n">raw</span> <span class="o">=</span> <span class="n">RawSignal</span><span class="p">(</span><span class="n">resp_ts</span><span class="p">,</span> <span class="n">fs</span><span class="o">=</span><span class="n">sfreq</span><span class="p">)</span>
+<span class="n">raw</span><span class="o">.</span><span class="n">filter_bandpass</span><span class="p">(</span><span class="n">low</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+<span class="n">raw</span><span class="o">.</span><span class="n">smoothing</span><span class="p">(</span><span class="n">window_size</span><span class="o">=</span><span class="mi">500</span><span class="p">)</span>
+<span class="n">raw</span><span class="o">.</span><span class="n">zscore</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<p>We extract the phase angles and identify the peaks and troughs of the signal using a two-point method. The <code class="docutils literal notranslate"><span class="pre">create_phase_events</span></code> function is then used to create phase events based on the extracted phase angles and the target event samples.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">PA</span><span class="p">,</span> <span class="n">peaks</span><span class="p">,</span> <span class="n">troughs</span> <span class="o">=</span> <span class="n">raw</span><span class="o">.</span><span class="n">phase_twopoint</span><span class="p">(</span><span class="n">prominence</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
 
+<span class="c1"># get the samples at which the target events occur</span>
 <span class="n">target_event_samples</span> <span class="o">=</span> <span class="p">[</span>
     <span class="n">samp</span> <span class="k">for</span> <span class="n">samp</span><span class="p">,</span> <span class="n">label</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">event_samples</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span> <span class="k">if</span> <span class="s2">&quot;target&quot;</span> <span class="ow">in</span> <span class="n">label</span>
 <span class="p">]</span>
 
-<span class="c1"># initialise RawSignal object</span>
-<span class="n">raw</span> <span class="o">=</span> <span class="n">RawSignal</span><span class="p">(</span><span class="n">resp_ts</span><span class="p">,</span> <span class="n">fs</span><span class="o">=</span><span class="n">sfreq</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[40]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">raw</span><span class="o">.</span><span class="n">filter_bandpass</span><span class="p">(</span><span class="n">low</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
-<span class="n">raw</span><span class="o">.</span><span class="n">smoothing</span><span class="p">(</span><span class="n">window_size</span><span class="o">=</span><span class="mi">500</span><span class="p">)</span>
-<span class="n">raw</span><span class="o">.</span><span class="n">zscore</span><span class="p">()</span>
-
-<span class="n">PA</span><span class="p">,</span> <span class="n">peaks</span><span class="p">,</span> <span class="n">troughs</span> <span class="o">=</span> <span class="n">raw</span><span class="o">.</span><span class="n">phase_twopoint</span><span class="p">(</span><span class="n">prominence</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[41]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">circ</span> <span class="o">=</span> <span class="n">create_phase_events</span><span class="p">(</span>
+<span class="n">circ</span> <span class="o">=</span> <span class="n">create_phase_events</span><span class="p">(</span>
     <span class="n">PA</span><span class="p">,</span> <span class="n">events</span><span class="o">=</span><span class="n">target_event_samples</span>
 <span class="p">)</span>
 </pre></div>
@@ -491,11 +502,12 @@
 Rejected 0 out of 416 events (0.0%)
 </pre></div></div>
 </div>
+<p>Surrogate samples are generated by shuffling the peak-to-peak intervals of the observed samples. This creates a null distribution of phase angles that can be used to assess the significance of the observed samples.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[42]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">surr_samples</span> <span class="o">=</span> <span class="n">surrogate_shuffle_breath_cyclehs</span><span class="p">(</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">surr_samples</span> <span class="o">=</span> <span class="n">surrogate_shuffle_breath_cycles</span><span class="p">(</span>
     <span class="n">PA</span><span class="p">,</span> <span class="n">target_event_samples</span><span class="p">,</span>
     <span class="n">n_surrogate</span><span class="o">=</span><span class="mi">1000</span>
 <span class="p">)</span>
@@ -507,7 +519,7 @@ Rejected 0 out of 416 events (0.0%)
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-100%|██████████| 1000/1000 [00:24&lt;00:00, 41.22it/s]
+100%|██████████| 1000/1000 [00:29&lt;00:00, 33.58it/s]
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -516,11 +528,10 @@ Rejected 0 out of 416 events (0.0%)
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 Generated 1000 surrogate time series by shuffling breathing cycles.
-Surrogate time series shape: (1000, 2758141)
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[43]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Run permutation test</span>
@@ -538,12 +549,12 @@ Surrogate time series shape: (1000, 2758141)
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-p val: 0.000999000999000999, observed stat: 779464.500, mean null stat: 499991.018
+p val: 0.000999000999000999, observed stat: 772578.500, mean null stat: 499983.753
 </pre></div></div>
 </div>
 <p>Let’s visually compare the observed phase angles of the target stimuli to a null distribution of phase angles drawn from the full respiratory cycle by plotting the mean resultant vector length and the mean angle for both the observed target phase angles and a sample of null phase angles. Note that this is not the statistical test, but rather a visualisation of the data.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[44]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># make a circular object with the null_samples for plotting</span>
@@ -567,9 +578,10 @@ p val: 0.000999000999000999, observed stat: 779464.500, mean null stat: 499991.0
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/tutorials_04a_permutation_against_surrogate_shuffled_9_0.png" src="../_images/tutorials_04a_permutation_against_surrogate_shuffled_9_0.png" />
+<img alt="../_images/tutorials_04a_permutation_against_surrogate_shuffled_14_0.png" src="../_images/tutorials_04a_permutation_against_surrogate_shuffled_14_0.png" />
 </div>
 </div>
+</section>
 </section>
 
 
@@ -582,6 +594,24 @@ p val: 0.000999000999000999, observed stat: 779464.500, mean null stat: 499991.0
             </div>
             
             
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Load-the-sample-dataset">Load the sample dataset</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>
