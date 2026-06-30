@@ -68,7 +68,27 @@ def permutation_test_against_surrogate(
     observed : np.ndarray
         The observed circular phase angles (in radians).
 
-    n_null : int, default=1000
+    surrogate_samples : np.ndarray
+        A 2D array of surrogate samples, where each row is a surrogate sample of circular phase angles (in radians).
+
+    n_permutations : int, default=1000
+        The number of permutations to perform for the permutation test.
+    stat_fun : Callable, default=watson_u2
+        A function that computes a test statistic between two samples of circular data. 
+    perm_stat_fun : Callable, default=mannwhitneyu
+        A function that computes a test statistic between two groups of test statistics (e.g., Mann-Whitney U test).
+    alternative : {"greater", "less", "two-sided"}, default="greater"
+        The alternative hypothesis to test.
+    rng : np.random.Generator, optional
+        A NumPy random number generator for reproducibility. If None, a new generator is created.
+    n_bins : int, default=30
+        The number of bins to use when computing the test statistic (if applicable).
+    verbose : bool, default=True
+        If True, prints the observed statistic and p-value.
+    return_obs_and_surr_stats : bool, default=False
+        If True, returns the observed-vs-surrogate and surrogate-vs-surrogate test statistics
+    return_perm_stats : bool, default=False
+        If True, returns the permutation test statistics.   
     """
     if rng is None:
         rng = np.random.default_rng()
