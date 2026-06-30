@@ -161,6 +161,13 @@
   </a>
 </li>
 
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../datasets/index.html">
+    Example datasets
+  </a>
+</li>
+
   </ul>
 </nav></div>
       
@@ -282,6 +289,13 @@
 <li class="nav-item ">
   <a class="nav-link nav-internal" href="../contributing/index.html">
     Contributing to Pyriodic
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../datasets/index.html">
+    Example datasets
   </a>
 </li>
 
@@ -522,6 +536,24 @@ Values should be in the range appropriate to the specified <cite>unit</cite>.</p
 </dl>
 </dd></dl>
 
+</dd></dl>
+
+</section>
+<section id="module-pyriodic.datasets">
+<span id="datasets"></span><h2>datasets<a class="headerlink" href="#module-pyriodic.datasets" title="Link to this heading">#</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="pyriodic.datasets.fetch_dataset">
+<span class="sig-prename descclassname"><span class="pre">pyriodic.datasets.</span></span><span class="sig-name descname"><span class="pre">fetch_dataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">destination</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">url</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fname</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force_update</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyriodic.datasets.fetch_dataset" title="Link to this definition">#</a></dt>
+<dd><p>Download and prepare a dataset using pooch.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>) – Dataset identifier.</p></li>
+<li><p><strong>destination</strong> (<em>Path</em>) – Where the dataset should live (already resolved by caller).</p></li>
+<li><p><strong>force_update</strong> (<em>bool</em>) – If True, re-download even if cached.</p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 </section>
@@ -1331,6 +1363,10 @@ Each should be 1D array of same length as <cite>data</cite>.</p></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.circular.Circular.r"><code class="docutils literal notranslate"><span class="pre">Circular.r()</span></code></a></li>
 </ul>
 </li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-pyriodic.datasets">datasets</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyriodic.datasets.fetch_dataset"><code class="docutils literal notranslate"><span class="pre">fetch_dataset()</span></code></a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-pyriodic.density">density</a><ul class="nav section-nav flex-column">

@@ -45,10 +45,11 @@
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'dataset/dataset_info';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'datasets/dataset_info';</script>
     <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Example datasets" href="index.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="" />
@@ -157,6 +158,13 @@
 <li class="nav-item ">
   <a class="nav-link nav-internal" href="../contributing/index.html">
     Contributing to Pyriodic
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="index.html">
+    Example datasets
   </a>
 </li>
 
@@ -284,6 +292,13 @@
   </a>
 </li>
 
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="index.html">
+    Example datasets
+  </a>
+</li>
+
   </ul>
 </nav></div>
           
@@ -342,7 +357,10 @@
 <nav class="bd-docs-nav bd-links"
      aria-label="Section Navigation">
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
-  <div class="bd-toc-item navbar-nav"></div>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Example datasets</a></li>
+</ul>
+</div>
 </nav></div>
     </div>
   
@@ -381,6 +399,9 @@
         <i class="fa-solid fa-home"></i>
       </a>
     </li>
+    
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">Example datasets</a></li>
+    
     <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Example datasets</span></li>
   </ul>
 </nav>
@@ -400,12 +421,7 @@
                   
   <section id="Example-datasets">
 <h1>Example datasets<a class="headerlink" href="#Example-datasets" title="Link to this heading">#</a></h1>
-<p>All example datasets are available in the <code class="docutils literal notranslate"><span class="pre">pyriodic.datasets</span></code> module. To download a dataset, simply call the corresponding data_path function. For example, to download the sample dataset, run:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pyriodic.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">sample</span>
-<span class="n">path</span> <span class="o">=</span> <span class="n">sample</span><span class="o">.</span><span class="n">data_path</span><span class="p">()</span>  <span class="c1"># Returns the default download location for the sample dataset</span>
-</pre></div>
-</div>
-<p>All fetchers will check the default download location first to see if the dataset is already on your computer, and only download it if necessary. The default download location is also configurable; see the documentation of any of the data_path functions for more information.</p>
+<p>All example datasets are available in the <code class="docutils literal notranslate"><span class="pre">pyriodic.datasets</span></code> module. To download a dataset, simply call the corresponding data_path function. All fetchers will check the default download location first to see if the dataset is already on your computer, and only download it if necessary. The default download location is also configurable; see the documentation of any of the data_path functions for more information.</p>
 <section id="Sample">
 <h2>Sample<a class="headerlink" href="#Sample" title="Link to this heading">#</a></h2>
 <p>Currently, only one dataset is available.</p>
