@@ -7,16 +7,28 @@
    .. image:: /_images/01_intro.png
       :alt: preload
 
+   .. image:: /_images/02_phase_extraction.png
+      :alt: preload
+
+   .. image:: /_images/03_descriptive_stats.png
+      :alt: preload
+
+   .. image:: /_images/04a_permutation_against_surrogate_shuffled.png
+      :alt: preload
+
+   .. image:: /_images/05_permutation_two_samples.png
+      :alt: preload
+
    .. image:: /_images/default.png
       :alt: preload
 
-   .. image:: /_images/03_why_circular_stats.png
-      :alt: preload
-
-   .. image:: /_images/04_permutation_against_null.png
+   .. image:: /_images/07_association_with_behavioural_variable.png
       :alt: preload
 
    .. image:: /_images/default.png
+      :alt: preload
+
+   .. image:: /_images/IAAFT_draft.png
       :alt: preload
 
    </div>
