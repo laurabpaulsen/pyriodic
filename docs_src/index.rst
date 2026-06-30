@@ -15,3 +15,4 @@ Check out the tutorials to get started, or jump to the API reference.
    tutorials/index
    api/index
    contributing/index
+   datasets/index
