@@ -25,7 +25,6 @@ def _format_surrogate_output(ts, events=None, return_ts=False):
     tuple(ndarray, ndarray)
         (samples, full_ts) if return_ts=True and events is not None.
     """
-    print(f"Surrogate time series shape: {ts.shape}")
     
     if events is None:
         return ts
@@ -277,8 +276,6 @@ def extract_phase_angles_surrogate_ts(
         phase_angles[i] = phase[events]
         if return_phase_ts:
             phase_ts[i,:] = phase
-            print(f"Surrogate {i+1}/{surrogate_ts.shape[0]}: Extracted phase angles and phase time series.")
-            print(f"Phase angles shape: {phase_angles.shape}, Phase time series: {phase_ts}")
 
     if return_phase_ts:
         return phase_angles, phase_ts
