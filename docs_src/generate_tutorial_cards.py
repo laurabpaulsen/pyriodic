@@ -75,6 +75,9 @@ def main():
     for fname in sorted(TUTORIALS_DIR.glob("*.ipynb")):
         if fname.name.startswith("index"):
             continue
+        if "DRAFT" in fname.name:
+            print(f"⚠️ Skipping draft notebook: {fname}")
+            continue
 
         nb = nbformat.read(fname, as_version=4)
         base = fname.stem
