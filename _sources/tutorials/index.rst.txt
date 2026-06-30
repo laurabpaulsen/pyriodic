@@ -20,7 +20,7 @@ These tutorials walk you through using **Pyriodic** for circular data analysis, 
       <div class="col-md-4">
         <div class="card shadow-sm mb-4">
           <a href="02_phase_extraction.html" class="stretched-link"></a>
-          <img src="../_static/tutorials/default.png" class="card-img-top" alt="Methods for phase extraction from respiration data">
+          <img src="../_static/tutorials/02_phase_extraction.png" class="card-img-top" alt="Methods for phase extraction from respiration data">
           <div class="card-body">
             <h5 class="card-title">Methods for phase extraction from respiration data</h5>
             <p class="card-text">See notebook for details.</p>
@@ -63,11 +63,11 @@ These tutorials walk you through using **Pyriodic** for circular data analysis, 
 
       <div class="col-md-4">
         <div class="card shadow-sm mb-4">
-          <a href="06_why_circular_stats.html" class="stretched-link"></a>
-          <img src="../_static/tutorials/06_why_circular_stats.png" class="card-img-top" alt="Why circular statistics matter - the case of respiratory signals">
+          <a href="05_permutation_two_samples_grouplevel.html" class="stretched-link"></a>
+          <img src="../_static/tutorials/default.png" class="card-img-top" alt="Two sample permutation test of respiratory phase angles at the group level">
           <div class="card-body">
-            <h5 class="card-title">Why circular statistics matter - the case of respiratory signals</h5>
-            <p class="card-text">See notebook for details.</p>
+            <h5 class="card-title">Two sample permutation test of respiratory phase angles at the group level</h5>
+            <p class="card-text">This notebook runs permutation tests to compare two samples of respiratory phase angles. This is useful when you want to compare the phase angles of two different conditions or groups.</p>
           </div>
         </div>
       </div>
@@ -86,9 +86,9 @@ These tutorials walk you through using **Pyriodic** for circular data analysis, 
       <div class="col-md-4">
         <div class="card shadow-sm mb-4">
           <a href="08_methods_for_generating_surrogates.html" class="stretched-link"></a>
-          <img src="../_static/tutorials/default.png" class="card-img-top" alt="Untitled">
+          <img src="../_static/tutorials/default.png" class="card-img-top" alt="Choosing a method for generating surrogate data for inference">
           <div class="card-body">
-            <h5 class="card-title">Untitled</h5>
+            <h5 class="card-title">Choosing a method for generating surrogate data for inference</h5>
             <p class="card-text">See notebook for details.</p>
           </div>
         </div>
@@ -106,6 +106,6 @@ These tutorials walk you through using **Pyriodic** for circular data analysis, 
    03_descriptive_stats
    04a_permutation_against_surrogate_shuffled
    05_permutation_two_samples
-   06_why_circular_stats
+   05_permutation_two_samples_grouplevel
    07_association_with_behavioural_variable
    08_methods_for_generating_surrogates

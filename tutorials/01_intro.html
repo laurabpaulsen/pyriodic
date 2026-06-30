@@ -27,17 +27,17 @@
   </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=0790524f97105ba85085" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=0790524f97105ba85085" rel="stylesheet" />
+  <link href="../_static/styles/theme.css?digest=a95f357e85573c9b56d5" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=a95f357e85573c9b56d5" rel="stylesheet" />
 
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="../_static/nbsphinx-code-cells.css?v=2aa19091" />
   
   <!-- So that users can add custom icons -->
-  <script defer src="../_static/scripts/fontawesome.js?digest=0790524f97105ba85085"></script>
+  <script defer src="../_static/scripts/fontawesome.js?digest=a95f357e85573c9b56d5"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=0790524f97105ba85085" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=0790524f97105ba85085" />
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=a95f357e85573c9b56d5" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=a95f357e85573c9b56d5" />
 
     <script src="../_static/documentation_options.js?v=f539c95a"></script>
     <script src="../_static/doctools.js?v=fd6eb6e6"></script>
@@ -349,10 +349,11 @@
 <li class="toctree-l1"><a class="reference internal" href="02_phase_extraction.html">Methods for phase extraction from respiration data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="03_descriptive_stats.html">Descriptive statistics for circular data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="04a_permutation_against_surrogate_shuffled.html">Single-level analysis</a></li>
-
 <li class="toctree-l1"><a class="reference internal" href="05_permutation_two_samples.html">Two sample permutation test of respiratory phase angles</a></li>
-<li class="toctree-l1"><a class="reference internal" href="06_why_circular_stats.html">Why circular statistics matter - the case of respiratory signals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05_permutation_two_samples_grouplevel.html">Two sample permutation test of respiratory phase angles at the group level</a></li>
 <li class="toctree-l1"><a class="reference internal" href="07_association_with_behavioural_variable.html">Test association with behavioural variable such as reaction time</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08_methods_for_generating_surrogates.html">Choosing a method for generating surrogate data for inference</a></li>
+
 </ul>
 </div>
 </nav></div>
@@ -416,54 +417,44 @@
   <section id="Overview-of-respiration-data-preprocessing-and-analysis">
 <h1>Overview of respiration data preprocessing and analysis<a class="headerlink" href="#Overview-of-respiration-data-preprocessing-and-analysis" title="Link to this heading">#</a></h1>
 <p>This tutorial covers a basic pipeline for preprocessing and analysis of respiration data collected during a experimental task. It introduces core <code class="docutils literal notranslate"><span class="pre">pyriodic</span></code> classes.</p>
-<p>At first, we import the necessary Python modules:</p>
+<p>First, we import the necessary Python modules:</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[52]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pickle</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pkl</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pyriodic.preproc</span><span class="w"> </span><span class="kn">import</span> <span class="n">RawSignal</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pyriodic.viz</span><span class="w"> </span><span class="kn">import</span> <span class="n">plot_phase_diagnostics</span><span class="p">,</span> <span class="n">CircPlot</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pyriodic.phase_events</span><span class="w"> </span><span class="kn">import</span> <span class="n">create_phase_events</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">pyriodic.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">sample</span>
 </pre></div>
 </div>
 </div>
 <section id="Load-in-data-and-create-RawSignal-object">
 <h2>Load in data and create <code class="docutils literal notranslate"><span class="pre">RawSignal</span></code> object<a class="headerlink" href="#Load-in-data-and-create-RawSignal-object" title="Link to this heading">#</a></h2>
 <p>The first step is to load in the respiration time series data. Together with the sampling frequency, this is used to create a <code class="docutils literal notranslate"><span class="pre">RawSignal</span></code> object. This object holds many useful methods for preprocessing the raw data.</p>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[53]:
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># load data</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">bioread</span><span class="w"> </span><span class="kn">import</span> <span class="n">read_file</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">read_file</span><span class="p">(</span><span class="s2">&quot;../../data/respiration/example.acq&quot;</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">path</span> <span class="o">=</span> <span class="n">sample</span><span class="o">.</span><span class="n">data_path</span><span class="p">()</span>
 
-<span class="c1"># extract respiration channel and sampling rate</span>
-<span class="n">sfreq</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">samples_per_second</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Sampling rate: </span><span class="si">{</span><span class="n">sfreq</span><span class="si">}</span><span class="s2"> Hz&quot;</span><span class="p">)</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">pkl</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
 
-<span class="n">t</span><span class="p">,</span> <span class="n">resp_ts</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">time_index</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">channels</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">data</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Data length: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">resp_ts</span><span class="p">)</span><span class="o">/</span><span class="n">sfreq</span><span class="o">/</span><span class="mi">60</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> minutes&quot;</span><span class="p">)</span>
+<span class="n">behav_data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;behav_data&quot;</span><span class="p">]</span>
+<span class="n">resp_ts</span><span class="p">,</span> <span class="n">sfreq</span><span class="p">,</span> <span class="n">event_samples</span><span class="p">,</span> <span class="n">event_ids</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;resp_ts&quot;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;sfreq&quot;</span><span class="p">],</span> <span class="n">behav_data</span><span class="p">[</span><span class="s2">&quot;event_samples&quot;</span><span class="p">],</span> <span class="n">behav_data</span><span class="p">[</span><span class="s2">&quot;event_ids&quot;</span><span class="p">]</span>
 
-<span class="c1"># initialise RawSignal object</span>
-<span class="n">raw</span> <span class="o">=</span> <span class="n">RawSignal</span><span class="p">(</span><span class="n">resp_ts</span><span class="p">,</span> <span class="n">fs</span><span class="o">=</span><span class="n">sfreq</span><span class="p">)</span>
-</pre></div>
+<span class="n">raw</span> <span class="o">=</span> <span class="n">RawSignal</span><span class="p">(</span><span class="n">resp_ts</span><span class="p">,</span> <span class="n">sfreq</span><span class="p">)</span>
+<br/></pre></div>
 </div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-Sampling rate: 1000.0 Hz
-Data length: 48.36 minutes
-</pre></div></div>
 </div>
 <p>The <code class="docutils literal notranslate"><span class="pre">RawSignal</span></code> object has a built-in plotting method that allows you to visualise the data. You can specify the start time and duration of the segment you want to plot. If no arguments are provided, it will plot the first 20 seconds of the signal.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[54]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">preproc_plot_kwargs</span> <span class="o">=</span> <span class="p">{</span>
@@ -476,7 +467,7 @@ Data length: 48.36 minutes
 </div>
 </div>
 <div class="nboutput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[54]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -495,7 +486,7 @@ Data length: 48.36 minutes
 <section id="Preprocessing">
 <h2>Preprocessing<a class="headerlink" href="#Preprocessing" title="Link to this heading">#</a></h2>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[55]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">raw</span><span class="o">.</span><span class="n">filter_bandpass</span><span class="p">(</span><span class="n">low</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">,</span> <span class="n">high</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
@@ -504,7 +495,7 @@ Data length: 48.36 minutes
 </div>
 </div>
 <div class="nboutput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[55]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -520,16 +511,16 @@ Data length: 48.36 minutes
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[56]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">raw</span><span class="o">.</span><span class="n">smoothing</span><span class="p">(</span><span class="n">window_size</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">raw</span><span class="o">.</span><span class="n">smoothing</span><span class="p">(</span><span class="n">window_size</span><span class="o">=</span><span class="mi">500</span><span class="p">)</span>
 <span class="n">raw</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="o">**</span><span class="n">preproc_plot_kwargs</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[56]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -545,7 +536,7 @@ Data length: 48.36 minutes
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[57]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">raw</span><span class="o">.</span><span class="n">zscore</span><span class="p">()</span>
@@ -554,7 +545,7 @@ Data length: 48.36 minutes
 </div>
 </div>
 <div class="nboutput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[57]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -571,7 +562,7 @@ Data length: 48.36 minutes
 </div>
 <p>As the data is modified in-place, the original signal is lost. If you want to keep the original signal, make a copy before applying any modifications. To see which modifications have been applied to the signal, you can print the history:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[58]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">raw</span><span class="o">.</span><span class="n">history</span>
@@ -579,13 +570,13 @@ Data length: 48.36 minutes
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[58]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 [&#39;bandpass(0.1 Hz - 1 Hz)&#39;,
- &#39;Smoothing has been applied with a window size of 50&#39;,
+ &#39;Smoothing has been applied with a window size of 500 ms&#39;,
  &#39;zscore()&#39;]
 </pre></div></div>
 </div>
@@ -595,7 +586,7 @@ Data length: 48.36 minutes
 <p>There are several ways to extract phase angles from the respiration signal. We will use the recommended two-point method, which linearly interpolates the signal from peak to trough from <span class="math notranslate nohighlight">\(0\)</span> to <span class="math notranslate nohighlight">\(\pi\)</span>. and trough to peak from <span class="math notranslate nohighlight">\(\pi\)</span> to <span class="math notranslate nohighlight">\(2\pi\)</span>.</p>
 <p>For a review of the different methods, see the <a class="reference internal" href="02_phase_extraction.html"><span class="doc">phase extraction tutorial</span></a>.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[59]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">phase</span><span class="p">,</span> <span class="n">peaks</span><span class="p">,</span> <span class="n">troughs</span> <span class="o">=</span> <span class="n">raw</span><span class="o">.</span><span class="n">phase_twopoint</span><span class="p">(</span>
@@ -606,7 +597,7 @@ Data length: 48.36 minutes
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[60]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_phase_diagnostics</span><span class="p">(</span>
@@ -629,7 +620,7 @@ Data length: 48.36 minutes
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[60]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -641,7 +632,7 @@ Data length: 48.36 minutes
 <p>Now, we will extract the phase angles corresponding to the events of interest. This will allow us to analyse the whether the respiration phase is aligned with the timing of the stimuli presented during the task.</p>
 <p>To acheive this, we first need to get the event timings. In the data used for this tutorial, the events are stored in a numpy array with <span class="math notranslate nohighlight">\(n\)</span> rows and 3 columns. The first column holds the the sample index of the event, and the third column holds the trigger value (i.e. an integer that identifes the type of event).</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[61]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">events</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;../../data/respiration/example_events.npy&quot;</span><span class="p">)</span>
@@ -665,7 +656,7 @@ Sample indices: [ 99069  99085 100557 102004 103453 104126 104911 106362 107821 
 </div>
 <p>To make it easier to understand the data, we will convert the trigger values into a list of event labels.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[62]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">event_ids</span> <span class="o">=</span> <span class="p">{</span>
@@ -694,7 +685,7 @@ Sample indices: [ 99069  99085 100557 102004 103453 104126 104911 106362 107821 
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[63]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">trigger_vals</span><span class="p">)</span>
@@ -713,7 +704,7 @@ Unique event labels: 11
 </div>
 <p>Now that we have our event labels and the phase angles, we can find the phase angles corresponding to the experimental events.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[64]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">circ</span> <span class="o">=</span> <span class="n">create_phase_events</span><span class="p">(</span>
@@ -731,12 +722,12 @@ Unique event labels: 11
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Rejected 114 out of 2053 events (5.6%)
+Rejected 147 out of 2053 events (7.2%)
 </pre></div></div>
 </div>
 <p>The <code class="docutils literal notranslate"><span class="pre">Circular</span></code> object has a plotting function, so we can visualise the phase angles at the time of the events. This will allow us to see how the phase angles are distributed across the different event types.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[65]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># find unique labels</span>
@@ -755,10 +746,14 @@ Rejected 114 out of 2053 events (5.6%)
         <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span>
         <span class="n">title</span><span class="o">=</span><span class="n">label</span>
     <span class="p">)</span>
-
     <span class="n">circplot_tmp</span><span class="o">.</span><span class="n">add_points</span><span class="p">(</span><span class="n">s</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span> <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.6</span><span class="p">)</span>
     <span class="n">circplot_tmp</span><span class="o">.</span><span class="n">add_density</span><span class="p">()</span>
     <span class="n">circplot_tmp</span><span class="o">.</span><span class="n">add_histogram</span><span class="p">(</span><span class="n">phase</span><span class="p">)</span>
+
+<span class="c1"># remove empty subplots</span>
+<span class="k">for</span> <span class="n">ax</span> <span class="ow">in</span> <span class="n">axes</span><span class="o">.</span><span class="n">flatten</span><span class="p">():</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">ax</span><span class="o">.</span><span class="n">has_data</span><span class="p">():</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">remove</span><span class="p">()</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 <br/></pre></div>
@@ -773,13 +768,13 @@ Plotting label: break/end with 3 events
 Plotting label: break/start with 3 events
 Plotting label: experiment/end with 1 events
 Plotting label: experiment/start with 1 events
-Plotting label: response/index/correct with 149 events
-Plotting label: response/index/incorrect with 40 events
-Plotting label: response/middle/correct with 144 events
+Plotting label: response/index/correct with 140 events
+Plotting label: response/index/incorrect with 41 events
+Plotting label: response/middle/correct with 143 events
 Plotting label: response/middle/incorrect with 27 events
-Plotting label: stim/salient with 1178 events
-Plotting label: target/index with 204 events
-Plotting label: target/middle with 189 events
+Plotting label: stim/salient with 1160 events
+Plotting label: target/index with 196 events
+Plotting label: target/middle with 191 events
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -834,8 +829,8 @@ Plotting label: target/middle with 189 events
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script defer src="../_static/scripts/bootstrap.js?digest=0790524f97105ba85085"></script>
-<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=0790524f97105ba85085"></script>
+  <script defer src="../_static/scripts/bootstrap.js?digest=a95f357e85573c9b56d5"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=a95f357e85573c9b56d5"></script>
 
   <footer class="bd-footer">
 <div class="bd-footer__inner bd-page-width">
@@ -869,7 +864,7 @@ Plotting label: target/middle with 189 events
         <div class="footer-item">
 <p class="theme-version">
   <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
-  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.18.0.
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.19.0.
 </p></div>
       
     </div>

@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Tutorials &#8212; pyriodic 0.0.1 documentation</title>
+    <title>Example datasets &#8212; pyriodic 0.0.1 documentation</title>
   
   
   
@@ -31,6 +31,7 @@
 <link href="../_static/styles/pydata-sphinx-theme.css?digest=a95f357e85573c9b56d5" rel="stylesheet" />
 
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/nbsphinx-code-cells.css?v=2aa19091" />
   
   <!-- So that users can add custom icons -->
   <script defer src="../_static/scripts/fontawesome.js?digest=a95f357e85573c9b56d5"></script>
@@ -42,12 +43,12 @@
     <script src="../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'tutorials/index';</script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'dataset/dataset_info';</script>
     <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Overview of respiration data preprocessing and analysis" href="01_intro.html" />
-    <link rel="prev" title="How to use Pyriodic" href="../installation/installation_guide.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="" />
@@ -139,8 +140,8 @@
 </li>
 
 
-<li class="nav-item current active">
-  <a class="nav-link nav-internal" href="#">
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../tutorials/index.html">
     Tutorials
   </a>
 </li>
@@ -226,6 +227,10 @@
   
 
   
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
 </div>
 
     </header>
@@ -259,8 +264,8 @@
 </li>
 
 
-<li class="nav-item current active">
-  <a class="nav-link nav-internal" href="#">
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../tutorials/index.html">
     Tutorials
   </a>
 </li>
@@ -337,18 +342,7 @@
 <nav class="bd-docs-nav bd-links"
      aria-label="Section Navigation">
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
-  <div class="bd-toc-item navbar-nav"><ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="01_intro.html">Overview of respiration data preprocessing and analysis</a></li>
-<li class="toctree-l1"><a class="reference internal" href="02_phase_extraction.html">Methods for phase extraction from respiration data</a></li>
-<li class="toctree-l1"><a class="reference internal" href="03_descriptive_stats.html">Descriptive statistics for circular data</a></li>
-<li class="toctree-l1"><a class="reference internal" href="04a_permutation_against_surrogate_shuffled.html">Single-level analysis</a></li>
-<li class="toctree-l1"><a class="reference internal" href="05_permutation_two_samples.html">Two sample permutation test of respiratory phase angles</a></li>
-<li class="toctree-l1"><a class="reference internal" href="05_permutation_two_samples_grouplevel.html">Two sample permutation test of respiratory phase angles at the group level</a></li>
-<li class="toctree-l1"><a class="reference internal" href="07_association_with_behavioural_variable.html">Test association with behavioural variable such as reaction time</a></li>
-<li class="toctree-l1"><a class="reference internal" href="08_methods_for_generating_surrogates.html">Choosing a method for generating surrogate data for inference</a></li>
-
-</ul>
-</div>
+  <div class="bd-toc-item navbar-nav"></div>
 </nav></div>
     </div>
   
@@ -387,7 +381,7 @@
         <i class="fa-solid fa-home"></i>
       </a>
     </li>
-    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Tutorials</span></li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Example datasets</span></li>
   </ul>
 </nav>
 </div>
@@ -404,126 +398,45 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="tutorials">
-<h1>Tutorials<a class="headerlink" href="#tutorials" title="Link to this heading">#</a></h1>
-<p>These tutorials walk you through using <strong>Pyriodic</strong> for circular data analysis, from getting started to phase diagnostics and circular statistics.</p>
-<div class="row">
-  <div class="col-md-4">
-    <div class="card shadow-sm mb-4">
-      <a href="01_intro.html" class="stretched-link"></a>
-      <img src="../_static/tutorials/01_intro.png" class="card-img-top" alt="Overview of respiration data preprocessing and analysis">
-      <div class="card-body">
-        <h5 class="card-title">Overview of respiration data preprocessing and analysis</h5>
-        <p class="card-text">This tutorial covers a basic pipeline for preprocessing and analysis of respiration data collected during a experimental task. It introduces core `pyriodic` classes.</p>
-      </div>
-    </div>
-  </div>
-
-  <div class="col-md-4">
-    <div class="card shadow-sm mb-4">
-      <a href="02_phase_extraction.html" class="stretched-link"></a>
-      <img src="../_static/tutorials/02_phase_extraction.png" class="card-img-top" alt="Methods for phase extraction from respiration data">
-      <div class="card-body">
-        <h5 class="card-title">Methods for phase extraction from respiration data</h5>
-        <p class="card-text">See notebook for details.</p>
-      </div>
-    </div>
-  </div>
-
-  <div class="col-md-4">
-    <div class="card shadow-sm mb-4">
-      <a href="03_descriptive_stats.html" class="stretched-link"></a>
-      <img src="../_static/tutorials/03_descriptive_stats.png" class="card-img-top" alt="Descriptive statistics for circular data">
-      <div class="card-body">
-        <h5 class="card-title">Descriptive statistics for circular data</h5>
-        <p class="card-text">We will explore how to compute descriptive statistics for circular data using the Pyriodic package, and illustrate why we need special methods for circular data.</p>
-      </div>
-    </div>
-  </div>
-
-  <div class="col-md-4">
-    <div class="card shadow-sm mb-4">
-      <a href="04a_permutation_against_surrogate_shuffled.html" class="stretched-link"></a>
-      <img src="../_static/tutorials/04a_permutation_against_surrogate_shuffled.png" class="card-img-top" alt="Single-level analysis">
-      <div class="card-body">
-        <h5 class="card-title">Single-level analysis</h5>
-        <p class="card-text">See notebook for details.</p>
-      </div>
-    </div>
-  </div>
-
-  <div class="col-md-4">
-    <div class="card shadow-sm mb-4">
-      <a href="05_permutation_two_samples.html" class="stretched-link"></a>
-      <img src="../_static/tutorials/05_permutation_two_samples.png" class="card-img-top" alt="Two sample permutation test of respiratory phase angles">
-      <div class="card-body">
-        <h5 class="card-title">Two sample permutation test of respiratory phase angles</h5>
-        <p class="card-text">This notebook runs permutation tests to compare two samples of respiratory phase angles. This is useful when you want to compare the phase angles of two different conditions or groups.</p>
-      </div>
-    </div>
-  </div>
-
-  <div class="col-md-4">
-    <div class="card shadow-sm mb-4">
-      <a href="05_permutation_two_samples_grouplevel.html" class="stretched-link"></a>
-      <img src="../_static/tutorials/default.png" class="card-img-top" alt="Two sample permutation test of respiratory phase angles at the group level">
-      <div class="card-body">
-        <h5 class="card-title">Two sample permutation test of respiratory phase angles at the group level</h5>
-        <p class="card-text">This notebook runs permutation tests to compare two samples of respiratory phase angles. This is useful when you want to compare the phase angles of two different conditions or groups.</p>
-      </div>
-    </div>
-  </div>
-
-  <div class="col-md-4">
-    <div class="card shadow-sm mb-4">
-      <a href="07_association_with_behavioural_variable.html" class="stretched-link"></a>
-      <img src="../_static/tutorials/07_association_with_behavioural_variable.png" class="card-img-top" alt="Test association with behavioural variable such as reaction time">
-      <div class="card-body">
-        <h5 class="card-title">Test association with behavioural variable such as reaction time</h5>
-        <p class="card-text">This notebook runs permutation tests to see whether there is a statistically significant relationship between the phase angle at which a target stimulus was presented and the response was given by the participant. The analysis is done for each participant separately, and the results are visualised in polar plots.</p>
-      </div>
-    </div>
-  </div>
-
-  <div class="col-md-4">
-    <div class="card shadow-sm mb-4">
-      <a href="08_methods_for_generating_surrogates.html" class="stretched-link"></a>
-      <img src="../_static/tutorials/default.png" class="card-img-top" alt="Choosing a method for generating surrogate data for inference">
-      <div class="card-body">
-        <h5 class="card-title">Choosing a method for generating surrogate data for inference</h5>
-        <p class="card-text">See notebook for details.</p>
-      </div>
-    </div>
-  </div>
-
-</div><div style='display:none'>
-
-.. image:: /_images/01_intro.png
-   :alt: preload
-
-.. image:: /_images/02_phase_extraction.png
-   :alt: preload
-
-.. image:: /_images/03_descriptive_stats.png
-   :alt: preload
-
-.. image:: /_images/04a_permutation_against_surrogate_shuffled.png
-   :alt: preload
-
-.. image:: /_images/05_permutation_two_samples.png
-   :alt: preload
-
-.. image:: /_images/default.png
-   :alt: preload
-
-.. image:: /_images/07_association_with_behavioural_variable.png
-   :alt: preload
-
-.. image:: /_images/default.png
-   :alt: preload
-
-</div><div class="toctree-wrapper compound">
+  <section id="Example-datasets">
+<h1>Example datasets<a class="headerlink" href="#Example-datasets" title="Link to this heading">#</a></h1>
+<p>All example datasets are available in the <code class="docutils literal notranslate"><span class="pre">pyriodic.datasets</span></code> module. To download a dataset, simply call the corresponding data_path function. For example, to download the sample dataset, run:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pyriodic.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">sample</span>
+<span class="n">path</span> <span class="o">=</span> <span class="n">sample</span><span class="o">.</span><span class="n">data_path</span><span class="p">()</span>  <span class="c1"># Returns the default download location for the sample dataset</span>
+</pre></div>
 </div>
+<p>All fetchers will check the default download location first to see if the dataset is already on your computer, and only download it if necessary. The default download location is also configurable; see the documentation of any of the data_path functions for more information.</p>
+<section id="Sample">
+<h2>Sample<a class="headerlink" href="#Sample" title="Link to this heading">#</a></h2>
+<p>Currently, only one dataset is available.</p>
+<ul class="simple">
+<li><p>Describe task briefly</p></li>
+<li><p>Give infomation about the dataset, e.g. number of samples, which biopack system, which respiration belt…</p></li>
+</ul>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span> <span class="c1"># Returns the default download location for the sample dataset</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pyriodic.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">sample</span>
+<span class="n">path</span> <span class="o">=</span> <span class="n">sample</span><span class="o">.</span><span class="n">data_path</span><span class="p">()</span>  <span class="c1"># Returns the default download location for the sample dataset</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+/Users/au661930/Library/CloudStorage/OneDrive-Aarhusuniversitet/Dokumenter/projects/_BehaviouralBreathing/code/AnalysisBreathingBehaviour/BreathingBehaviourVenv/lib/python3.13/site-packages/tqdm/auto.py:21: TqdmWarning: IProgress not found. Please update jupyter and ipywidgets. See https://ipywidgets.readthedocs.io/en/stable/user_install.html
+  from .autonotebook import tqdm as notebook_tqdm
+Downloading data from &#39;https://osf.io/download/pby59/&#39; to file &#39;/Users/au661930/.pyriodic/datasets/sample/sample_data.pkl&#39;.
+100%|█████████████████████████████████████| 23.2M/23.2M [00:00&lt;00:00, 56.5GB/s]
+SHA256 hash of downloaded file: 8c27441c7a0369df200aa12e45ff5d768b0922ce5e672d12340b13be45e241ee
+Use this value as the &#39;known_hash&#39; argument of &#39;pooch.retrieve&#39; to ensure that the file hasn&#39;t changed if it is downloaded again in the future.
+</pre></div></div>
+</div>
+</section>
 </section>
 
 
@@ -536,6 +449,24 @@
             </div>
             
             
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Sample">Sample</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>

@@ -6,10 +6,10 @@
    "metadata": {},
    "source": [
     "# How to use Pyriodic\n",
-    "Pyriodic can be installed via pip: NOT YET THIS IS JUST A TEST\n",
+    "Pyriodic can be installed via pip:\n",
     "\n",
     "```bash\n",
-    "pip install pyriodic\n",
+    "pip install python-pyriodic\n",
     "```"
    ]
   }

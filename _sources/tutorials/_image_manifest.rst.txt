@@ -7,7 +7,7 @@
    .. image:: /_images/01_intro.png
       :alt: preload
 
-   .. image:: /_images/default.png
+   .. image:: /_images/02_phase_extraction.png
       :alt: preload
 
    .. image:: /_images/03_descriptive_stats.png
@@ -19,7 +19,7 @@
    .. image:: /_images/05_permutation_two_samples.png
       :alt: preload
 
-   .. image:: /_images/06_why_circular_stats.png
+   .. image:: /_images/default.png
       :alt: preload
 
    .. image:: /_images/07_association_with_behavioural_variable.png
