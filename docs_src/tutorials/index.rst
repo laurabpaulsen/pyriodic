@@ -42,10 +42,10 @@ These tutorials walk you through using **Pyriodic** for circular data analysis, 
       <div class="col-md-4">
         <div class="card shadow-sm mb-4">
           <a href="04a_permutation_against_surrogate_shuffled.html" class="stretched-link"></a>
-          <img src="../_static/tutorials/04a_permutation_against_surrogate_shuffled.png" class="card-img-top" alt="Single-level analysis">
+          <img src="../_static/tutorials/04a_permutation_against_surrogate_shuffled.png" class="card-img-top" alt="Permutation test between observed samples and surrogate samples (peak-to-peak shuffled)">
           <div class="card-body">
-            <h5 class="card-title">Single-level analysis</h5>
-            <p class="card-text">See notebook for details.</p>
+            <h5 class="card-title">Permutation test between observed samples and surrogate samples (peak-to-peak shuffled)</h5>
+            <p class="card-text">In this tutorial, we will perform a permutation test between observed samples and surrogate samples (peak-to-peak shuffled) to assess whether the observed samples are significantly different from what would be expected by chance.</p>
           </div>
         </div>
       </div>
