@@ -52,6 +52,17 @@ These tutorials walk you through using **Pyriodic** for circular data analysis, 
 
       <div class="col-md-4">
         <div class="card shadow-sm mb-4">
+          <a href="04a_permutation_against_surrogate_shuffled_grouplevel.html" class="stretched-link"></a>
+          <img src="../_static/tutorials/04a_permutation_against_surrogate_shuffled_grouplevel.png" class="card-img-top" alt="Group-level permutation test between observed samples and surrogate samples (peak-to-peak shuffled)">
+          <div class="card-body">
+            <h5 class="card-title">Group-level permutation test between observed samples and surrogate samples (peak-to-peak shuffled)</h5>
+            <p class="card-text">In this tutorial, we will perform a permutation test between observed samples and surrogate samples (peak-to-peak shuffled) at group level to assess whether the observed samples are significantly different from what would be expected by chance.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="card shadow-sm mb-4">
           <a href="05_permutation_two_samples.html" class="stretched-link"></a>
           <img src="../_static/tutorials/05_permutation_two_samples.png" class="card-img-top" alt="Two sample permutation test of respiratory phase angles">
           <div class="card-body">
@@ -86,10 +97,10 @@ These tutorials walk you through using **Pyriodic** for circular data analysis, 
       <div class="col-md-4">
         <div class="card shadow-sm mb-4">
           <a href="08_methods_for_generating_surrogates.html" class="stretched-link"></a>
-          <img src="../_static/tutorials/default.png" class="card-img-top" alt="Choosing a method for generating surrogate data for inference">
+          <img src="../_static/tutorials/08_methods_for_generating_surrogates.png" class="card-img-top" alt="Generating surrogate data for inference">
           <div class="card-body">
-            <h5 class="card-title">Choosing a method for generating surrogate data for inference</h5>
-            <p class="card-text">See notebook for details.</p>
+            <h5 class="card-title">Generating surrogate data for inference</h5>
+            <p class="card-text">There are many ways to generate surrogate data for inference. Here we introduce and compare several methods.</p>
           </div>
         </div>
       </div>
@@ -97,9 +108,9 @@ These tutorials walk you through using **Pyriodic** for circular data analysis, 
       <div class="col-md-4">
         <div class="card shadow-sm mb-4">
           <a href="IAAFT_draft.html" class="stretched-link"></a>
-          <img src="../_static/tutorials/IAAFT_draft.png" class="card-img-top" alt="Computation times">
+          <img src="../_static/tutorials/default.png" class="card-img-top" alt="Generating IAAFT surrogates for a respiratory signal">
           <div class="card-body">
-            <h5 class="card-title">Computation times</h5>
+            <h5 class="card-title">Generating IAAFT surrogates for a respiratory signal</h5>
             <p class="card-text">See notebook for details.</p>
           </div>
         </div>
@@ -117,7 +128,7 @@ These tutorials walk you through using **Pyriodic** for circular data analysis, 
    03_descriptive_stats
    04a_permutation_against_null_timeshifted_DRAFT
    04a_permutation_against_surrogate_shuffled
-   04a_permutation_against_surrogate_shuffled_grouplevel_DRAFT
+   04a_permutation_against_surrogate_shuffled_grouplevel
    05_permutation_two_samples
    05_permutation_two_samples_grouplevel
    06_why_circular_stats_DRAFT

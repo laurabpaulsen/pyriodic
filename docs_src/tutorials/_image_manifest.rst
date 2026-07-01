@@ -16,6 +16,9 @@
    .. image:: /_images/04a_permutation_against_surrogate_shuffled.png
       :alt: preload
 
+   .. image:: /_images/04a_permutation_against_surrogate_shuffled_grouplevel.png
+      :alt: preload
+
    .. image:: /_images/05_permutation_two_samples.png
       :alt: preload
 
@@ -28,7 +31,7 @@
    .. image:: /_images/08_methods_for_generating_surrogates.png
       :alt: preload
 
-   .. image:: /_images/IAAFT_draft.png
+   .. image:: /_images/default.png
       :alt: preload
 
    </div>
