@@ -363,6 +363,7 @@
 <li class="toctree-l1"><a class="reference internal" href="02_phase_extraction.html">Methods for phase extraction from respiration data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="03_descriptive_stats.html">Descriptive statistics for circular data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="04a_permutation_against_surrogate_shuffled.html">Permutation test between observed samples and surrogate samples (peak-to-peak shuffled)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04a_permutation_against_surrogate_shuffled_grouplevel.html">Group-level permutation test between observed samples and surrogate samples (peak-to-peak shuffled)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="05_permutation_two_samples.html">Two sample permutation test of respiratory phase angles</a></li>
 <li class="toctree-l1"><a class="reference internal" href="05_permutation_two_samples_grouplevel.html">Two sample permutation test of respiratory phase angles at the group level</a></li>
 <li class="toctree-l1"><a class="reference internal" href="07_association_with_behavioural_variable.html">Test association with behavioural variable such as reaction time</a></li>
@@ -431,8 +432,8 @@
   <section id="Generating-surrogate-data-for-inference">
 <h1>Generating surrogate data for inference<a class="headerlink" href="#Generating-surrogate-data-for-inference" title="Link to this heading">#</a></h1>
 <p>There are many ways to generate surrogate data for inference. Here we introduce and compare several methods.</p>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pickle</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pkl</span>
@@ -440,7 +441,6 @@
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.gridspec</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">gridspec</span>
-
 <span class="kn">from</span><span class="w"> </span><span class="nn">tqdm</span><span class="w"> </span><span class="kn">import</span> <span class="n">tqdm</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">pyriodic.preproc</span><span class="w"> </span><span class="kn">import</span> <span class="n">RawSignal</span><span class="p">,</span> <span class="n">Pipeline</span>
@@ -448,20 +448,11 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">pyriodic.viz</span><span class="w"> </span><span class="kn">import</span> <span class="n">plot_phase_diagnostics</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">pyriodic.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">sample</span>
-<br/></pre></div>
+</pre></div>
 </div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area stderr docutils container">
-<div class="highlight"><pre>
-/Users/au661930/Library/CloudStorage/OneDrive-Aarhusuniversitet/Dokumenter/projects/_BehaviouralBreathing/code/AnalysisBreathingBehaviour/BreathingBehaviourVenv/lib/python3.13/site-packages/tqdm/auto.py:21: TqdmWarning: IProgress not found. Please update jupyter and ipywidgets. See https://ipywidgets.readthedocs.io/en/stable/user_install.html
-  from .autonotebook import tqdm as notebook_tqdm
-</pre></div></div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">preproc_pipeline</span> <span class="o">=</span> <span class="p">(</span>
@@ -474,7 +465,7 @@
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">path</span> <span class="o">=</span> <span class="n">sample</span><span class="o">.</span><span class="n">data_path</span><span class="p">()</span>
@@ -488,7 +479,7 @@
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># # only keep 4 minutes of data</span>
@@ -508,7 +499,7 @@
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">raw</span> <span class="o">=</span> <span class="n">RawSignal</span><span class="p">(</span><span class="n">resp_ts</span><span class="p">,</span> <span class="n">sfreq</span><span class="p">)</span>
@@ -520,7 +511,7 @@
 
 <span class="n">plot_phase_diagnostics</span><span class="p">(</span>
     <span class="p">{</span><span class="s2">&quot;PA&quot;</span><span class="p">:</span> <span class="n">PA</span><span class="p">},</span>
-    <span class="n">start</span> <span class="o">=</span> <span class="mi">20</span><span class="p">,</span>
+    <span class="n">start</span> <span class="o">=</span> <span class="mi">60</span><span class="p">,</span>
     <span class="n">window_duration</span> <span class="o">=</span> <span class="mi">30</span><span class="p">,</span>
     <span class="n">fs</span> <span class="o">=</span> <span class="n">raw</span><span class="o">.</span><span class="n">fs</span><span class="p">,</span>
     <span class="n">data</span> <span class="o">=</span> <span class="n">raw</span><span class="o">.</span><span class="n">ts</span><span class="p">,</span>
@@ -538,7 +529,7 @@
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -551,42 +542,36 @@
 <section id="Comparing-different-methods">
 <h1>Comparing different methods<a class="headerlink" href="#Comparing-different-methods" title="Link to this heading">#</a></h1>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">load_results</span> <span class="o">=</span> <span class="kc">False</span>
-<span class="k">if</span> <span class="n">load_results</span><span class="p">:</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;surrogates.pkl&quot;</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-        <span class="n">surrogates</span> <span class="o">=</span> <span class="n">pkl</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">surrogate_methods</span> <span class="o">=</span> <span class="p">[</span><span class="n">surrogate_iaaft</span><span class="p">,</span> <span class="n">surrogate_shuffle_breath_cycles</span><span class="p">,</span> <span class="n">surrogate_time_shifted</span><span class="p">,</span> <span class="n">surrogate_random</span><span class="p">]</span>
+<span class="n">n_surrogates</span> <span class="o">=</span> <span class="mi">200</span>
 
-<span class="k">else</span><span class="p">:</span>
-    <span class="n">surrogate_methods</span> <span class="o">=</span> <span class="p">[</span><span class="n">surrogate_iaaft</span><span class="p">,</span> <span class="n">surrogate_shuffle_breath_cycles</span><span class="p">,</span> <span class="n">surrogate_time_shifted</span><span class="p">,</span> <span class="n">surrogate_random</span><span class="p">]</span>
-    <span class="n">n_surrogates</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">surrogates</span> <span class="o">=</span> <span class="p">{}</span>
 
-    <span class="n">surrogates</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="k">for</span> <span class="n">surrogate_method</span> <span class="ow">in</span> <span class="n">surrogate_methods</span><span class="p">:</span>
+    <span class="n">method_name</span> <span class="o">=</span> <span class="n">surrogate_method</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">+</span> <span class="s2">&quot;()&quot;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Extracting phase angles from surrogate data using method: </span><span class="si">{</span><span class="n">method_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">surrogate_method</span> <span class="o">==</span> <span class="n">surrogate_iaaft</span><span class="p">:</span>
+        <span class="n">surr_ts</span> <span class="o">=</span> <span class="n">surrogate_iaaft</span><span class="p">(</span><span class="n">resp_ts</span><span class="p">,</span> <span class="n">n_surrogate</span><span class="o">=</span><span class="n">n_surrogates</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
-    <span class="k">for</span> <span class="n">surrogate_method</span> <span class="ow">in</span> <span class="n">surrogate_methods</span><span class="p">:</span>
-        <span class="n">method_name</span> <span class="o">=</span> <span class="n">surrogate_method</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">+</span> <span class="s2">&quot;()&quot;</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Extracting phase angles from surrogate data using method: </span><span class="si">{</span><span class="n">method_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">surrogate_method</span> <span class="o">==</span> <span class="n">surrogate_iaaft</span><span class="p">:</span>
-            <span class="n">surr_ts</span> <span class="o">=</span> <span class="n">surrogate_iaaft</span><span class="p">(</span><span class="n">resp_ts</span><span class="p">,</span> <span class="n">n_surrogate</span><span class="o">=</span><span class="n">n_surrogates</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-
-            <span class="n">surrogate_phase_angles</span><span class="p">,</span> <span class="n">surrogate_phase_ts</span> <span class="o">=</span> <span class="n">extract_phase_angles_surrogate_ts</span><span class="p">(</span>
-                <span class="n">surr_ts</span><span class="p">,</span>
-                <span class="n">target_event_samples</span><span class="p">,</span>
-                <span class="n">preproc_pipeline</span><span class="o">=</span><span class="n">preproc_pipeline</span><span class="p">,</span>
-                <span class="n">fs</span><span class="o">=</span><span class="n">sfreq</span><span class="p">,</span>
-                <span class="n">return_phase_ts</span><span class="o">=</span><span class="kc">True</span>
-            <span class="p">)</span>
-            <span class="n">surrogates</span><span class="p">[</span><span class="n">method_name</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">surrogate_phase_angles</span><span class="p">,</span> <span class="n">surrogate_phase_ts</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">surrogate_phase_angles</span><span class="p">,</span> <span class="n">surrogate_phase_ts</span> <span class="o">=</span> <span class="n">surrogate_method</span><span class="p">(</span>
-                <span class="n">phase_pool</span><span class="o">=</span><span class="n">PA</span><span class="p">,</span>
-                <span class="n">events</span><span class="o">=</span><span class="n">target_event_samples</span><span class="p">,</span>
-                <span class="n">return_ts</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-                <span class="n">n_surrogate</span><span class="o">=</span><span class="n">n_surrogates</span><span class="p">,</span>
-            <span class="p">)</span>
-            <span class="n">surrogates</span><span class="p">[</span><span class="n">method_name</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">surrogate_phase_angles</span><span class="p">,</span> <span class="n">surrogate_phase_ts</span><span class="p">)</span>
+        <span class="n">surrogate_phase_angles</span><span class="p">,</span> <span class="n">surrogate_phase_ts</span> <span class="o">=</span> <span class="n">extract_phase_angles_surrogate_ts</span><span class="p">(</span>
+            <span class="n">surr_ts</span><span class="p">,</span>
+            <span class="n">target_event_samples</span><span class="p">,</span>
+            <span class="n">preproc_pipeline</span><span class="o">=</span><span class="n">preproc_pipeline</span><span class="p">,</span>
+            <span class="n">fs</span><span class="o">=</span><span class="n">sfreq</span><span class="p">,</span>
+            <span class="n">return_phase_ts</span><span class="o">=</span><span class="kc">True</span>
+        <span class="p">)</span>
+        <span class="n">surrogates</span><span class="p">[</span><span class="n">method_name</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">surrogate_phase_angles</span><span class="p">,</span> <span class="n">surrogate_phase_ts</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">surrogate_phase_angles</span><span class="p">,</span> <span class="n">surrogate_phase_ts</span> <span class="o">=</span> <span class="n">surrogate_method</span><span class="p">(</span>
+            <span class="n">phase_pool</span><span class="o">=</span><span class="n">PA</span><span class="p">,</span>
+            <span class="n">events</span><span class="o">=</span><span class="n">target_event_samples</span><span class="p">,</span>
+            <span class="n">return_ts</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">n_surrogate</span><span class="o">=</span><span class="n">n_surrogates</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">surrogates</span><span class="p">[</span><span class="n">method_name</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">surrogate_phase_angles</span><span class="p">,</span> <span class="n">surrogate_phase_ts</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -598,47 +583,12 @@
 Extracting phase angles from surrogate data using method: surrogate_iaaft()
 </pre></div></div>
 </div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area stderr docutils container">
-<div class="highlight"><pre>
-Estim100%|██████████████████████████████| 100/100 [18:45&lt;00:00, 11.26s/it]
-</pre></div></div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-Extracting phase angles from surrogate data using method: surrogate_shuffle_breath_cycles()
-</pre></div></div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area stderr docutils container">
-<div class="highlight"><pre>
-100%|██████████| 100/100 [00:00&lt;00:00, 1077.11it/s]
-</pre></div></div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-Generated 100 surrogate time series by shuffling breathing cycles.
-Extracting phase angles from surrogate data using method: surrogate_time_shifted()
-Generating null samples with time shifts...
-Extracting phase angles from surrogate data using method: surrogate_random()
-</pre></div></div>
-</div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-
+Estim 50%|██████████████▊               | 99/200 [16:23&lt;19:24, 11.53s/it]
 </pre></div></div>
 </div>
 <div class="nbinput nblast docutils container">
@@ -822,11 +772,7 @@ Computing PLV for surrogate method: surrogate_random()
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># =============================================================================</span>
-<span class="c1"># Figure layout</span>
-<span class="c1"># =============================================================================</span>
-
-<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">)</span>
 
 <span class="n">n_histograms</span> <span class="o">=</span> <span class="mi">5</span>  <span class="c1"># number of surrogate histograms to plot</span>
 <span class="n">gs</span> <span class="o">=</span> <span class="n">gridspec</span><span class="o">.</span><span class="n">GridSpec</span><span class="p">(</span>
