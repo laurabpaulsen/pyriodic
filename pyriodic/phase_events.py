@@ -95,12 +95,10 @@ def create_phase_events(
     events : np.ndarray
         1D array of sample indices at which to extract phase values.
     event_labels : np.ndarray, optional
-        Labels for grouping events. If None, returns a single Circular object;
-        otherwise, returns a PhaseEvents container grouped by unique labels.
+        Labels corresponding to each event, for grouping in the Circular object. Must be the same length as `events`.
     unit : str
         Unit of the input phase time series and the desired unit for output Circular objects.
         Must be either 'radians' or 'degrees'. Internally, all computations are performed in radians.
-
     first_samp : int
         Offset to subtract from each event index to align with the phase time series
         (useful if phase_ts is a segment of a longer recording).
@@ -117,9 +115,8 @@ def create_phase_events(
 
     Returns
     -------
-    Circular or PhaseEvents
-        If event_labels is None, returns a single Circular object.
-        Otherwise, returns a PhaseEvents object containing condition-grouped Circular data.
+    Circular 
+        A Circular object containing the phase values at the specified events. 
     (optional) list[int]
         If `return_rejected` is True, returns a second value: the list of event indices that were rejected.
     """
