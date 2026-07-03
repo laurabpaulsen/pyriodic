@@ -818,8 +818,7 @@ optionally applying rejection criteria.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>phase_ts</strong> (<em>np.ndarray</em>) – 1D array of phase values (in radians), typically spanning multiple 0–2π cycles.</p></li>
 <li><p><strong>events</strong> (<em>np.ndarray</em>) – 1D array of sample indices at which to extract phase values.</p></li>
-<li><p><strong>event_labels</strong> (<em>np.ndarray</em><em>, </em><em>optional</em>) – Labels for grouping events. If None, returns a single Circular object;
-otherwise, returns a PhaseEvents container grouped by unique labels.</p></li>
+<li><p><strong>event_labels</strong> (<em>np.ndarray</em><em>, </em><em>optional</em>) – Labels corresponding to each event, for grouping in the Circular object. Must be the same length as <cite>events</cite>.</p></li>
 <li><p><strong>unit</strong> (<em>str</em>) – Unit of the input phase time series and the desired unit for output Circular objects.
 Must be either ‘radians’ or ‘degrees’. Internally, all computations are performed in radians.</p></li>
 <li><p><strong>first_samp</strong> (<em>int</em>) – Offset to subtract from each event index to align with the phase time series
@@ -834,8 +833,7 @@ Only used if <cite>rejection_method=’segment_duration_sd’</cite>. Default is
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><ul class="simple">
-<li><p><em>Circular or PhaseEvents</em> – If event_labels is None, returns a single Circular object.
-Otherwise, returns a PhaseEvents object containing condition-grouped Circular data.</p></li>
+<li><p><em>Circular</em> – A Circular object containing the phase values at the specified events.</p></li>
 <li><p><em>(optional) list[int]</em> – If <cite>return_rejected</cite> is True, returns a second value: the list of event indices that were rejected.</p></li>
 </ul>
 </p>

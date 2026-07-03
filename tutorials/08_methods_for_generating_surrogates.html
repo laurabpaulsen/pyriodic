@@ -542,7 +542,7 @@
 <section id="Comparing-different-methods">
 <h1>Comparing different methods<a class="headerlink" href="#Comparing-different-methods" title="Link to this heading">#</a></h1>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">surrogate_methods</span> <span class="o">=</span> <span class="p">[</span><span class="n">surrogate_iaaft</span><span class="p">,</span> <span class="n">surrogate_shuffle_breath_cycles</span><span class="p">,</span> <span class="n">surrogate_time_shifted</span><span class="p">,</span> <span class="n">surrogate_random</span><span class="p">]</span>
@@ -583,16 +583,58 @@
 Extracting phase angles from surrogate data using method: surrogate_iaaft()
 </pre></div></div>
 </div>
-<div class="nboutput nblast docutils container">
+<div class="nboutput docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-Estim 50%|██████████████▊               | 99/200 [16:23&lt;19:24, 11.53s/it]
+Estim100%|██████████████████████████████| 200/200 [33:05&lt;00:00,  9.93s/it]
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Extracting phase angles from surrogate data using method: surrogate_shuffle_breath_cycles()
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+100%|██████████| 200/200 [00:00&lt;00:00, 1278.01it/s]
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Generated 200 surrogate time series by shuffling breathing cycles.
+Extracting phase angles from surrogate data using method: surrogate_time_shifted()
+Generating null samples with time shifts...
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Extracting phase angles from surrogate data using method: surrogate_random()
 </pre></div></div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">circular_autocorr</span><span class="p">(</span><span class="n">phases</span><span class="p">,</span> <span class="n">lag</span><span class="p">):</span>
@@ -603,7 +645,7 @@ Estim 50%|██████████████▊               | 99/200 [
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dat_for_plot</span> <span class="o">=</span> <span class="p">{}</span>
@@ -671,7 +713,7 @@ Computing autocorrelation for surrogate method: surrogate_iaaft()
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-100%|██████████| 100/100 [01:02&lt;00:00,  1.60it/s]
+100%|██████████| 100/100 [01:58&lt;00:00,  1.18s/it]
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
@@ -687,7 +729,7 @@ Computing autocorrelation for surrogate method: surrogate_shuffle_breath_cycles(
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-100%|██████████| 100/100 [00:59&lt;00:00,  1.67it/s]
+100%|██████████| 100/100 [01:58&lt;00:00,  1.19s/it]
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
@@ -703,7 +745,7 @@ Computing autocorrelation for surrogate method: surrogate_time_shifted()
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-100%|██████████| 100/100 [00:51&lt;00:00,  1.96it/s]
+100%|██████████| 100/100 [01:41&lt;00:00,  1.02s/it]
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
@@ -719,11 +761,11 @@ Computing autocorrelation for surrogate method: surrogate_random()
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-100%|██████████| 100/100 [01:15&lt;00:00,  1.33it/s]
+100%|██████████| 100/100 [02:29&lt;00:00,  1.50s/it]
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plv_for_plot</span> <span class="o">=</span> <span class="p">{}</span>
@@ -754,7 +796,7 @@ Computing PLV for surrogate method: surrogate_random()
 </pre></div></div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">colormap</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">get_cmap</span><span class="p">(</span><span class="s2">&quot;tab10&quot;</span><span class="p">)</span>
@@ -769,7 +811,7 @@ Computing PLV for surrogate method: surrogate_random()
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">)</span>
