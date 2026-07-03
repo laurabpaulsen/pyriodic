@@ -89,7 +89,7 @@ These tutorials walk you through using **Pyriodic** for circular data analysis, 
           <img src="../_static/tutorials/07_association_with_behavioural_variable.png" class="card-img-top" alt="Test association with behavioural variable such as reaction time">
           <div class="card-body">
             <h5 class="card-title">Test association with behavioural variable such as reaction time</h5>
-            <p class="card-text">This notebook runs permutation tests to see whether there is a statistically significant relationship between the phase angle at which a target stimulus was presented and the response was given by the participant. The analysis is done for each participant separately, and the results are visualised in polar plots.</p>
+            <p class="card-text">This notebook runs permutation tests to see whether there is a statistically significant relationship between the phase angle at which a target stimulus was presented and the response was given by the participant.</p>
           </div>
         </div>
       </div>
@@ -133,6 +133,7 @@ These tutorials walk you through using **Pyriodic** for circular data analysis, 
    05_permutation_two_samples_grouplevel
    06_why_circular_stats_DRAFT
    07_association_with_behavioural_variable
+   07_association_with_behavioural_variableOLD_DRAFT
    08_methods_for_generating_surrogates
    09_physiological_parameters_DRAFT
    100_response_DRAFT
