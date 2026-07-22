@@ -435,7 +435,7 @@
 <p>To obtain a circular representation of from time series there are four different methods implemented: <code class="docutils literal notranslate"><span class="pre">phase_hilbert()</span></code>, <code class="docutils literal notranslate"><span class="pre">phase_onepoint()</span></code>, <code class="docutils literal notranslate"><span class="pre">phase_twopoint()</span></code> and <code class="docutils literal notranslate"><span class="pre">phase_threepoint()</span></code> which all have been used in previous research.</p>
 <p>Choosing between these methods has implications for both the interpretation of individual phase angles and the statistical analyses that can subsequently be performed.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
@@ -452,7 +452,7 @@
 <h2>Load sample data<a class="headerlink" href="#Load-sample-data" title="Link to this heading">#</a></h2>
 <p>To show how to use the different methods for phase extraction, we will load the sample dataset which contains respiration data and event information.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">path</span> <span class="o">=</span> <span class="n">sample</span><span class="o">.</span><span class="n">data_path</span><span class="p">()</span>
@@ -466,7 +466,7 @@
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[28]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># for quick testing, we can use a subset of the data</span>
@@ -489,7 +489,7 @@
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[29]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># initial preprocessing: bandpass filter, smoothing, and z-scoring</span>
@@ -512,7 +512,7 @@ the default peak finder function <code class="docutils literal notranslate"><spa
 <h3>Landmark-based methods<a class="headerlink" href="#Landmark-based-methods" title="Link to this heading">#</a></h3>
 <p>The <code class="docutils literal notranslate"><span class="pre">phase_onepoint()</span></code> method for extracting phase angles relies on detected peaks from the time series data. Phase is defined by linearly interpolating from <span class="math notranslate nohighlight">\(0\)</span> to <span class="math notranslate nohighlight">\(2\pi\)</span> between each peak. The peak marks the beginning of a new cycle and is assigned a phase of <span class="math notranslate nohighlight">\(0\)</span> (equivalent to <span class="math notranslate nohighlight">\(2\pi\)</span>).</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[30]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">PA_onepoint</span><span class="p">,</span> <span class="n">peaks_onepoint</span> <span class="o">=</span> <span class="n">raw</span><span class="o">.</span><span class="n">phase_onepoint</span><span class="p">(</span><span class="n">prominence</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
@@ -522,7 +522,7 @@ the default peak finder function <code class="docutils literal notranslate"><spa
 <p>The <code class="docutils literal notranslate"><span class="pre">phase_twopoint()</span></code> method uses both peaks and troughs of the signal to define the phase angles within each respiratory cycle. Troughs are detected as the minimum point between two peaks. Phase is then linearly interpolated from <span class="math notranslate nohighlight">\(0\)</span> to <span class="math notranslate nohighlight">\(\pi\)</span> between a detected peak and the following trough, and from <span class="math notranslate nohighlight">\(\pi\)</span> to <span class="math notranslate nohighlight">\(2\pi\)</span> from that trough to the next peak. This results in two fixed anchor points per cycle: the peak is assigned a phase of <span class="math notranslate nohighlight">\(0\)</span> (or <span class="math notranslate nohighlight">\(2\pi\)</span>), and the
 trough is assigned <span class="math notranslate nohighlight">\(\pi\)</span>.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[31]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">PA_twopoint</span><span class="p">,</span> <span class="n">peaks_twopoint</span><span class="p">,</span> <span class="n">troughs_twopoint</span> <span class="o">=</span> <span class="n">raw</span><span class="o">.</span><span class="n">phase_twopoint</span><span class="p">(</span><span class="n">prominence</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
@@ -530,9 +530,15 @@ trough is assigned <span class="math notranslate nohighlight">\(\pi\)</span>.</p
 </div>
 </div>
 <p>The <code class="docutils literal notranslate"><span class="pre">phase_threepoint()</span></code> method extends the two-point approach by introducing an additional anchor point per respiratory cycle. In addition to inhalation and exhalation, respiration may also include periods of breath-holding or transition phases where the signal remains relatively flat. To capture this structure more explicitly, the three-point linear interpolation detects the beginning and the end of troughs.</p>
-<p><code class="docutils literal notranslate"><span class="pre">{admonition}</span> <span class="pre">:class:</span> <span class="pre">red</span> <span class="pre">Note</span> <span class="pre">that</span> <span class="pre">this</span> <span class="pre">method</span> <span class="pre">does</span> <span class="pre">not</span> <span class="pre">work</span> <span class="pre">well</span> <span class="pre">with</span> <span class="pre">the</span> <span class="pre">sample</span> <span class="pre">data</span> <span class="pre">which</span> <span class="pre">does</span> <span class="pre">not</span> <span class="pre">have</span> <span class="pre">a</span> <span class="pre">clear</span> <span class="pre">flat</span> <span class="pre">period</span> <span class="pre">between</span> <span class="pre">exhalation</span> <span class="pre">and</span> <span class="pre">inhalation.</span> <span class="pre">Remember</span> <span class="pre">to</span> <span class="pre">plot</span> <span class="pre">the</span> <span class="pre">data</span> <span class="pre">and</span> <span class="pre">check</span> <span class="pre">that</span> <span class="pre">the</span> <span class="pre">detected</span> <span class="pre">peaks</span> <span class="pre">and</span> <span class="pre">troughs</span> <span class="pre">are</span> <span class="pre">correct</span> <span class="pre">before</span> <span class="pre">using</span> <span class="pre">this</span> <span class="pre">method.</span></code></p>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+<div style="
+    border-left: 5px solid #f0ad4e;
+    background-color: #fff8e5;
+    padding: 12px 16px;
+    border-radius: 4px;
+    margin: 1em 0;
+"><p>⚠️ Note This method does not work well with the sample data because it does not have a clear flat period between exhalation and inhalation. Always plot the data and verify that the detected peaks and troughs are correct before using this method.</p>
+</div><div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[32]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">PA_threepoint</span><span class="p">,</span> <span class="n">peaks_threepoint</span><span class="p">,</span> <span class="n">troughs_threepoint</span> <span class="o">=</span> <span class="n">raw</span><span class="o">.</span><span class="n">phase_threepoint</span><span class="p">()</span>
@@ -545,7 +551,7 @@ trough is assigned <span class="math notranslate nohighlight">\(\pi\)</span>.</p
 <p>The Hilbert transform provides an alternative way of extracting continuous phase by constructing an analytic signal from the original time series. A key advantage of this approach is that it does not rely on landmark detection, and therefore does not require the user to specify parameters for peak detection.</p>
 <p>Instead it assumes an approximately narrowband, sinusoidal signal, which is often violated in respiratory data. Therefore, phase angles may not align consistently with inhalation or exhalation across cycles or participants.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[33]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">PA_hilbert</span> <span class="o">=</span> <span class="n">raw</span><span class="o">.</span><span class="n">phase_hilbert</span><span class="p">()</span>
@@ -557,7 +563,7 @@ trough is assigned <span class="math notranslate nohighlight">\(\pi\)</span>.</p
 <h3>Comparison of methods<a class="headerlink" href="#Comparison-of-methods" title="Link to this heading">#</a></h3>
 <p>Let’s start by ccomparing the phase angle time series extracted using the different methods. The following figure shows the phase angle time series extracted using the one-point, two-point and Hilbert methods. The phase angle time series are shown for a 40 second window of data starting at 300 seconds. The peaks and troughs identified by the two-point method are also shown.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[34]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot</span> <span class="o">=</span> <span class="n">plot_phase_diagnostics</span><span class="p">(</span>
@@ -576,12 +582,12 @@ trough is assigned <span class="math notranslate nohighlight">\(\pi\)</span>.</p
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/tutorials_02_phase_extraction_17_0.png" src="../_images/tutorials_02_phase_extraction_17_0.png" />
+<img alt="../_images/tutorials_02_phase_extraction_18_0.png" src="../_images/tutorials_02_phase_extraction_18_0.png" />
 </div>
 </div>
 <p>We can also look at the distribution of phase angles extracted using the different methods. The following figure shows the distribution of phase angles extracted using the <code class="docutils literal notranslate"><span class="pre">phase_onepoint()</span></code> <code class="docutils literal notranslate"><span class="pre">phase_twopoint()</span></code> and <code class="docutils literal notranslate"><span class="pre">phase_hilbert()</span></code> methods.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[35]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># histogram of phase values</span>
@@ -612,11 +618,11 @@ trough is assigned <span class="math notranslate nohighlight">\(\pi\)</span>.</p
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/tutorials_02_phase_extraction_19_0.png" src="../_images/tutorials_02_phase_extraction_19_0.png" />
+<img alt="../_images/tutorials_02_phase_extraction_20_0.png" src="../_images/tutorials_02_phase_extraction_20_0.png" />
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[36]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># proportion of phase values in 0-pi and pi-2pi ranges</span>
