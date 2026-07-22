@@ -13,7 +13,7 @@ sys.path.insert(0, os.path.abspath('..'))  # adjust if needed
 project = 'pyriodic'
 copyright = '2025, Laura Bock Paulsen'
 author = 'Laura Bock Paulsen'
-release = '0.0.1'
+release = '0.1.1'
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
@@ -50,8 +50,5 @@ html_theme_options = {
 
 html_static_path = ['_static']
 html_extra_path = ['_static/tutorials']
-
-#html_static_path = ['source/_static']
-
 autosummary_generate = True
 
