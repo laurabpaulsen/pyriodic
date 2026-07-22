@@ -15,7 +15,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 5,
+   "execution_count": 2,
    "id": "50e1dca3",
    "metadata": {
     "execution": {
@@ -37,8 +37,17 @@
    ]
   },
   {
+   "cell_type": "markdown",
+   "id": "6ba22bcf",
+   "metadata": {},
+   "source": [
+    "## Load sample data\n",
+    "To show how to use the different methods for phase extraction, we will load the sample dataset which contains respiration data and event information. "
+   ]
+  },
+  {
    "cell_type": "code",
-   "execution_count": null,
+   "execution_count": 3,
    "id": "87813a7c",
    "metadata": {},
    "outputs": [],
@@ -54,7 +63,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": null,
+   "execution_count": 4,
    "id": "7fe65bc9",
    "metadata": {},
    "outputs": [],
@@ -65,12 +74,13 @@
     "# subtract start sample from events (the first column)\n",
     "event_samples -= start_sample\n",
     "\n",
-    "duration_samples = int(sfreq * 60 * 10)  # 5 minutes\n",
+    "duration_samples = int(sfreq * 60 * 10)  # 10 minutes\n",
     "resp_ts = resp_ts[start_sample:start_sample + duration_samples]\n",
     "\n",
     "# only keep events that are within the range of the new resp_ts\n",
-    "event_ids = event_ids[event_samples < len(resp_ts)]\n",
-    "event_samples = event_samples[event_samples < len(resp_ts)]\n",
+    "keep_idx = (event_samples >= 0) & (event_samples < len(resp_ts))\n",
+    "event_samples = event_samples[keep_idx]\n",
+    "event_ids = event_ids[keep_idx]\n",
     "\n",
     "# initialise RawSignal object\n",
     "raw = RawSignal(resp_ts, fs=sfreq)"
@@ -78,7 +88,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 8,
+   "execution_count": 5,
    "id": "b71f13e6",
    "metadata": {},
    "outputs": [],
@@ -98,7 +108,7 @@
     "\n",
     "Broadly, methods for reconstructing instantaneous phase can be divided into two categories:\n",
     "\n",
-    "1. **Landmark-based methods:**  Phase is defined relative to identifiable landmarks in the signal, such as a spike in neural oscillations or the peaks and troughs of a respiratory signal. Three such methods are implemented in the \\lstinline{Pyriodic}; `phase_onepoint()`, `phase_twopoint()` and `phase_threepoint()`. All of these methods rely on identifying peaks of time series data. As different types of data has different characteristics, the user can specify `distance` and `prominence` parameters for the default peak finder function `scipy.signal.find_peaks()`. You can also specify a custom peak finder function by providing a callable to the `peak_finder` argument.\n",
+    "1. **Landmark-based methods:**  Phase is defined relative to identifiable landmarks in the signal, such as a spike in neural oscillations or the peaks and troughs of a respiratory signal. Three such methods are implemented in pyriodic; `phase_onepoint()`, `phase_twopoint()` and `phase_threepoint()`. All of these methods rely on identifying peaks of time series data. As different types of data has different characteristics, the user can specify `distance` and `prominence` parameters for the default peak finder function `scipy.signal.find_peaks()`. You can also specify a custom peak finder function by providing a callable to the `peak_finder` argument.\n",
     "\n",
     "2. **Continuous phase estimation methods.** Rather than relying on discrete landmarks, these approaches transform the time series into a continuous complex-valued representation from which instantaneous phase can be extracted at every time point. This is implemented using the Hilbert transform through the function `phase_hilbert()`.\n",
     "\n",
@@ -106,8 +116,16 @@
    ]
   },
   {
+   "cell_type": "markdown",
+   "id": "4588b46c",
+   "metadata": {},
+   "source": [
+    "The `phase_onepoint()` method for extracting phase angles relies on detected peaks from the time series data. Phase is defined by linearly interpolating from $0$ to $2\\pi$ between each peak. The peak marks the beginning of a new cycle and is assigned a phase of $0$ (equivalent to $2\\pi$). \n"
+   ]
+  },
+  {
    "cell_type": "code",
-   "execution_count": 9,
+   "execution_count": 6,
    "id": "ac724cd1",
    "metadata": {},
    "outputs": [],
@@ -116,18 +134,38 @@
    ]
   },
   {
-   "cell_type": "code",
-   "execution_count": 10,
-   "id": "85f77abd",
+   "cell_type": "markdown",
+   "id": "dc773cdf",
    "metadata": {},
-   "outputs": [],
    "source": [
-    "PA_twopoint, peaks_twopoint, troughs_twopoint = raw.phase_twopoint(prominence=0.1)\n"
+    "The `phase_twopoint()` method uses both peaks and troughs of the signal to define the phase angles within each respiratory cycle. Troughs are detected as the minimum point between two peaks. Phase is then linearly interpolated from $0$ to $\\pi$ between a detected peak and the following trough, and from $\\pi$ to $2\\pi$ from that trough to the next peak. This results in two fixed anchor points per cycle: the peak is assigned a phase of $0$ (or $2\\pi$), and the trough is assigned $\\pi$."
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": 11,
+   "execution_count": 13,
+   "id": "85f77abd",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "PA_twopoint, peaks_twopoint, troughs_twopoint = raw.phase_twopoint(prominence=0.1)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "0180c939",
+   "metadata": {},
+   "source": [
+    "The `phase_threepoint()` method extends the two-point approach by introducing an additional anchor point per respiratory cycle. In addition to inhalation and exhalation, respiration may also include periods of breath-holding or transition phases where the signal remains relatively flat. To capture this structure more explicitly, the three-point linear interpolation detects the beginning and the end of troughs. \n",
+    "\n",
+    "{admonition}\n",
+    ":class: red\n",
+    "Note that this method does not work well with the sample data which does not have a clear flat period between exhalation and inhalation. Remember to plot the data and check that the detected peaks and troughs are correct before using this method."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 8,
    "id": "26d5e22b",
    "metadata": {},
    "outputs": [],
@@ -144,8 +182,18 @@
    ]
   },
   {
+   "cell_type": "markdown",
+   "id": "1bfa28fc",
+   "metadata": {},
+   "source": [
+    "The Hilbert transform provides an alternative way of extracting continuous phase by constructing an analytic signal from the original time series. A key advantage of this approach is that it does not rely on landmark detection, and therefore does not require the user to specify parameters for peak detection.\n",
+    "\n",
+    "Instead it assumes an approximately narrowband, sinusoidal signal, which is often violated in respiratory data. Therefore, phase angles may not align consistently with inhalation or exhalation across cycles or participants."
+   ]
+  },
+  {
    "cell_type": "code",
-   "execution_count": 12,
+   "execution_count": 9,
    "id": "8b197fd7",
    "metadata": {},
    "outputs": [],
@@ -164,7 +212,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 13,
+   "execution_count": 14,
    "id": "a483017c",
    "metadata": {},
    "outputs": [
@@ -177,22 +225,10 @@
      },
      "metadata": {},
      "output_type": "display_data"
-    },
-    {
-     "data": {
-      "text/plain": [
-       "(<Figure size 1200x1000 with 6 Axes>,\n",
-       " array([<Axes: >, <Axes: ylabel='One-point'>, <Axes: ylabel='Two-point'>,\n",
-       "        <Axes: ylabel='Hilbert'>], dtype=object))"
-      ]
-     },
-     "execution_count": 13,
-     "metadata": {},
-     "output_type": "execute_result"
     }
    ],
    "source": [
-    "plot_phase_diagnostics(\n",
+    "plot = plot_phase_diagnostics(\n",
     "    {\"One-point\": PA_onepoint, \"Two-point\": PA_twopoint, \"Hilbert\": PA_hilbert},\n",
     "    start = 300,\n",
     "    window_duration = 30,\n",
@@ -208,12 +244,12 @@
    "id": "6e5a6064",
    "metadata": {},
    "source": [
-    "We can also look at the distribution of phase angles extracted using the different methods. The following figure shows the distribution of phase angles extracted using the one-point, two-point and Hilbert methods."
+    "We can also look at the distribution of phase angles extracted using the different methods. The following figure shows the distribution of phase angles extracted using the `phase_onepoint()` `phase_twopoint()` and `phase_hilbert()` methods. "
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": 14,
+   "execution_count": 15,
    "id": "ee6f6657",
    "metadata": {},
    "outputs": [
@@ -239,7 +275,6 @@
     "colors = [cmap(i+1) for i in range(len(phase_values))]\n",
     "\n",
     "for phase, label, ax, color in zip(phase_values, labels, axes, colors):\n",
-    "\n",
     "    ax.hist(phase, bins=40, color=color,)\n",
     "    ax.set_title(label)\n",
     "    ax.set_xlim(0, 2*np.pi)\n",
@@ -255,8 +290,8 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 15,
-   "id": "8cb32787",
+   "execution_count": 18,
+   "id": "c906642a",
    "metadata": {},
    "outputs": [
     {
@@ -275,6 +310,16 @@
     "    prop_0_pi = np.sum((phase >= 0) & (phase < np.pi)) / len(phase)\n",
     "    prop_pi_2pi = np.sum((phase >= np.pi) & (phase < 2*np.pi)) / len(phase)\n",
     "    print(f\"{label}: Proportion in [0, π): {prop_0_pi:.3f}, Proportion in [π, 2π): {prop_pi_2pi:.3f}\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "b72ace85",
+   "metadata": {},
+   "source": [
+    "The `phase_onepoint()` produces a uniform distribution of phase angles, which can be useful for statistical analyses that assume that the underlying distribution is uniform. However, as only a single landmark is defined per cycle, the same phase angle can correspond to different respiratory states; for example, $\\pi$ may fall within inhalation in one cycle and exhalation in another. \n",
+    "\n",
+    "Given successful peak and trough detection, `phase_twopoint()` yields a physiologically interpretable mapping in which $0$–$\\pi$ corresponds to exhalation and $\\pi$–$2\\pi$ to inhalation. However, the resulting phase distribution is not uniform, as respiratory time is unequally distributed across inhalation and exhalation, which complicates subsequent statistical analyses."
    ]
   }
  ],

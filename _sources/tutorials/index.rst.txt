@@ -12,7 +12,7 @@ These tutorials walk you through using **Pyriodic** for circular data analysis, 
           <img src="../_static/tutorials/01_intro.png" class="card-img-top" alt="Overview of respiration data preprocessing and analysis">
           <div class="card-body">
             <h5 class="card-title">Overview of respiration data preprocessing and analysis</h5>
-            <p class="card-text">This tutorial covers a basic pipeline for preprocessing and analysis of respiration data collected during a experimental task. It introduces core `pyriodic` classes.</p>
+            <p class="card-text">This tutorial covers a basic pipeline for preprocessing and analysis of respiration data collected during a experimental task.</p>
           </div>
         </div>
       </div>
@@ -100,7 +100,7 @@ These tutorials walk you through using **Pyriodic** for circular data analysis, 
           <img src="../_static/tutorials/08_methods_for_generating_surrogates.png" class="card-img-top" alt="Generating surrogate data for inference">
           <div class="card-body">
             <h5 class="card-title">Generating surrogate data for inference</h5>
-            <p class="card-text">There are many ways to generate surrogate data for inference. Here we introduce and compare several methods.</p>
+            <p class="card-text">There are many ways to generate surrogate data for inference. Here we introduce and compare several methods. What is important to note is that the surrogate data should be generated in a way that preserves the null hypothesis. For example, if we are testing for a specific pattern in the data, the surrogate data should not contain that pattern. This means, that the choise of surrogate data depends on the hypothesis being tested. Furthermore, it can depend on how phase angles are extracted from the data, as different methods for extracting phase angles can lead to different distributions of phase angles.</p>
           </div>
         </div>
       </div>
