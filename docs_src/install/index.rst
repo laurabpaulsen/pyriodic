@@ -1,4 +1,4 @@
-Installation
+Install
 ============
 
 Pyriodic can be installed via pip:
