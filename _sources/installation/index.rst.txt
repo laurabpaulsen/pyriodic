@@ -1,12 +1,8 @@
-
 Installation
 ============
-This section provides a guide on how to install and set up the `pyriodic` package for your projects.
 
-.. toctree::
-   :maxdepth: 2
+Pyriodic can be installed via pip:
 
-   installation_guide
+.. code-block:: bash
 
-
-
+   pip install python-pyriodic
