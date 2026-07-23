@@ -11,8 +11,8 @@ Check out the tutorials to get started, or jump to the API reference.
    :caption: Navigation
    :hidden:
 
-   installation/index
+   install/index
    tutorials/index
    api/index
-   contributing/index
+   contribute/index
    datasets/index
