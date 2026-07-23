@@ -7,7 +7,7 @@
    "source": [
     "# Example datasets\n",
     "\n",
-    "All example datasets are available in the `pyriodic.datasets` module. To download a dataset, simply call the corresponding data_path function. The default download location is checked first to see if the dataset is already on the computer, and only download it if necessary. "
+    "All example datasets are available in the `pyriodic.datasets` module. To download a dataset, simply call the corresponding data_path function. The default download location is checked first to see if the dataset is already on the computer, and only downloaded if necessary. "
    ]
   },
   {
