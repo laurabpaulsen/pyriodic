@@ -14,5 +14,5 @@ Check out the tutorials to get started, or jump to the API reference.
    install/index
    tutorials/index
    api/index
-   contributing/index
+   contribute/index
    datasets/index
