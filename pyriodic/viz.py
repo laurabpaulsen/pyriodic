@@ -1,6 +1,8 @@
 import matplotlib.pyplot as plt
 from matplotlib.widgets import Slider
 import numpy as np
+
+from pyriodic.preproc import RawSignal
 from .circular import Circular
 from .density import vonmises_kde
 from typing import Union, Optional
@@ -589,9 +591,8 @@ class CircPlot:
 
 # ------- DIAGNOSIC PLOT FOR PREPROCESSING -----------
 def plot_phase_diagnostics(
+    raw: RawSignal,
     phase_angles: dict[str, np.ndarray],
-    fs: Union[int, float],
-    data: Optional[np.ndarray] = None,
     events: Optional[Union[list, np.ndarray]] = None,
     event_labels: Optional[Union[list, np.ndarray]] = None,
     peaks=None,
@@ -604,13 +605,11 @@ def plot_phase_diagnostics(
     """
     Parameters
     ----------
+    raw : RawSignal
+        RawSignal object containing the signal data and sampling frequency.
     phase_angles : dict[str, np.ndarray]
         Dictionary of named phase angle signals (e.g., {"Three-point": ..., "Hilbert": ...}).
         Each should be 1D array of same length as `data`.
-    fs : float
-        Sampling frequency (Hz).
-    data : np.ndarray, optional
-        Raw or preprocessed time series signal (same length as phase arrays).
     events : list[int] or np.ndarray, optional
         Sample indices of events to mark (e.g., stimulus or response times).
     event_labels : list[str], optional
@@ -636,6 +635,11 @@ def plot_phase_diagnostics(
     if type(phase_angles) is not dict:
         phase_angles = {"Phase": phase_angles}
 
+    fs=raw.fs
+    data=raw.ts
+    bad_segments = raw.bad_segments
+
+    
     n_phase_axes = len(phase_angles)
     n_rows = n_phase_axes + (1 if data is not None else 0)
 
@@ -725,6 +729,25 @@ def plot_phase_diagnostics(
         ax.legend(loc="upper right")
         row_idx += 1
 
+    bad_segment_objs = []
+
+    if bad_segments is not None and len(bad_segments) > 0:
+        for ax in axes:
+            spans = []
+
+            for seg_start, seg_end in bad_segments:
+                patch = ax.axvspan(
+                    seg_start / fs,
+                    seg_end / fs,
+                    color="red",
+                    alpha=0.3,
+                    visible=False,
+                )
+
+                spans.append((patch, seg_start, seg_end))
+
+            bad_segment_objs.append(spans)
+
     # --- Phase angles
     for label, phase in phase_angles.items():
         (line,) = axes[row_idx].plot(
@@ -788,6 +811,16 @@ def plot_phase_diagnostics(
                 visible = start_idx <= ev_sample < end_idx
                 line.set_xdata([ev_sample / fs]*2)
                 line.set_visible(visible)
+        
+        for spans in bad_segment_objs:
+            for patch, seg_start, seg_end in spans:
+
+                visible = (
+                    seg_end >= start_idx
+                    and seg_start <= end_idx
+                )
+
+                patch.set_visible(visible)
 
         fig.canvas.draw_idle()
 
