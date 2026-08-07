@@ -829,6 +829,7 @@ def plot_phase_diagnostics(
     zoom_slider.on_changed(update)
 
     plt.subplots_adjust(bottom=0.12, right=0.9)
+    update(None)
     plt.show(block = True)
     return fig, axes
 
