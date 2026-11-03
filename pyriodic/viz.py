@@ -767,7 +767,7 @@ def plot_phase_diagnostics(
         if event_labels is None:
             event_labels = ["event"] * len(events)
         unique_labels = sorted(set(event_labels))
-        cmap = plt.cm.get_cmap("tab10", len(unique_labels))
+        cmap = plt.colormaps.get_cmap("tab10").resampled(len(unique_labels))
         label_colors = {lbl: cmap(i) for i, lbl in enumerate(unique_labels)}
 
         for ax in axes:
