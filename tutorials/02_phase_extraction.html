@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 
 
@@ -8,7 +7,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Methods for phase extraction from respiration data &#8212; pyriodic 0.1.2 documentation</title>
+    <title>Methods for phase extraction from respiration data &#8212; pyriodic 0.1.3 documentation</title>
   
   
   
@@ -27,19 +26,19 @@
   </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=90905a2f556bf617f1a9" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=90905a2f556bf617f1a9" rel="stylesheet" />
+  <link href="../_static/styles/theme.css?digest=75c7c72ae941e8b558d8" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=75c7c72ae941e8b558d8" rel="stylesheet" />
 
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="../_static/nbsphinx-code-cells.css?v=2aa19091" />
   
   <!-- So that users can add custom icons -->
-  <script defer src="../_static/scripts/fontawesome.js?digest=90905a2f556bf617f1a9"></script>
+  <script defer src="../_static/scripts/fontawesome.js?digest=75c7c72ae941e8b558d8"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9" />
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=75c7c72ae941e8b558d8" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=75c7c72ae941e8b558d8" />
 
-    <script src="../_static/documentation_options.js?v=b14783f5"></script>
+    <script src="../_static/documentation_options.js?v=1807f793"></script>
     <script src="../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -52,6 +51,7 @@
     <link rel="next" title="Descriptive statistics for circular data" href="03_descriptive_stats.html" />
     <link rel="prev" title="Overview of respiration data preprocessing and analysis" href="01_intro.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="color-scheme" content="light dark"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="" />
   
@@ -101,7 +101,7 @@
   
     <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
 <div class="bd-header__inner bd-page-width">
-  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+  <button type="button" class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation" aria-expanded="false" aria-controls="pst-primary-sidebar-modal">
     <span class="fa-solid fa-bars"></span>
   </button>
   
@@ -121,7 +121,7 @@
   
   
   
-    <p class="title logo__title">pyriodic 0.1.2 documentation</p>
+    <p class="title logo__title">pyriodic 0.1.3 documentation</p>
   
 </a></div>
     
@@ -180,7 +180,7 @@
         <div class="navbar-item navbar-persistent--container">
           
 
-<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+<button type="button" class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
  <i class="fa-solid fa-magnifying-glass"></i>
  <span class="search-button__default-text">Search</span>
  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
@@ -227,7 +227,7 @@
   
     <div class="navbar-persistent--mobile">
 
-<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+<button type="button" class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
  <i class="fa-solid fa-magnifying-glass"></i>
  <span class="search-button__default-text">Search</span>
  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
@@ -236,7 +236,7 @@
   
 
   
-    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+    <button type="button" class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page" aria-expanded="false" aria-controls="pst-secondary-sidebar-modal">
       <span class="fa-solid fa-outdent"></span>
     </button>
   
@@ -250,7 +250,7 @@
       
       
       
-      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <dialog id="pst-primary-sidebar-modal" tabindex="-1"></dialog>
       <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
         
 
@@ -347,7 +347,7 @@
   </div>
   
     <div class="sidebar-primary-items__start sidebar-primary__section">
-        <div class="sidebar-primary-item pst-sidebar-collapse"><button id="pst-collapse-sidebar-button" aria-expanded="true" aria-controls="pst-primary-sidebar">
+        <div class="sidebar-primary-item pst-sidebar-collapse"><button type="button" id="pst-collapse-sidebar-button" aria-expanded="true" aria-controls="pst-primary-sidebar">
   <svg class="pst-icon" role="img" aria-hidden="true" focusable="false" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
     <path fill="currentColor" d="M3 15.5C2.36232 15.5 1.74874 15.2564 1.28478 14.8189C0.820828 14.3815 0.541576 13.7832 0.504167 13.1467L0.5 13L0.5 3C0.499965 2.36232 0.743605 1.74874 1.18107 1.28478C1.61854 0.820828 2.21676 0.541576 2.85333 0.504167L3 0.5L13 0.5C13.6377 0.499965 14.2513 0.743605 14.7152 1.18107C15.1792 1.61854 15.4584 2.21676 15.4958 2.85333L15.5 3L15.5 13C15.5 13.6377 15.2564 14.2513 14.8189 14.7152C14.3815 15.1792 13.7832 15.4584 13.1467 15.4958L13 15.5L3 15.5ZM3 13.8333L10.5 13.8333L10.5 2.16667L3 2.16667C2.79589 2.16669 2.59889 2.24163 2.44636 2.37726C2.29383 2.5129 2.19638 2.69979 2.1725 2.9025L2.16667 3L2.16667 13C2.16669 13.2041 2.24163 13.4011 2.37726 13.5536C2.5129 13.7062 2.69979 13.8036 2.9025 13.8275L3 13.8333ZM6.65583 10.325L6.5775 10.2558L4.91083 8.58917C4.76735 8.44567 4.68116 8.25476 4.66843 8.05223C4.65569 7.84971 4.71729 7.6495 4.84167 7.48917L4.91083 7.41083L6.5775 5.74417C6.72747 5.59471 6.9287 5.50794 7.14032 5.50148C7.35194 5.49502 7.55809 5.56935 7.7169 5.70937C7.8757 5.8494 7.97525 6.04463 7.99533 6.25539C8.01541 6.46616 7.95451 6.67667 7.825 6.84417L7.75583 6.9225L6.67917 8L7.75583 9.0775C7.89931 9.22099 7.98551 9.41191 7.99824 9.61443C8.01097 9.81695 7.94938 10.0172 7.825 10.1775L7.75583 10.2558C7.61234 10.3993 7.42142 10.4855 7.2189 10.4982C7.01638 10.511 6.81617 10.4494 6.65583 10.325Z"/>
   </svg>
@@ -361,7 +361,7 @@
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
   <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="01_intro.html">Overview of respiration data preprocessing and analysis</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Methods for phase extraction from respiration data</a></li>
+<li class="toctree-l1 current active"><a aria-current="page" class="current reference internal" href="#">Methods for phase extraction from respiration data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="03_descriptive_stats.html">Descriptive statistics for circular data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="04a_permutation_against_surrogate_shuffled.html">Permutation test between observed samples and surrogate samples (peak-to-peak shuffled)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="04a_permutation_against_surrogate_shuffled_grouplevel.html">Group-level permutation test between observed samples and surrogate samples (peak-to-peak shuffled)</a></li>
@@ -407,7 +407,7 @@
     
     <li class="breadcrumb-item breadcrumb-home">
       <a href="../index.html" class="nav-link" aria-label="Home">
-        <i class="fa-solid fa-home"></i>
+        <i class="fa-solid fa-house"></i>
       </a>
     </li>
     
@@ -435,7 +435,7 @@
 <p>To obtain a circular representation of from time series there are four different methods implemented: <code class="docutils literal notranslate"><span class="pre">phase_hilbert()</span></code>, <code class="docutils literal notranslate"><span class="pre">phase_onepoint()</span></code>, <code class="docutils literal notranslate"><span class="pre">phase_twopoint()</span></code> and <code class="docutils literal notranslate"><span class="pre">phase_threepoint()</span></code> which all have been used in previous research.</p>
 <p>Choosing between these methods has implications for both the interpretation of individual phase angles and the statistical analyses that can subsequently be performed.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
@@ -452,21 +452,21 @@
 <h2>Load sample data<a class="headerlink" href="#Load-sample-data" title="Link to this heading">#</a></h2>
 <p>To show how to use the different methods for phase extraction, we will load the sample dataset which contains respiration data and event information.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">path</span> <span class="o">=</span> <span class="n">sample</span><span class="o">.</span><span class="n">data_path</span><span class="p">()</span>
 
-<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">"rb"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
     <span class="n">data</span> <span class="o">=</span> <span class="n">pkl</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
 
-<span class="n">behav_data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;behav_data&quot;</span><span class="p">]</span>
-<span class="n">resp_ts</span><span class="p">,</span> <span class="n">sfreq</span><span class="p">,</span> <span class="n">event_samples</span><span class="p">,</span> <span class="n">event_ids</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;resp_ts&quot;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;sfreq&quot;</span><span class="p">],</span> <span class="n">behav_data</span><span class="p">[</span><span class="s2">&quot;event_samples&quot;</span><span class="p">],</span> <span class="n">behav_data</span><span class="p">[</span><span class="s2">&quot;event_ids&quot;</span><span class="p">]</span>
+<span class="n">behav_data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">"behav_data"</span><span class="p">]</span>
+<span class="n">resp_ts</span><span class="p">,</span> <span class="n">sfreq</span><span class="p">,</span> <span class="n">event_samples</span><span class="p">,</span> <span class="n">event_ids</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">"resp_ts"</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s2">"sfreq"</span><span class="p">],</span> <span class="n">behav_data</span><span class="p">[</span><span class="s2">"event_samples"</span><span class="p">],</span> <span class="n">behav_data</span><span class="p">[</span><span class="s2">"event_ids"</span><span class="p">]</span>
 <br/></pre></div>
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[28]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># for quick testing, we can use a subset of the data</span>
@@ -489,7 +489,7 @@
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[29]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># initial preprocessing: bandpass filter, smoothing, and z-scoring</span>
@@ -512,7 +512,7 @@ the default peak finder function <code class="docutils literal notranslate"><spa
 <h3>Landmark-based methods<a class="headerlink" href="#Landmark-based-methods" title="Link to this heading">#</a></h3>
 <p>The <code class="docutils literal notranslate"><span class="pre">phase_onepoint()</span></code> method for extracting phase angles relies on detected peaks from the time series data. Phase is defined by linearly interpolating from <span class="math notranslate nohighlight">\(0\)</span> to <span class="math notranslate nohighlight">\(2\pi\)</span> between each peak. The peak marks the beginning of a new cycle and is assigned a phase of <span class="math notranslate nohighlight">\(0\)</span> (equivalent to <span class="math notranslate nohighlight">\(2\pi\)</span>).</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[30]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">PA_onepoint</span><span class="p">,</span> <span class="n">peaks_onepoint</span> <span class="o">=</span> <span class="n">raw</span><span class="o">.</span><span class="n">phase_onepoint</span><span class="p">(</span><span class="n">prominence</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
@@ -522,7 +522,7 @@ the default peak finder function <code class="docutils literal notranslate"><spa
 <p>The <code class="docutils literal notranslate"><span class="pre">phase_twopoint()</span></code> method uses both peaks and troughs of the signal to define the phase angles within each respiratory cycle. Troughs are detected as the minimum point between two peaks. Phase is then linearly interpolated from <span class="math notranslate nohighlight">\(0\)</span> to <span class="math notranslate nohighlight">\(\pi\)</span> between a detected peak and the following trough, and from <span class="math notranslate nohighlight">\(\pi\)</span> to <span class="math notranslate nohighlight">\(2\pi\)</span> from that trough to the next peak. This results in two fixed anchor points per cycle: the peak is assigned a phase of <span class="math notranslate nohighlight">\(0\)</span> (or <span class="math notranslate nohighlight">\(2\pi\)</span>), and the
 trough is assigned <span class="math notranslate nohighlight">\(\pi\)</span>.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[31]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">PA_twopoint</span><span class="p">,</span> <span class="n">peaks_twopoint</span><span class="p">,</span> <span class="n">troughs_twopoint</span> <span class="o">=</span> <span class="n">raw</span><span class="o">.</span><span class="n">phase_twopoint</span><span class="p">(</span><span class="n">prominence</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
@@ -538,7 +538,7 @@ trough is assigned <span class="math notranslate nohighlight">\(\pi\)</span>.</p
     margin: 1em 0;
 "><p>⚠️ Note This method does not work well with the sample data because it does not have a clear flat period between exhalation and inhalation. Always plot the data and verify that the detected peaks and troughs are correct before using this method.</p>
 </div><div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[32]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">PA_threepoint</span><span class="p">,</span> <span class="n">peaks_threepoint</span><span class="p">,</span> <span class="n">troughs_threepoint</span> <span class="o">=</span> <span class="n">raw</span><span class="o">.</span><span class="n">phase_threepoint</span><span class="p">()</span>
@@ -551,7 +551,7 @@ trough is assigned <span class="math notranslate nohighlight">\(\pi\)</span>.</p
 <p>The Hilbert transform provides an alternative way of extracting continuous phase by constructing an analytic signal from the original time series. A key advantage of this approach is that it does not rely on landmark detection, and therefore does not require the user to specify parameters for peak detection.</p>
 <p>Instead it assumes an approximately narrowband, sinusoidal signal, which is often violated in respiratory data. Therefore, phase angles may not align consistently with inhalation or exhalation across cycles or participants.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[33]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">PA_hilbert</span> <span class="o">=</span> <span class="n">raw</span><span class="o">.</span><span class="n">phase_hilbert</span><span class="p">()</span>
@@ -563,15 +563,14 @@ trough is assigned <span class="math notranslate nohighlight">\(\pi\)</span>.</p
 <h3>Comparison of methods<a class="headerlink" href="#Comparison-of-methods" title="Link to this heading">#</a></h3>
 <p>Let’s start by ccomparing the phase angle time series extracted using the different methods. The following figure shows the phase angle time series extracted using the one-point, two-point and Hilbert methods. The phase angle time series are shown for a 40 second window of data starting at 300 seconds. The peaks and troughs identified by the two-point method are also shown.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[34]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot</span> <span class="o">=</span> <span class="n">plot_phase_diagnostics</span><span class="p">(</span>
-    <span class="p">{</span><span class="s2">&quot;One-point&quot;</span><span class="p">:</span> <span class="n">PA_onepoint</span><span class="p">,</span> <span class="s2">&quot;Two-point&quot;</span><span class="p">:</span> <span class="n">PA_twopoint</span><span class="p">,</span> <span class="s2">&quot;Hilbert&quot;</span><span class="p">:</span> <span class="n">PA_hilbert</span><span class="p">},</span>
+    <span class="n">raw</span><span class="p">,</span>
+    <span class="p">{</span><span class="s2">"One-point"</span><span class="p">:</span> <span class="n">PA_onepoint</span><span class="p">,</span> <span class="s2">"Two-point"</span><span class="p">:</span> <span class="n">PA_twopoint</span><span class="p">,</span> <span class="s2">"Hilbert"</span><span class="p">:</span> <span class="n">PA_hilbert</span><span class="p">},</span>
     <span class="n">start</span> <span class="o">=</span> <span class="mi">300</span><span class="p">,</span>
     <span class="n">window_duration</span> <span class="o">=</span> <span class="mi">30</span><span class="p">,</span>
-    <span class="n">fs</span> <span class="o">=</span> <span class="n">raw</span><span class="o">.</span><span class="n">fs</span><span class="p">,</span>
-    <span class="n">data</span> <span class="o">=</span> <span class="n">raw</span><span class="o">.</span><span class="n">ts</span><span class="p">,</span>
     <span class="n">peaks</span><span class="o">=</span><span class="n">peaks_twopoint</span><span class="p">,</span> <span class="c1"># plotting the peaks and troughs from the two-point method. Same peaks are identified by the one-point method.</span>
     <span class="n">troughs</span><span class="o">=</span><span class="n">troughs_twopoint</span>
 <span class="p">)</span>
@@ -587,16 +586,16 @@ trough is assigned <span class="math notranslate nohighlight">\(\pi\)</span>.</p
 </div>
 <p>We can also look at the distribution of phase angles extracted using the different methods. The following figure shows the distribution of phase angles extracted using the <code class="docutils literal notranslate"><span class="pre">phase_onepoint()</span></code> <code class="docutils literal notranslate"><span class="pre">phase_twopoint()</span></code> and <code class="docutils literal notranslate"><span class="pre">phase_hilbert()</span></code> methods.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[35]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># histogram of phase values</span>
 <span class="n">phase_values</span> <span class="o">=</span> <span class="p">[</span><span class="n">PA_onepoint</span><span class="p">,</span> <span class="n">PA_twopoint</span><span class="p">,</span> <span class="n">PA_hilbert</span><span class="p">]</span>
-<span class="n">labels</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;phase_onepoint()&#39;</span><span class="p">,</span> <span class="s1">&#39;phase_twopoint()&#39;</span><span class="p">,</span> <span class="s1">&#39;phase_hilbert()&#39;</span><span class="p">]</span>
+<span class="n">labels</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'phase_onepoint()'</span><span class="p">,</span> <span class="s1">'phase_twopoint()'</span><span class="p">,</span> <span class="s1">'phase_hilbert()'</span><span class="p">]</span>
 
 <span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">phase_values</span><span class="p">),</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="n">sharey</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">)</span>
 
-<span class="n">cmap</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">get_cmap</span><span class="p">(</span><span class="s1">&#39;Set1&#39;</span><span class="p">)</span>
+<span class="n">cmap</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">get_cmap</span><span class="p">(</span><span class="s1">'Set1'</span><span class="p">)</span>
 <span class="n">colors</span> <span class="o">=</span> <span class="p">[</span><span class="n">cmap</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">phase_values</span><span class="p">))]</span>
 
 <span class="k">for</span> <span class="n">phase</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="n">ax</span><span class="p">,</span> <span class="n">color</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">phase_values</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">axes</span><span class="p">,</span> <span class="n">colors</span><span class="p">):</span>
@@ -605,12 +604,12 @@ trough is assigned <span class="math notranslate nohighlight">\(\pi\)</span>.</p
     <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span>
 
 <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">])</span>
-<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">([</span><span class="s1">&#39;0&#39;</span><span class="p">,</span> <span class="s1">&#39;π&#39;</span><span class="p">,</span> <span class="s1">&#39;2π&#39;</span><span class="p">])</span>
-<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Count&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">([</span><span class="s1">'0'</span><span class="p">,</span> <span class="s1">'π'</span><span class="p">,</span> <span class="s1">'2π'</span><span class="p">])</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">'Count'</span><span class="p">)</span>
 
 <span class="k">for</span> <span class="n">ax</span> <span class="ow">in</span> <span class="n">axes</span><span class="o">.</span><span class="n">flat</span><span class="p">:</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">spines</span><span class="p">[</span><span class="s2">&quot;top&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">spines</span><span class="p">[</span><span class="s2">&quot;right&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">spines</span><span class="p">[</span><span class="s2">"top"</span><span class="p">]</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">spines</span><span class="p">[</span><span class="s2">"right"</span><span class="p">]</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
 <br/></pre></div>
 </div>
 </div>
@@ -622,14 +621,14 @@ trough is assigned <span class="math notranslate nohighlight">\(\pi\)</span>.</p
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[36]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># proportion of phase values in 0-pi and pi-2pi ranges</span>
 <span class="k">for</span> <span class="n">phase</span><span class="p">,</span> <span class="n">label</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">phase_values</span><span class="p">,</span> <span class="n">labels</span><span class="p">):</span>
     <span class="n">prop_0_pi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="n">phase</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">phase</span> <span class="o">&lt;</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">))</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">phase</span><span class="p">)</span>
     <span class="n">prop_pi_2pi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="n">phase</span> <span class="o">&gt;=</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">phase</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">))</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">phase</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">label</span><span class="si">}</span><span class="s2">: Proportion in [0, π): </span><span class="si">{</span><span class="n">prop_0_pi</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">, Proportion in [π, 2π): </span><span class="si">{</span><span class="n">prop_pi_2pi</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">label</span><span class="si">}</span><span class="s2">: Proportion in [0, π): </span><span class="si">{</span><span class="n">prop_0_pi</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">, Proportion in [π, 2π): </span><span class="si">{</span><span class="n">prop_pi_2pi</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -660,7 +659,7 @@ phase_hilbert(): Proportion in [0, π): 0.554, Proportion in [π, 2π): 0.446
             
             
               
-                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <dialog id="pst-secondary-sidebar-modal" tabindex="-1"></dialog>
                 <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
 
@@ -695,8 +694,8 @@ phase_hilbert(): Proportion in [0, π): 0.554, Proportion in [π, 2π): 0.446
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script defer src="../_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9"></script>
-<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9"></script>
+  <script defer src="../_static/scripts/bootstrap.js?digest=75c7c72ae941e8b558d8"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=75c7c72ae941e8b558d8"></script>
 
   <footer class="bd-footer">
 <div class="bd-footer__inner bd-page-width">
@@ -717,7 +716,6 @@ phase_hilbert(): Proportion in [0, π): 0.554, Proportion in [π, 2π): 0.446
 
   <p class="sphinx-version">
     Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.0.4.
-    <br/>
   </p>
 </div>
       
@@ -730,7 +728,7 @@ phase_hilbert(): Proportion in [0, π): 0.554, Proportion in [π, 2π): 0.446
         <div class="footer-item">
 <p class="theme-version">
   <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
-  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.20.0.
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.24.0.
 </p></div>
       
     </div>
