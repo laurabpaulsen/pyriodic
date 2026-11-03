@@ -601,6 +601,7 @@ def plot_phase_diagnostics(
     window_duration: float = 20.0,
     title=None,
     start = 0,
+    show: bool = True
 ):
     """
     Parameters
@@ -830,7 +831,8 @@ def plot_phase_diagnostics(
 
     plt.subplots_adjust(bottom=0.12, right=0.9)
     update(None)
-    plt.show(block = True)
+    if show:
+        plt.show(block = True)
     return fig, axes
 
   
