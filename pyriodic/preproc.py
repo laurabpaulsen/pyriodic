@@ -84,13 +84,41 @@ class RawSignal:
         self.ts[nans] = interpolated_values(np.where(nans)[0])
 
         self._history.append(f"interpolate_missing(), {np.sum(nans)} NaNs interpolated")
-
-    def zscore(self):
+    def zscore(self, ignore_bad_segments=True):
         """
         Normalises the signal in-place to mean 0 and unit variance.
+
+        Parameters
+        ----------
+        ignore_bad_segments : bool
+            If True, bad segments are excluded when estimating the mean and
+            standard deviation. The z-scoring is still applied to the whole
+            signal.
         """
-        self.ts = (self.ts - np.nanmean(self.ts)) / np.nanstd(self.ts)
-        self._history.append("zscore()")
+
+        if ignore_bad_segments and self.bad_segments is not None:
+            good_mask = np.ones(len(self.ts), dtype=bool)
+
+            for start, end in self.bad_segments:
+                good_mask[start:end] = False
+
+            good_mask &= ~np.isnan(self.ts)
+
+            mean = np.mean(self.ts[good_mask])
+            std = np.std(self.ts[good_mask])
+
+        else:
+            mean = np.nanmean(self.ts)
+            std = np.nanstd(self.ts)
+
+        if std == 0:
+            raise ValueError("Cannot z-score signal: standard deviation is zero.")
+
+        self.ts = (self.ts - mean) / std
+
+        self._history.append(
+            f"zscore(ignore_bad_segments={ignore_bad_segments})"
+        )
 
     def filter_bandpass(self, low = 0.1, high = 1.0):
         """ """
@@ -244,7 +272,7 @@ class RawSignal:
 
         return phase_angles % (2 * np.pi)  # return from 0 to 2pi instead
 
-    def phase_twopoint(self, peak_finder=None, distance=1, prominence=0.01):
+    def phase_twopoint(self, peak_finder=None, distance=1, prominence=0.01, ignore_bad_segments=True):
         """
         Extract phase using linear interpolation between peaks and troughs.
 
@@ -256,6 +284,8 @@ class RawSignal:
             Minimum distance in seconds between peaks, passed to the peak detection algorithm.
         prominence : float
             Prominence threshold for peak detection.
+        ignore_bad_segments : bool
+            Whether to ignore bad segments when extracting phase. If true, sets phase to NaN in bad segments.
 
         Returns
         -------
@@ -292,9 +322,13 @@ class RawSignal:
             phase[t] = np.pi
             phase[p2] = 2 * np.pi
 
+        if ignore_bad_segments and self.bad_segments is not None:
+            for start, end in self.bad_segments:
+                phase[start:end] = np.nan
+
         return (phase, peaks, troughs)
 
-    def phase_onepoint(self, peak_finder=None, distance=1, prominence=0.01):
+    def phase_onepoint(self, peak_finder=None, distance=1, prominence=0.01, ignore_bad_segments=True):
         """
         Extract phase by linearly interpolating from 0 to 2π between detected peaks.
 
@@ -306,6 +340,8 @@ class RawSignal:
             Minimum distance between peaks, passed to the peak detection algorithm in seconds.
         prominence : float
             Prominence threshold for peak detection.
+        ignore_bad_segments : bool
+            Whether to ignore bad segments when extracting phase. If true, sets phase to NaN in bad segments.
 
         Returns
         -------
@@ -327,6 +363,10 @@ class RawSignal:
             phase[p1:p2] = np.linspace(0, 2 * np.pi, p2 - p1)
             phase[p1] = 0
             phase[p2] = 2 * np.pi
+
+        if ignore_bad_segments and self.bad_segments is not None:
+            for start, end in self.bad_segments:
+                phase[start:end] = np.nan
 
         return phase, peaks
 
@@ -445,6 +485,29 @@ class RawSignal:
             f"<RawSignal | fs={self.fs} Hz, len={len(self.ts)}, "
             f"steps={len(self._history)}>"
         )
+
+    def get_data(self, mask_bad_segments: bool = True):
+        """
+        Returns the time series data, optionally setting bad segments to NaN.
+
+        Parameters
+        ----------
+        mask_bad_segments : bool
+            If True, bad segments are set to NaN in the returned data.
+            If False, the original data is returned.
+
+        Returns
+        -------
+        np.ndarray
+            The signal data.
+        """
+        data = self.ts.copy()
+
+        if mask_bad_segments and self.bad_segments is not None:
+            for start, end in self.bad_segments:
+                data[start:end] = np.nan
+
+        return data
 
 
 class Pipeline:
